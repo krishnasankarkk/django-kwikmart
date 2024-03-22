@@ -1,7 +1,7 @@
-# example/urls.py
+# shop/urls.py
 from django.urls import path
 
-from example.views import index
+from shop.views import index
 
 
 urlpatterns = [
