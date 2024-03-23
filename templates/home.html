@@ -2,5 +2,180 @@
 {% load static %}
 {% block title %}Kwikmart | Home{% endblock title %}
 {% block main %}
-    <h1>Helllo</h1>
+    {% include 'navbar.html' %}
+    <div class="carousel">
+        <div class="carousel-inner">
+            {% for item in carousel %}
+                <div class="carousel-item">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                </div>
+            {% endfor %}
+        </div>
+        <div class="prev">
+            <img src="{% static 'images/before.png' %}" alt="">
+        </div>
+        <div class="next">
+            <img src="{% static 'images/next.png' %}" alt="">
+        </div>
+        <div class="offers">
+            <div class="offer" style="margin-left:2rem;">
+                <h3>Appliances for your home | Up to 55% off</h3>
+                <div class="offer-items">
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/ac.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Air conditioners</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/fridge.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Refrigerators</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/oven.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Microwaves</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/wm.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Washing machines</span>
+                    </div>
+                </div>
+                <h4 style="cursor: pointer;color:var(--theme-3)">See all offers</h4>
+            </div>
+            <div class="offer">
+                <h3>Up to 60% off | Styles for men</h3>
+                <div class="offer-items">
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/cloth.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Clothing</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/shoe.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Footwears</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/watch.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Watches</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/bag.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Bags & Wallets</span>
+                    </div>
+                </div>
+                <h4 style="cursor: pointer;color:var(--theme-3)">See all offers</h4>
+            </div>
+            <div class="offer">
+                <h3>Revamp your home in style</h3>
+                <div class="offer-items">
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/mat.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Mat, bedsheets & more</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/figure.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Figurines, vases & more</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/storage.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Home storage</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/light.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Lighting solutions</span>
+                    </div>
+                </div>
+                <h4 style="cursor: pointer;color:var(--theme-3)">Explore all</h4>
+            </div>
+            <div class="offer" style="margin-right:2rem;">
+                <h3>Up to 75% off | Headphones</h3>
+                <div class="offer-items">
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/boat.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Up to 75% off | boAt</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/boult.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Up to 75% off | Boult</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/noise.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Up to 75% off | Noise</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/zebro.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Up to 75% off | Zebronics</span>
+                    </div>
+                </div>
+                <h4 style="cursor: pointer;color:var(--theme-3)">See all offers</h4>
+            </div>
+        </div>
+    </div>
+    <div class="deals">
+        <div class="title">
+            <h1>Today's deals</h1>
+            <h3>See all deals</h3>
+        </div>
+        <div class="products">
+            {% for product in products %}
+                <div class="product">
+                    <img src="{{ product.image.url }}" alt="">
+                    <span>{{ product.name }}</span>
+                </div>
+            {% endfor %}
+            <div class="prev-prod">
+                <img src="{% static 'images/before.png' %}" alt="">
+            </div>
+            <div class="next-prod">
+                <img src="{% static 'images/next.png' %}" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="signin">
+        <span class="title">See personalized recommendations</span>
+        <button>Sign In</button>
+        <span>New customer?<a href="">Register account</a></span>
+    </div>
+    {% include 'footer.html' %}
 {% endblock main %}
+{% block script %}
+<script>
+    const carousel = document.querySelector('.carousel-inner');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    const products = document.querySelector('.products');
+    const prevProdBtn = document.querySelector('.prev-prod');
+    const nextProdBtn = document.querySelector('.next-prod');
+    const scrollToTop = document.querySelector('.top');
+
+    scrollToTop.addEventListener('click', ()=>{
+        document.documentElement.scrollTop = 0;
+    });
+
+    // Scroll to previous image
+    prevBtn.addEventListener('click', function() {
+        carousel.scrollBy({
+            left: -100 * window.innerWidth / 100,
+            behavior: 'smooth'
+        });
+    });
+
+    // Scroll to next image
+    nextBtn.addEventListener('click', function() {
+        carousel.scrollBy({
+            left: 100 * window.innerWidth / 100,
+            behavior: 'smooth'
+        });
+    });
+    prevProdBtn.addEventListener('click', function() {
+        products.scrollBy({
+            left: -100 * window.innerWidth / 100,
+            behavior: 'smooth'
+        });
+    });
+    nextProdBtn.addEventListener('click', function() {
+        products.scrollBy({
+            left: 100 * window.innerWidth / 100,
+            behavior: 'smooth'
+        });
+    });
+
+</script>
+{% endblock script %}

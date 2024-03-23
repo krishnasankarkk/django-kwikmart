@@ -1,3 +1,38 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('/static/fonts/Poppins-Regular.ttf');
+}
+@font-face {
+    font-family: 'Sofia';
+    src: url('/static/fonts/Sofia-Regular.ttf');
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('/static/fonts/RobotoCondensed-Regular.ttf');
+}
+@font-face {
+    font-family: 'Borel';
+    src: url('/static/fonts/Borel-Regular.ttf');
+}
+:root {
+    --theme-1:#222831;
+    --theme-2:#31363F;
+    --theme-3:#1a8e94;
+    --theme-4:#76ABAE;
+    --theme-5:#EEEEEE;
+}
+.rounded {
+    border-radius: 20px;
+}
 body {
-    background-color: aqua;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Poppins';
+    background-color: var(--theme-5);
+    color: var(--theme-1);
+    margin: 0;
+    margin-top: 65px;
+}
+::-webkit-scrollbar{
+    display: none;
 }

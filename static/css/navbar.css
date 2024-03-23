@@ -1,0 +1,110 @@
+
+.navbar {
+    background-color: var(--theme-2);
+    color: var(--theme-5);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    font-size: large;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 99;
+}
+.navbar img {
+    height: 40px;
+    width: 40px;
+}
+.navbar .item { 
+    cursor: pointer;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+.navbar .item:hover { 
+    color: var(--theme-3);
+    transform: scale(1.2);
+}
+.navbar .logo {
+    font-family: 'Borel';
+    line-height: .5;
+    font-size: 1.4rem;
+    color: var(--theme-3);
+    display: flex;
+    align-items: baseline;
+    cursor: pointer;
+    margin: 10px 30px 10px 20px;
+}
+.navbar .search-product {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    position: relative;
+}
+.navbar .search-product select {
+    width: auto;
+    background-color: var(--theme-5);
+    border-radius: 10px 0 0 10px;
+    font-family: inherit;
+}
+.navbar .search-product img {
+    position: absolute;
+    top: 2px;
+    right: 6px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+}
+.navbar input{
+    background-color: var(--theme-5);
+    border: none;
+    border-radius: 0 10px 10px 0;
+    padding: 10px;
+    width: 400px;
+    font-family: inherit;
+    outline: none;
+    padding-right: 50px;
+}
+.navbar .login{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: 10px;
+}
+.navbar .login .signup {
+    color:var(--theme-3);
+    font-size:1.3rem;
+    font-weight:bold;
+}
+.navbar .signup:hover {
+    color:var(--theme-5);
+}
+.navbar .icons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-right: 20px;
+}
+.navbar .icons img{
+    height: 40px;
+    width: 40px;
+}
+.navbar .cart {
+    position: relative;
+}
+.navbar .cart .count{
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translateX(70%);
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: var(--theme-5);
+    color: var(--theme-1);
+    font-size: .7rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}

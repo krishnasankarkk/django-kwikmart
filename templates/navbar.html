@@ -1,0 +1,31 @@
+{% load static %}
+<div class="navbar">
+    <div class="logo">
+        <img src="{% static 'images/logo.png' %}" alt="logo">
+        <span>wikmart</span>
+    </div>
+    <span class="item">Home</span>
+    <span class="item">Go to shop</span>
+    <div class="search-product">
+        <select name="categories" id="category-select">
+            <option value="">All</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="search" id="search" placeholder="Search Products...">
+        <img src="{% static 'images/search.png' %}" alt="">
+    </div>
+    <div class="login">
+        <span class="item">Login</span>
+        <span class="item signup">Signup</span>
+    </div>
+    <div class="icons">
+        <img class="item" src="{% static 'images/people.png' %}" alt="">
+        <img class="item" src="{% static 'images/heart.png' %}" alt="">
+        <div class="cart item">
+            <img src="{% static 'images/cart.png' %}" alt="">
+            <span class="count">1</span>
+        </div>
+    </div>
+</div>

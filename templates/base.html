@@ -7,8 +7,12 @@
     <title>{% block title %}Kwikmart{% endblock title %}</title>
     <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
     {% block main %}{% endblock main %}
+    {% block script %}{% endblock script %}
 </body>
 </html>
