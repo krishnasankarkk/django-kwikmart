@@ -12,5 +12,5 @@ setuptools==68.2.2
 six==1.16.0
 sqlparse==0.4.4
 tzdata==2024.1
-urllib3==2.2.1
+urllib3==1.26.6
 wheel==0.41.2
