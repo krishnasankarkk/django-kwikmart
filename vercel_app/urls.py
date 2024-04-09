@@ -18,9 +18,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from shop.views import login, logout, signup
 
 urlpatterns = [
+    path('login/', login, name='login'),
+    path('signup/', signup, name='signup'),
+    path('logout/', logout, name='logout'),
     path('admin/', admin.site.urls),
-    path('', include('shop.urls')),
+    path('', include('shop.urls'), name='shop'),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

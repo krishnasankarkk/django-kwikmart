@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}wishlist{% endblock title %}
+
+{% load static %}
+
+{% block main %}
+{% include 'navbar.html' %}
+{% include 'breadcrumbs.html' %}
+<link rel="stylesheet" href="{% static 'css/wishlist.css' %}">
+<div class="wishlist-section">
+    <h1>Wishlist <span style="font-size:1.3rem">({{items_count}} items added)</span></h1>
+    <div class="line"></div>
+    <div class="wishlist-items">
+        {% for item in wishlist %}
+            <a href="{% url 'shop:product-detail' product_id=item.product.id %}" class="item">
+                <img src="{{item.product.image.url}}" alt="">
+                <span>{{item.product.name}}</span>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock main %}

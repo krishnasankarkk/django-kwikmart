@@ -1,0 +1,98 @@
+.product-detail {
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.product-detail .product {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+}
+.product-detail .product .image {
+    width: 50%;
+    height: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.product-detail .product .image img {
+    border-radius: 1rem;
+    width: 15rem;
+}
+.product-detail .product .details {
+    flex: 1;
+    display: flex;
+    height: 20rem;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+.product-detail .product .details .review {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: start;
+    cursor: pointer;
+}
+.product-detail .product .details .review img{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.action-buttons{
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap:1rem;
+}
+.action-buttons .add-to-cart{
+    width: 40%;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--theme-2);
+    padding: .5rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: var(--theme-3);
+    cursor: pointer;
+    transition: transform .2s ease;
+}
+.action-buttons .add-to-cart:hover {
+    transform: scale(1.08);
+}
+.action-buttons .add-to-cart img {
+    width: 2.5rem;
+}
+.action-buttons .like{
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    background-color: var(--theme-2);
+    padding: .5rem;
+    border-radius: 1rem;
+    color: var(--theme-5);
+    cursor: pointer;
+    transition: transform .2s ease;
+}
+.action-buttons .like:hover {
+    transform: scale(1.08);
+}
+.action-buttons .like img {
+    width: 2.5rem;
+}
+.description {
+    display: flex;
+    flex-direction: column;
+}

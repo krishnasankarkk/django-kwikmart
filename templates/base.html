@@ -10,9 +10,89 @@
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
 </head>
 <body>
+    <div id="loading-screen">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
     {% block main %}{% endblock main %}
     {% block script %}{% endblock script %}
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {{message.tags}}">
+                    <strong>{{message}}</strong>&nbsp;
+                    <span class="close-message">x</span>
+                    <span class="timeout-bar"></span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <script>
+        $('#loading-screen').hide();
+        
+        // Function to fetch cart data via AJAX
+        var csrftoken = getCookie('csrftoken'); 
+
+        // Function to get CSRF token from cookie
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        $('#addToCart').click(function() {
+            var cartProductId = $(this).attr('data-product-id');
+    
+            // Your logic here to handle the product ID and perform AJAX request
+            $('#loading-screen').show();
+            $.ajax({
+                url: '/add-to-cart/' + cartProductId,
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken') // Assuming you have a function getCookie() defined
+                },
+                success: function(data) {
+                    $('#loading-screen').hide();
+
+                    // Append the received message to the messages div
+                    var messageDiv = $('<div class="message success"></div>').text(response);
+                    $('.messages').append(messageDiv);
+                }
+            });
+        });
+
+        // Function to hide messages after a specified duration
+        $(document).ready(function() {
+            var messagesContainer = $('.messages');
+            var loadingBar = $('.timeout-bar');
+
+            $('.close-message').click(()=>{
+                messagesContainer.css('display', 'none');
+            });
+            if (loadingBar) {
+                loadingBar.css('width', 0);
+                loadingBar.css('border-top-right-radius', '2rem');
+            }
+            setTimeout(function() {
+                if (messagesContainer) {
+                    messagesContainer.css('display', 'none');
+                }
+            }, 5000); // Hide after 5 seconds (adjust as needed)
+        });
+
+    </script>
 </body>
 </html>

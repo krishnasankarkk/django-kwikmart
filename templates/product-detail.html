@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static humanize %}
+
+{% block title %}{{product.name}}{% endblock title %}
+
+{% block main %}
+    {% include 'navbar.html' %}
+    {% include 'breadcrumbs.html' %}
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+    <div class="product-detail">
+        <div class="product">
+            <div class="image">
+                <img id="productImage" src="{{ product.image.url }}" alt="">
+            </div>
+            <div class="details">
+                <div style="display:flex;flex-direction:column;">
+                    <span><b>Category:</b> <a href="">{{product.category}}</a></span>
+                    <span style="font-weight:bold;font-size:1.9rem;">{{product.name}}</span>
+                    <a href="/" class="review">
+                        {% if product.stars == 5 %}
+                            {% for star in "12345"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                        {% elif product.stars == 4 %}
+                            {% for star in "1234"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                            {% for star in "1"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% elif product.stars == 3 %}
+                            {% for star in "123"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                            {% for star in "12"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% elif product.stars == 2 %}
+                            {% for star in "12"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                            {% for star in "123"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% elif product.stars == 1 %}
+                            {% for star in "1"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                            {% for star in "1234"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% else %}
+                            {% for star in "12345"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% endif %}
+                        <span style="margin-left:.5rem;">5 reviews</span>
+                    </a>
+                </div>
+                <span class="price">₹<b style="font-size: 2rem;">{{product.price|intcomma}}</b></span>
+                <div class="action-buttons">
+                    <a href="{% url 'shop:add-to-cart' product_id=product.id %}" class="add-to-cart">
+                        <img src="{% static 'images/cart.png' %}" alt="">
+                        <span>Add To Cart</span>
+                    </a>
+                    <a href="{% url 'shop:add-to-wishlist' product_id=product.id %}" class="like">
+                        <img src="{% static 'images/heart.png' %}">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="description">
+            <span style="font-weight:bold; font-size:1.6rem">Product's description</span>
+            <div class="line"></div>
+            <span>{{product.description|linebreaks}}</span>
+        </div>
+    </div>
+{% endblock main %} 

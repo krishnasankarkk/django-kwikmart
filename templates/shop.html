@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static humanize %}
+{% block title %}Kwikmart | Shop{% endblock title %}
+{% block main %}
+    {% include 'navbar.html' %}
+    {% include 'breadcrumbs.html' %}
+    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+    <div class="main">
+        <div class="filters">
+            <span class="title">Categories</span>
+            <div class="categories">
+                {% for category in categories %}
+                    <div class="category">
+                        <label class="radio-button-label">
+                            <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
+                        </label>
+                        <span>{{category.name}}</span>
+                    </div>
+                {% endfor %} 
+            </div>
+        </div>
+        <div class="product-section">
+            <span class="title">Products</span>
+            <div class="products">
+                {% for product in products %}
+                <a href="{% url 'shop:product-detail' product_id=product.id %}" class="product">
+                    <img id="productImage" src="{{ product.image.url }}" alt="">
+                    <span>{{ product.name }}</span>
+                    <div class="review">
+                        {% if product.stars == 5 %}
+                            {% for star in "12345"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                        {% elif product.stars == 4 %}
+                            {% for star in "1234"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                            {% for star in "1"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% elif product.stars == 3 %}
+                            {% for star in "123"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                            {% for star in "12"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% elif product.stars == 2 %}
+                            {% for star in "12"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                            {% for star in "123"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% elif product.stars == 1 %}
+                            {% for star in "1"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                            {% for star in "1234"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% else %}
+                            {% for star in "12345"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <span class="price">₹{{ product.price|intcomma  }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock main %}
+{% block script %}
+<script>
+    const checkBoxes = document.querySelectorAll('.category-check');
+    
+    checkBoxes.forEach(checkbox => {
+        checkbox.addEventListener('change', toggleCheck);
+    });
+    
+    function toggleCheck(event) {
+        const checkbox = event.target;
+        const label = checkbox.parentNode;
+
+        if (checkbox.checked) {
+            label.style.backgroundImage = 'url("/static/images/checkbox.png")';
+        } else {
+            label.style.backgroundImage = 'url("/static/images/unchecked.png")';
+        }
+    }
+    
+</script>
+{% endblock script %}

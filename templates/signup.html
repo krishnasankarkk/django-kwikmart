@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Sign Up{% endblock title %}
+
+{% block main %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+<div class="signup-section">
+    <div class="logo">
+        <img src="{% static 'images/logo.png' %}" alt="">
+        <span>wikmart</span>
+    </div>
+    <form id="signupForm" action="" method="post">
+        {% csrf_token %}
+        {% if error %}
+            <p>{{error}}</p>
+        {% endif %}
+        <span style="display:flex;justify-content:center;">Sign Up</span>
+        <div class="line"></div>
+        {{form.as_p}}
+        <button type="submit">Sign Up</button>
+        <a href="{% url 'login' %}" class="login">Login</a>
+    </form>
+</div>
+<script>
+    $("#id_username").attr("placeholder", "Enter your username");
+    $("#id_password1").attr("placeholder", "Enter your password");
+    $("#id_password2").attr("placeholder", "Confirm your password");
+    $("ul:first").css("display", "none");
+    $("p").each(function() {
+        if ($(this).text().trim() === '') {
+            $(this).hide();
+        }
+    });
+</script>
+{% endblock main %}

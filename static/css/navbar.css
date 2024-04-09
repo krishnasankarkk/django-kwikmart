@@ -20,6 +20,10 @@
     transform: translateY(0);
     transition: transform 0.3s ease;
 }
+.navbar a {
+    color: var(--theme-5);
+    text-decoration: none;
+}
 .navbar .item:hover { 
     color: var(--theme-3);
     transform: scale(1.2);

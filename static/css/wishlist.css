@@ -1,0 +1,32 @@
+.wishlist-section {
+    margin: 1rem;
+}
+.wishlist-items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: auto;
+    gap: 2rem;
+    padding: 2rem;
+}
+.wishlist-items .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    box-shadow: 0 0 .5rem slategray;
+    min-width: 12rem;
+    min-height: 15rem;
+    font-weight: bold;
+    gap: 1rem;
+    cursor: pointer;
+    transition: transform .2s ease;
+}
+.wishlist-items .item:hover {
+    transform: scale(1.1);
+}
+.wishlist-items .item img{
+    height: 10rem;
+    width: auto;
+}
