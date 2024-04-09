@@ -154,7 +154,7 @@
     color: var(--theme-1);
     padding: 1rem;
     border-radius: 1rem;
-    min-width: 12rem;
+    width: 12rem;
 }
 .deals .products .product .review {
     display: flex;
