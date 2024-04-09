@@ -119,7 +119,7 @@
                 {% for product in products %}
                     <a href="{% url 'shop:product-detail' product_id=product.id %}" class="product">
                         <img id="productImage" src="{{ product.image.url }}" alt="">
-                        <span>{{ product.name }}</span>
+                        <span>{{ product.name|truncatechars:20}}</span>
                         <div class="review">
                             {% if product.stars == 5 %}
                                 {% for star in "12345"  %}
