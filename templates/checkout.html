@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Kwikmart • Checkout{% endblock title %}
+
+{% block main %}
+{% include 'navbar.html' %}
+{% include 'breadcrumbs.html' %}
+<link rel="stylesheet" href="{% static 'shop/css/checkout.css' %}">
+<div class="checkout-section">
+    <h2>Checkout</h2>
+    <div class="line"></div>
+    <form method="post" action="{% url 'shop:save-order' %}">
+        {% csrf_token %}
+        <label for="id_name">Name:</label>
+        <input type="text" id="id_name" name="name" maxlength="100" required><br>
+        
+        <label for="id_address">Address:</label>
+        <textarea id="id_address" name="address" required></textarea><br>
+        
+        <label for="id_city">City:</label>
+        <input type="text" id="id_city" name="city" maxlength="100" required><br>
+        
+        <label for="id_postal_code">Postal Code:</label>
+        <input type="text" id="id_postal_code" name="postal_code" maxlength="10" required><br>
+        
+        <label for="id_country">Country:</label>
+        <input type="text" id="id_country" name="country" maxlength="100" required><br>
+        
+        <!-- Add more fields for payment information if needed -->
+
+        <button type="submit">Place Order</button>
+    </form>
+</div>
+{% endblock main %}

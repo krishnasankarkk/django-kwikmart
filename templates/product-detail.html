@@ -6,7 +6,7 @@
 {% block main %}
     {% include 'navbar.html' %}
     {% include 'breadcrumbs.html' %}
-    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/product.css' %}">
     <div class="product-detail">
         <div class="product">
             <div class="image">
@@ -59,13 +59,13 @@
                 </div>
                 <span class="price">₹<b style="font-size: 2rem;">{{product.price|intcomma}}</b></span>
                 <div class="action-buttons">
-                    <a href="{% url 'shop:add-to-cart' product_id=product.id %}" class="add-to-cart">
+                    <span class="add-to-cart" onclick="handleAddToCart('{{product.id}}')" data-product-id="{{product.id}}">
                         <img src="{% static 'images/cart.png' %}" alt="">
                         <span>Add To Cart</span>
-                    </a>
-                    <a href="{% url 'shop:add-to-wishlist' product_id=product.id %}" class="like">
+                    </span>
+                    <span class="like" onclick="handleAddToWishlist('{{product.id}}')">
                         <img src="{% static 'images/heart.png' %}">
-                    </a>
+                    </span>
                 </div>
             </div>
         </div>

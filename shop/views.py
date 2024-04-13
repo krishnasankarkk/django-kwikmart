@@ -21,8 +21,9 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             get_in(request, user)
-            messages.success(request, 'Login successfull! ✔ ')
-            return redirect('shop:home')
+            messages.success(request, f'Welcome {request.user}, You are successfully logged in! ✔ ')
+            next_page = request.GET.get('next', reverse('shop:home'))
+            return redirect(next_page)
         else:
             messages.warning(request, 'Invalid username or password! ')
             return render(request, 'login.html', {'error': 'Invalid username or password'})
@@ -42,6 +43,7 @@ def signup(request):
 
 def logout(request):
     get_out(request)
+    messages.warning(request, 'You are logged out! ')
     return redirect('login')
 
 def home(request):
@@ -82,50 +84,152 @@ def product(request, product_id):
     }
     return render(request, "product-detail.html", context)
 
-def add_to_cart(request, product_id):
-    product = Product.objects.get(pk=product_id)
-    user_session = request.session.session_key
-    if not user_session:
-        request.session.save()
+def add_to_cart(request):
+    try:
+        product_id = request.POST.get('product_id')
+        product = Product.objects.get(pk=product_id)
         user_session = request.session.session_key
-    cart_item, created = Cart.objects.get_or_create(product=product, user_session=user_session)
-    if not created:
-        cart_item.quantity += 1
-        cart_item.save()
-        messages.success(request, 'Cart updated! ✔')
-    else:
-        messages.success(request, 'Added to cart successfully! ✔ ')
-    # Get the referring URL
-    referring_url = request.META.get('HTTP_REFERER')
-    # print(referring_url)
-    #  # Check if the referring URL is the product detail page
-    # if referring_url and referring_url.contains('/product-detail/'):
-    #     # Redirect to the product detail page
-    #     return redirect(referring_url)
-    # else:
-    #     # Redirect to the cart page
-    #     return redirect(reverse('cart_page_name'))
-    # return redirect(reverse('shop:product-detail', kwargs={'product_id': product_id}))
-    return redirect(referring_url)
-
-def delete_from_cart(request, product_id):
-    item_to_delete = Cart.objects.filter(product_id=product_id)
-    item_to_delete.delete()
-    messages.success(request, 'Item deleted successfully! ✔')
-    return redirect('shop:cart')
-
-def get_session_cart_items(request):
-    user_session = request.session.session_key
-    cart_item_count = Cart.objects.filter(user_session=user_session).order_by('created_at').count()
-    context = {
-        'cart_item_count' : cart_item_count,
-    }
-    return JsonResponse(context, safe=False)
+        
+        if not user_session:
+            request.session.save()
+            user_session = request.session.session_key
+            
+        cart_item, created = Cart.objects.get_or_create(product=product, user_session=user_session)
+        
+        if not created:
+            cart_item.quantity += 1
+            cart_item.save()
+            message = 'Cart updated successfully! ✔'
+        else:
+            message = 'Item added to cart successfully! ✔'
+            
+        cart_items = Cart.objects.filter(user_session=user_session).order_by('created_at')
+        total_price = sum(item.product.price * item.quantity for item in cart_items)
+        
+        # Serialize cart_items queryset into a list of dictionaries
+        serialized_cart_items = []
+        for item in cart_items:
+            # Extracting the URL from CloudinaryResource object
+            image_url = item.product.image.url if isinstance(item.product.image, CloudinaryResource) else None
+            serialized_cart_items.append({
+                'id': item.id,
+                'product_id': item.product.id,
+                'product_name': item.product.name,
+                'category': item.product.category.name,
+                'image': image_url,
+                'quantity': item.quantity,
+                'price': item.product.price,
+            })
+        cart_items_count = cart_items.count()
+        context = {
+            'success': True, 
+            'message': message, 
+            'cart_items': serialized_cart_items,
+            'cart_items_count': cart_items_count,
+            'total_price': total_price,
+        }
+        return JsonResponse(context, safe=False)
     
-def get_cart_data(request):
+    except Product.DoesNotExist:
+        context = {
+                'success': False, 
+                'message': 'Product not found!', 
+            }
+        return JsonResponse(context, safe=False)
+
+def decrease_from_cart(request):
+    try:
+        product_id = request.POST.get('product_id')
+        product = Product.objects.get(pk=product_id)
+        user_session = request.session.session_key
+        if not user_session:
+            request.session.save()
+            user_session = request.session.session_key
+        try:
+            cart_item = Cart.objects.get(product=product, user_session=user_session)
+        except Cart.DoesNotExist:
+            message = 'Item not found!'
+        else:
+            cart_item.quantity -= 1
+            cart_item.save()
+            message = 'Cart updated successfully! ✔'
+        
+        cart_items = Cart.objects.filter(user_session=user_session).order_by('created_at')
+        total_price = sum(item.product.price * item.quantity for item in cart_items)
+        
+        # Serialize cart_items queryset into a list of dictionaries
+        serialized_cart_items = []
+        for item in cart_items:
+            # Extracting the URL from CloudinaryResource object
+            image_url = item.product.image.url if isinstance(item.product.image, CloudinaryResource) else None
+            serialized_cart_items.append({
+                'id': item.id,
+                'product_id': item.product.id,
+                'product_name': item.product.name,
+                'category': item.product.category.name,
+                'image': image_url,
+                'quantity': item.quantity,
+                'price': item.product.price,
+            })
+        cart_items_count = cart_items.count()
+        context = {
+            'success': True, 
+            'message': message, 
+            'cart_items': serialized_cart_items,
+            'cart_items_count': cart_items_count,
+            'total_price': total_price,
+        }
+        return JsonResponse(context, safe=False)
+    
+    except Product.DoesNotExist:
+        context = {
+                'success': False, 
+                'message': 'Product not found!', 
+            }
+        return JsonResponse(context, safe=False)
+
+def delete_from_cart(request, cart_item_id):
+    if request.method == 'DELETE':
+        Cart.objects.get(id=cart_item_id).delete()
+        user_session = request.session.session_key
+        
+        if not user_session:
+            request.session.save()
+            user_session = request.session.session_key
+        
+        cart_items = Cart.objects.filter(user_session=user_session)
+        total_price = sum(item.product.price * item.quantity for item in cart_items)
+        # Serialize cart_items queryset into a list of dictionaries
+        serialized_cart_items = []
+        for item in cart_items:
+            # Extracting the URL from CloudinaryResource object
+            image_url = item.product.image.url if isinstance(item.product.image, CloudinaryResource) else None
+            serialized_cart_items.append({
+                'id': item.id,
+                'product_id': item.product.id,
+                'product_name': item.product.name,
+                'category': item.product.category.name,
+                'image': image_url,
+                'quantity': item.quantity,
+                'price': item.product.price,
+            })
+        cart_items_count = cart_items.count()
+        context = {
+            'deleted_item': cart_item_id,
+            'cart_items': serialized_cart_items,
+            'cart_items_count': cart_items_count,
+            'total_price': total_price,
+            'message': 'Item deleted successfully! ✔',
+        }
+        return JsonResponse(context, safe=False)
+    else:
+        return JsonResponse({'message': 'Request method is not DELETE'})
+    
+def cart_view(request):
     user_session = request.session.session_key
     cart_items = Cart.objects.filter(user_session=user_session).order_by('created_at')
     total_price = sum(item.product.price * item.quantity for item in cart_items)
+    total_items = sum(item.quantity for item in cart_items)
     
     # Serialize cart_items queryset into a list of dictionaries
     serialized_cart_items = []
@@ -146,27 +250,34 @@ def get_cart_data(request):
     context = {
         'cart_items': serialized_cart_items,
         'total_price': total_price,
+        'total_items': total_items,
         'breadcrumbs': breadcrumbs,
     }
     return render(request, 'cart.html', context)
 
 @login_required
-def add_to_wishlist(request, product_id):
+def add_to_wishlist(request):
     try:
         user = User.objects.get(id=request.user.id)
     except User.DoesNotExist:
         return HttpResponse("User does not exist", status=404)
     else:
-        product = Product.objects.get(id=product_id)
-        if not WishList.objects.filter(user=user, product=product).exists():
-            wishlist = WishList()
-            wishlist.user = user
-            wishlist.product = product
-            wishlist.save()
-            messages.success(request, 'Added to wishlist successfully! ✔')
+        if request.method == 'POST':
+            product_id = request.POST.get('product_id')
+            if product_id:
+                product = Product.objects.get(id=product_id)
+                if not WishList.objects.filter(user=user, product=product).exists():
+                    wishlist = WishList()
+                    wishlist.user = user
+                    wishlist.product = product
+                    wishlist.save()
+                    return JsonResponse({'success': True, 'message': 'Added to wishlist successfully! ✔'})
+                else:
+                    return JsonResponse({'success': False, 'message': 'Item already in wishlist!'})
+            else:
+                return JsonResponse({'success': False, 'message': 'Product not found!'})
         else:
-            messages.warning(request, 'Item already in wishlist!')
-        return redirect(reverse('shop:product-detail', kwargs={'product_id': product_id}))
+            return JsonResponse({'success': False, 'message': 'Request is not POST method!'})
     
 @login_required
 def show_wishlist(request):
@@ -181,3 +292,25 @@ def show_wishlist(request):
         'breadcrumbs': breadcrumbs,
     }
     return render(request, 'wishlist.html', context)
+
+def checkout_view(request):
+    
+    breadcrumbs = [
+        {'name': 'Cart', 'url': '/cart'},
+        {'name': 'Checkout', 'url': ''},
+    ]
+    context = {
+        'breadcrumbs': breadcrumbs,
+    }
+    return render(request, 'checkout.html', context)
+
+def save_order(request):
+    
+    breadcrumbs = [
+        {'name': 'Cart', 'url': '/cart'},
+        {'name': 'Checkout', 'url': ''},
+    ]
+    context = {
+        'breadcrumbs': breadcrumbs,
+    }
+    return render(request, 'checkout.html', context)

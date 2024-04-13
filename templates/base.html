@@ -13,28 +13,266 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
 </head>
 <body>
-    <div id="loading-screen">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+    {% include 'loading.html' %}
+    {% include 'login-popup.html' %}
+    {% include 'notifications.html' %}
     {% block main %}{% endblock main %}
     {% block script %}{% endblock script %}
-    {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-                <div class="message {{message.tags}}">
-                    <strong>{{message}}</strong>&nbsp;
-                    <span class="close-message">x</span>
-                    <span class="timeout-bar"></span>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
 
     <script>
-        $('#loading-screen').hide();
+        $('.cart-popup').hide();
+        $('.login-popup').hide();
+
+        // Update cart popup.
+        function updateCartItems(cartItems) {
+            var cartItemsContainer = $('.cart_items tbody');
+            cartItemsContainer.empty(); // Clear existing cart items
+            
+            // Show or hide the "No items in cart" message based on cart items existence
+            if (cartItems.length === 0) {
+                $('.cart-popup').find('.cart_items').append($('<span>').text('No items in cart'));
+            } else {
+                $('.cart-popup').find('.cart_items span').remove(); // Remove the message if cart is not empty
+            }
         
+            // Loop through the received cart items and append them to the table body
+            cartItems.forEach(function(item) {
+                var row = $('<tr>').addClass('cart-item');
+                // Append table data for each cart item
+                row.append($('<td>').append($('<img>').attr('src', item.image)));
+                row.append($('<td>').addClass('product-name').append($('<span>')).text(item.product_name));
+                row.append($('<td>').append($('<span>')).text(item.quantity));
+                row.append($('<td>').append($('<span>').addClass('price').text('₹' + (item.price * item.quantity).toLocaleString())));
+                row.append($('<td>').append($('<img>').addClass('delete').attr('src', '{% static "images/trash.png" %}').attr('title', 'Remove item from cart').attr('onclick', "deleteItemFromCart('"+item.id+"')")));
+                // Append the row to the table body
+                cartItemsContainer.append(row);
+            });
+        }
+
+        // Handle decrease item from cart.
+        function decreaseItemFromCart(productId){
+            $.ajax({
+                type: 'POST',
+                url: '{% url "shop:decrease-item-from-cart" %}',
+                data: {
+                    'product_id': productId,
+                },
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken') // Assuming you have a function getCookie() defined
+                },
+                dataType: 'json',
+                success: (res)=>{
+                    if(res){
+                        var message = $('<div>');
+                        message.addClass('message');
+                        if(res.success){
+                            message.addClass('success');
+                        }else {
+                            message.addClass('warning');
+                        }
+                        message.text(res.message);
+                        $('.messages').empty();
+                        $('.messages').append(message);
+                        $('.messages').show();
+                        updateCartItems(res.cart_items);
+                        $('.count').text(res.cart_items_count);
+                        $('.checkout-button .price').text('₹' + res.total_price.toLocaleString());
+                        $('#total_price').text('₹' + res.total_price.toLocaleString());
+
+                        // Hide the message after 5 seconds (adjust as needed)
+                        setTimeout(() => {
+                            message.remove();
+                        }, 1000);
+                    }
+                },
+                error: (err)=>{
+                    console.log(err);
+                }
+            });
+        }
+
+        // Handle add to cart click.
+        function handleAddToCart(productId){
+            $.ajax({
+                type: 'POST',
+                url: '{% url "shop:add-to-cart" %}',
+                data: {
+                    'product_id': productId,
+                },
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken') // Assuming you have a function getCookie() defined
+                },
+                dataType: 'json',
+                success: (res)=>{
+                    if(res){
+                        var message = $('<div>');
+                        message.addClass('message');
+                        if(res.success){
+                            message.addClass('success');
+                        }else {
+                            message.addClass('warning');
+                        }
+                        message.text(res.message);
+                        $('.messages').empty();
+                        $('.messages').append(message);
+                        $('.messages').show();
+                        updateCartItems(res.cart_items);
+                        $('.count').text(res.cart_items_count);
+                        $('.checkout-button .price').text('₹' + res.total_price.toLocaleString());
+                        $('#total_price').text('₹' + res.total_price.toLocaleString());
+
+                        // Hide the message after 5 seconds (adjust as needed)
+                        setTimeout(() => {
+                            message.remove();
+                        }, 1000);
+                    }
+                },
+                error: (err)=>{
+                    console.log(err);
+                }
+            });
+        }
+
+        // Handle add to wishlist click.
+        function handleAddToWishlist(productId){
+            if(isLoggedIn=='True'){
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "shop:add-to-wishlist" %}',
+                    data: {
+                        'product_id': productId,
+                        'name':'name',
+                    },
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken') // Assuming you have a function getCookie() defined
+                    },
+                    dataType: 'json',
+                    success: (res)=>{
+                        if(res){
+                            var message = $('<div>');
+                            message.addClass('message');
+                            if(res.success){
+                                message.addClass('success');
+                            }else {
+                                message.addClass('warning');
+                            }
+                            message.text(res.message);
+                            $('.messages').empty();
+                            $('.messages').append(message);
+                            $('.messages').show();
+
+                            // Hide the message after 5 seconds (adjust as needed)
+                            setTimeout(() => {
+                                message.remove();
+                            }, 3000);
+                        }
+                    },
+                    error: (err)=>{
+                        console.log(err);
+                    }
+                });
+            } else {
+                $('.login-popup').toggle();
+                $('.login-popup').css('display', 'flex');
+            }
+        }
+        var isLoggedIn = '{{request.user.is_authenticated}}';
+
+        $(document).ready(function() {
+            $('#loading-screen').hide();
+        });
+
+        // delete item from cart.
+        function deleteItemFromCart(cart_item_id){
+            var url = '/delete-item-from-cart/'+cart_item_id;
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                success: (res)=>{
+                    if(res){
+                        var message = $('<div>');
+                        message.addClass('message');
+                        if(res.success){
+                            message.addClass('success');
+                        }else {
+                            message.addClass('warning');
+                        }
+                        message.text(res.message);
+                        $('.messages').empty();
+                        $('.messages').append(message);
+                        $('.messages').show();
+                        $('.count').text(res.cart_items_count);
+                        $('.checkout-button .price').text('₹' + res.total_price.toLocaleString());
+                        updateCartItems(res.cart_items);
+                        // Hide the message after 5 seconds (adjust as needed)
+                        setTimeout(() => {
+                            message.remove();
+                        }, 1000);
+                    }
+                },
+                error: (err)=>{
+                    console.log(err);
+                },
+            })
+        }
+
+        $('.wishlist-icon').click((event)=>{
+            if(isLoggedIn=='True'){
+                window.location.href = "{% url 'shop:wishlist' %}";
+            }else{
+                $('.login-popup').toggle();
+                $('.login-popup').css('display', 'flex');
+                event.stopPropagation();
+            }
+        });
+        $('#login-button').click((event)=>{
+            const previousUrl = $(event.target).data('previous-url');
+            console.log(previousUrl)
+            window.location.href = "{% url 'login' %}?next=" + encodeURIComponent(previousUrl);
+        });
+
+        // Toggle cart popup
+        $('.cart').click((event) => {
+            $('.cart-popup').toggle();
+            // Prevent the event from propagating further
+            event.stopPropagation();
+        });
+        $(document).click((event)=>{
+            if(!$(event.target).closest('.cart-popup', '.cart').length) {
+                $('.cart-popup').hide();
+            }
+            if(!$(event.target).closest('.login-popup', 'wishlist-icon').length) {
+                {% comment %} $('.login-popup').hide(); {% endcomment %}
+            }else if($(event.target).is('.close-login-popup') || $(event.target).is('.cancel-login-popup') ||  $(event.target).not('.add-to-wishlist')){
+                $('.login-popup').hide();
+            }
+
+            // Add to cart.
+            $('#addToCart').click(function() {
+                var cartProductId = $(this).attr('data-product-id');
+        
+                // Your logic here to handle the product ID and perform AJAX request
+                $('#loading-screen').show();
+                $.ajax({
+                    url: '/add-to-cart/' + cartProductId,
+                    type: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken') // Assuming you have a function getCookie() defined
+                    },
+                    success: function(data) {
+                        $('#loading-screen').hide();
+    
+                        // Append the received message to the messages div
+                        var messageDiv = $('<div class="message success"></div>').text(response);
+                        $('.messages').append(messageDiv);
+                    }
+                });
+            });
+        });
+
         // Function to fetch cart data via AJAX
         var csrftoken = getCookie('csrftoken'); 
 
@@ -53,45 +291,6 @@
             }
             return cookieValue;
         }
-        $('#addToCart').click(function() {
-            var cartProductId = $(this).attr('data-product-id');
-    
-            // Your logic here to handle the product ID and perform AJAX request
-            $('#loading-screen').show();
-            $.ajax({
-                url: '/add-to-cart/' + cartProductId,
-                type: 'POST',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken') // Assuming you have a function getCookie() defined
-                },
-                success: function(data) {
-                    $('#loading-screen').hide();
-
-                    // Append the received message to the messages div
-                    var messageDiv = $('<div class="message success"></div>').text(response);
-                    $('.messages').append(messageDiv);
-                }
-            });
-        });
-
-        // Function to hide messages after a specified duration
-        $(document).ready(function() {
-            var messagesContainer = $('.messages');
-            var loadingBar = $('.timeout-bar');
-
-            $('.close-message').click(()=>{
-                messagesContainer.css('display', 'none');
-            });
-            if (loadingBar) {
-                loadingBar.css('width', 0);
-                loadingBar.css('border-top-right-radius', '2rem');
-            }
-            setTimeout(function() {
-                if (messagesContainer) {
-                    messagesContainer.css('display', 'none');
-                }
-            }, 5000); // Hide after 5 seconds (adjust as needed)
-        });
 
     </script>
 </body>

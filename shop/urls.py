@@ -1,18 +1,20 @@
 # shop/urls.py
 from django.urls import path
 
-from shop.views import home, shop, product, get_cart_data, add_to_cart, get_session_cart_items, add_to_wishlist, show_wishlist, delete_from_cart
+from shop import views
 
 app_name = 'shop'
 
 urlpatterns = [
-    path('', home, name='home'),
-    path('shop', shop, name='shop'),
-    path('product-detail/<int:product_id>/', product, name='product-detail'),
-    path('get-cart-items/', get_cart_data, name='cart'),
-    path('get-cart-items-count/', get_session_cart_items, name='cart-items-count'),
-    path('add-to-cart/<int:product_id>', add_to_cart, name='add-to-cart'),
-    path('delete-item-from-cart/<int:product_id>', delete_from_cart, name='delete-item-from-cart'),
-    path('add-to-wishlist/<int:product_id>', add_to_wishlist, name='add-to-wishlist'),
-    path('go-to-wishlist/', show_wishlist, name='wishlist'),
+    path('', views.home, name='home'),
+    path('shop', views.shop, name='shop'),
+    path('product-detail/<int:product_id>/', views.product, name='product-detail'),
+    path('cart/', views.cart_view, name='cart'),
+    path('add-to-cart', views.add_to_cart, name='add-to-cart'),
+    path('decrease-item-from-cart', views.decrease_from_cart, name='decrease-item-from-cart'),
+    path('delete-item-from-cart/<int:cart_item_id>', views.delete_from_cart, name='delete-item-from-cart'),
+    path('add-to-wishlist/', views.add_to_wishlist, name='add-to-wishlist'),
+    path('wishlist/', views.show_wishlist, name='wishlist'),
+    path('checkout/', views.checkout_view, name='checkout'),
+    path('save-order/', views.save_order, name='save-order'),
 ]

@@ -1,0 +1,44 @@
+{% load static %}
+{% load humanize custom_filters %}
+<div class="cart-popup">
+    <div class="title">
+        <span>Cart</span>
+        <a href="{% url 'shop:cart' %}" class="view">View cart</a>
+    </div>
+    <div class="line"></div>
+    <div class="cart_items">
+        <table>
+            <tbody>
+                {% if items_in_cart %}
+                    {% for item in items_in_cart %}
+                        <tr class="cart-item" id="{{item.id}}">
+                            <td>
+                                <img src="{{item.product.image.url}}" alt="">
+                            </td>
+                            <td class="product-name">
+                                <span>{{item.product.name|truncatechars:20}}</span>
+                            </td>
+                            <td>
+                                <span>{{item.quantity}}</span>
+                            </td>
+                            <td>
+                                <span class="price">₹{{item.product.price|multiply:item.quantity|intcomma}}</span>
+                            </td>
+                            <td>
+                                <img class="delete" onclick="deleteItemFromCart({{item.id}})" src="{% static 'images/trash.png' %}" alt="" title="Remove item from cart">
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <span>No items in cart</span>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="checkout-button">
+        <span>Sub Total: <b class="price">₹{{total_price|intcomma}}</b></span>
+        <a>Checkout</a>
+    </div>
+</div>

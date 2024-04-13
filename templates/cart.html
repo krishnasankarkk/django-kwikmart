@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load static humanize custom_filters  %}
-{% block title %}Cart{% endblock title %}
+{% block title %}Kwikmart • Cart{% endblock title %}
 {% block main %}
 {% include 'navbar.html' %}
 {% include 'breadcrumbs.html' %}
-<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<link rel="stylesheet" href="{% static 'shop/css/cart.css' %}">
 <div class="cart-main">
     <div class="cart-section">
         <div class="cart-head">
@@ -25,26 +25,24 @@
                     </td>
                     <td>
                     <div class="details">
-                            <a href="{% url 'shop:product-detail' product_id=product.product_id %}" style="font-size:1.2rem;font-weight:bold;">{{product.product_name}}</a>
+                            <a href="{% url 'shop:product-detail' product_id=product.product_id %}" style="font-size:1.2rem;font-weight:bold;">{{product.product_name|truncatechars:20}}</a>
                             <a href="">{{product.category}}</a>
                         </div>
                     </td>
                     <td>
                         <div class="quantity">
-                            <a href="{% url 'shop:add-to-cart' product_id=product.product_id %}">-</a>
-                            <span>{{product.quantity}}</span>
-                            <a href="{% url 'shop:add-to-cart' product_id=product.product_id %}">+</a>
+                            <span onclick="removeQuantity('{{product.product_id}}')">-</span>
+                            <b id="quantity-{{product.product_id}}">{{product.quantity}}</b>
+                            <span onclick="addQuantity('{{product.product_id}}')">+</span>
                         </div>
                     </td>
                     <td>
                         <div class="product-price">
-                            <span class="price-text">₹{{product.price|multiply:product.quantity|intcomma}}</span>
+                            <span class="price-text" id="price-{{product.product_id}}" data-product-price='{{product.price}}'>₹{{product.price|multiply:product.quantity|intcomma}}</span>
                         </div>
                     </td>
                     <td class="delete">
-                        <a href="{% url 'shop:delete-item-from-cart' product_id=product.product_id %}">
-                            <img src="{% static 'images/trash.png' %}" alt="">
-                        </a>
+                        <img src="{% static 'images/trash.png' %}" alt="">
                     </td>
                 </tr>
                 {% endfor %}  
@@ -52,8 +50,49 @@
         </table>
     </div>
     <div class="checkout">
-        <h1 style="font-size:1.5rem;font-weight:bold;">Checkout</h1>
-        <span style="font-size:1.8rem;font-weight:bold;color:var(--theme-6)">₹{{total_price|intcomma}}</span>
+        <h1>Checkout</h1>
+        <div class="line"></div>
+        <br>
+        <div class="charges">
+            <span>Sub Total ({{total_items}} items) :</span>
+            <span class="price">₹{{total_price|intcomma}}</span>
+        </div>
+        <div class="charges">
+            <span>Delivery charges :</span>
+            <span class="price">+ ₹40</span>
+        </div>
+        <div class="charges">
+            <span>Discount :</span>
+            <span class="price">- ₹100 (5%)</span>
+        </div>
+        <div class="sub-total">
+            <span style="font-size:1.5rem;">Total :</span>
+            <span id="total_price">₹{{total_price|intcomma}}</span>
+        </div>
+        <a href="{% url 'shop:checkout' %}">
+            <button>Proceed to Checkout</button>
+        </a>
     </div>
 </div>
 {% endblock main %}
+{% block script %}
+<script>
+    function addQuantity(product_id){
+        var quantity = parseInt($('#quantity-'+product_id).text());
+        $('#quantity-'+product_id).text(quantity+1);
+        var price = parseInt($('#price-'+product_id).data('product-price'));
+        $('#price-'+product_id).text('₹'+price*(quantity+1)+'.00');
+        handleAddToCart(product_id);
+    }
+    function removeQuantity(product_id){
+        var quantity = parseInt($('#quantity-'+product_id).text());
+        var price = parseInt($('#price-'+product_id).data('product-price'));
+        if(quantity>1){
+            $('#quantity-'+product_id).text(quantity-1);
+            $('#price-'+product_id).text('₹'+price*(quantity-1)+'.00');
+            decreaseItemFromCart(product_id);
+        }
+
+    }
+</script>
+{% endblock script %}

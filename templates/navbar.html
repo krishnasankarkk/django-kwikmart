@@ -26,12 +26,11 @@
     </div>
     <div class="icons">
         <img class="item" src="{% static 'images/people.png' %}" alt="">
-        <a href="{% url 'shop:wishlist' %}">
-            <img class="item" src="{% static 'images/heart.png' %}" alt="">
-        </a>
-        <a href="{% url 'shop:cart' %}" class="cart item">
-            <img src="{% static 'images/cart.png' %}" alt="">
+        <img class="wishlist-icon item" src="{% static 'images/heart.png' %}" alt="">
+        <div class="cart item">
+            <img id="cartImage" src="{% static 'images/cart.png' %}" alt="">
             <span class="count">{{cart_item_count}}</span>
-        </a>
+        </div>
     </div>
+    {% include 'cart-popup.html' %}
 </div>

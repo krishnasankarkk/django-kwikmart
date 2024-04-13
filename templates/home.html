@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %}Kwikmart | Home{% endblock title %}
+{% block title %}Kwikmart Online Shopping{% endblock title %}
 {% block main %}
     {% include 'navbar.html' %}
     <div class="main">
@@ -19,95 +19,95 @@
             <div class="next">
                 <img src="{% static 'images/next.png' %}" alt="">
             </div>
-            <div class="offers">
-                <div class="offer" style="margin-left:2rem;">
-                    <h3>Appliances for your home | Up to 55% off</h3>
-                    <div class="offer-items">
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/ac.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Air conditioners</span>
-                        </div>
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/fridge.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Refrigerators</span>
-                        </div>
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/oven.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Microwaves</span>
-                        </div>
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/wm.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Washing machines</span>
-                        </div>
+        </div>
+        <div class="offers">
+            <div class="offer" style="margin-left:2rem;">
+                <span class="offer-title">Appliances for your home | Up to 55% off</span>
+                <div class="offer-items">
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/ac.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Air conditioners</span>
                     </div>
-                    <h4>See all offers</h4>
-                </div>
-                <div class="offer">
-                    <h3>Up to 60% off | Styles for men</h3>
-                    <div class="offer-items">
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/cloth.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Clothing</span>
-                        </div>
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/shoe.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Footwears</span>
-                        </div>
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/watch.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Watches</span>
-                        </div>
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/bag.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Bags & Wallets</span>
-                        </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/fridge.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Refrigerators</span>
                     </div>
-                    <h4>See all offers</h4>
-                </div>
-                <div class="offer">
-                    <h3>Revamp your home in style</h3>
-                    <div class="offer-items">
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/mat.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Mat, bedsheets & more</span>
-                        </div>
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/figure.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Figurines, vases & more</span>
-                        </div>
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/storage.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Home storage</span>
-                        </div>
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/light.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Lighting solutions</span>
-                        </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/oven.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Microwaves</span>
                     </div>
-                    <h4>Explore all</h4>
-                </div>
-                <div class="offer" style="margin-right:2rem;">
-                    <h3>Up to 75% off | Headphones</h3>
-                    <div class="offer-items">
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/boat.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Up to 75% off | boAt</span>
-                        </div>
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/boult.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Up to 75% off | Boult</span>
-                        </div>
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/noise.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Up to 75% off | Noise</span>
-                        </div>
-                        <div class="offer-item">
-                            <img src="{% static 'images/offers/zebro.jpg' %}" alt="">
-                            <span style="font-size:.8rem;">Up to 75% off | Zebronics</span>
-                        </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/wm.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Washing machines</span>
                     </div>
-                    <h4>See all offers</h4>
                 </div>
+                <a>See all offers</a>
+            </div>
+            <div class="offer">
+                <span class="offer-title">Up to 60% off | Styles for men</span>
+                <div class="offer-items">
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/cloth.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Clothing</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/shoe.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Footwears</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/watch.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Watches</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/bag.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Bags & Wallets</span>
+                    </div>
+                </div>
+                <a>End of season sale</a>
+            </div>
+            <div class="offer">
+                <span class="offer-title">Revamp your home in style</span>
+                <div class="offer-items">
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/mat.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Mat, bedsheets & more</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/figure.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Figurines, vases & more</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/storage.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Home storage</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/light.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Lighting solutions</span>
+                    </div>
+                </div>
+                <a>Explore all</a>
+            </div>
+            <div class="offer" style="margin-right:2rem;">
+                <span class="offer-title">Up to 75% off | Headphones</span>
+                <div class="offer-items">
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/boat.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Up to 75% off | boAt</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/boult.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Up to 75% off | Boult</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/noise.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Up to 75% off | Noise</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/zebro.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Up to 75% off | Zebronics</span>
+                    </div>
+                </div>
+                <a>See all offers</a>
             </div>
         </div>
         <div class="deals">
@@ -115,52 +115,62 @@
                 <h1>Today's deals</h1>
                 <a href="{% url 'shop:shop' %}">See all deals</a>
             </div>
+            <div class="line"></div>
             <div class="products">
                 {% for product in products %}
-                    <a href="{% url 'shop:product-detail' product_id=product.id %}" class="product">
+                    <div class="product" title="{{product.name}}">
                         <img id="productImage" src="{{ product.image.url }}" alt="">
-                        <span>{{ product.name|truncatechars:20}}</span>
-                        <div class="review">
-                            {% if product.stars == 5 %}
-                                {% for star in "12345"  %}
-                                    <img src="{% static 'images/star.png' %}" alt="">
-                                {% endfor %}
-                            {% elif product.stars == 4 %}
-                                {% for star in "1234"  %}
-                                    <img src="{% static 'images/star.png' %}" alt="">
-                                {% endfor %}
-                                {% for star in "1"  %}
-                                    <img src="{% static 'images/starline.png' %}" alt="">
-                                {% endfor %}
-                            {% elif product.stars == 3 %}
-                                {% for star in "123"  %}
-                                    <img src="{% static 'images/star.png' %}" alt="">
-                                {% endfor %}
-                                {% for star in "12"  %}
-                                    <img src="{% static 'images/starline.png' %}" alt="">
-                                {% endfor %}
-                            {% elif product.stars == 2 %}
-                                {% for star in "12"  %}
-                                    <img src="{% static 'images/star.png' %}" alt="">
-                                {% endfor %}
-                                {% for star in "123"  %}
-                                    <img src="{% static 'images/starline.png' %}" alt="">
-                                {% endfor %}
-                            {% elif product.stars == 1 %}
-                                {% for star in "1"  %}
-                                    <img src="{% static 'images/star.png' %}" alt="">
-                                {% endfor %}
-                                {% for star in "1234"  %}
-                                    <img src="{% static 'images/starline.png' %}" alt="">
-                                {% endfor %}
-                            {% else %}
-                                {% for star in "12345"  %}
-                                    <img src="{% static 'images/starline.png' %}" alt="">
-                                {% endfor %}
-                            {% endif %}
+                        <div class="product-details">
+                            <span>{{ product.name|truncatechars:15}}</span>
+                            <div class="review">
+                                {% if product.stars == 5 %}
+                                    {% for star in "12345"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif product.stars == 4 %}
+                                    {% for star in "1234"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "1"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif product.stars == 3 %}
+                                    {% for star in "123"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "12"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif product.stars == 2 %}
+                                    {% for star in "12"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "123"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif product.stars == 1 %}
+                                    {% for star in "1"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "1234"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% else %}
+                                    {% for star in "12345"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <span class="price">₹{{ product.price|intcomma  }}</span>
                         </div>
-                        <span class="price">₹{{ product.price|intcomma  }}</span>
-                    </a>
+                        <div class="actions">
+                            <img class="add-to-wishlist" id={{product.id}} onclick="handleAddToWishlist({{product.id}})" src="{% static 'images/heart.png' %}" alt="" title="Add to wishlist">
+                            <img src="{% static 'images/cart.png' %}" onclick="handleAddToCart({{product.id}})" alt="" title="Add to cart">
+                            <a href="{% url 'shop:product-detail' product_id=product.id %}">
+                                <img src="{% static 'images/view.png' %}" alt="" title="View product">
+                            </a>
+                        </div>
+                    </div>
                 {% endfor %}
                 <div class="prev-prod">
                     <img src="{% static 'images/before.png' %}" alt="">
@@ -170,13 +180,17 @@
                 </div>
             </div>
         </div>
-        <div class="line"></div>
-        <div class="signin">
-            <span class="title">See personalized recommendations</span>
-            <a class="login" href="{% url 'login' %}">Sign In</a>
-            <span>New customer?<a href="">Register account</a></span>
-        </div>
-        <div class="line"></div>    
+        
+        {% if not request.user.is_authenticated %}
+            <div class="line"></div>
+            <div class="signin">
+                <span class="title">See personalized recommendations</span>
+                <a class="login" href="{% url 'login' %}">Sign In</a>
+                <span>New customer?<a href="{% url 'signup' %}">Register account</a></span>
+            </div>
+            <div class="line"></div>  
+        {% endif %}
+              
     </div>
     {% include 'footer.html' %}
 {% endblock main %}
@@ -189,6 +203,86 @@
     const prevProdBtn = document.querySelector('.prev-prod');
     const nextProdBtn = document.querySelector('.next-prod');
     const scrollToTop = document.querySelector('.top');
+
+    // Handle add to wishlist click.
+    function handleAddToCart(productId){
+        $.ajax({
+            type: 'POST',
+            url: '{% url "shop:add-to-cart" %}',
+            data: {
+                'product_id': productId,
+            },
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken') // Assuming you have a function getCookie() defined
+            },
+            dataType: 'json',
+            success: (res)=>{
+                if(res){
+                    var message = $('<div>');
+                    message.addClass('message');
+                    if(res.success){
+                        message.addClass('success');
+                    }else {
+                        message.addClass('warning');
+                    }
+                    message.text(res.message);
+                    $('.messages').empty();
+                    $('.messages').append(message);
+                    $('.messages').show();
+                    $('.count').text(res.cart_items_count);
+                    // Hide the message after 5 seconds (adjust as needed)
+                    setTimeout(() => {
+                        message.remove();
+                    }, 1000);
+                }
+            },
+            error: (err)=>{
+                console.log(err);
+            }
+        });
+    }
+
+    // Handle add to wishlist click.
+    function handleAddToWishlist(productId){
+        if(isLoggedIn=='True'){
+            $.ajax({
+                type: 'POST',
+                url: '{% url "shop:add-to-wishlist" %}',
+                data: {
+                    'product_id': productId,
+                },
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken') // Assuming you have a function getCookie() defined
+                },
+                dataType: 'json',
+                success: (res)=>{
+                    if(res){
+                        var message = $('<div>');
+                        message.addClass('message');
+                        if(res.success){
+                            message.addClass('success');
+                        }else {
+                            message.addClass('warning');
+                        }
+                        message.text(res.message);
+                        $('.messages').empty();
+                        $('.messages').append(message);
+                        $('.messages').show();
+
+                        // Hide the message after 5 seconds (adjust as needed)
+                        setTimeout(() => {
+                            message.remove();
+                        }, 3000);
+                    }
+                },
+                error: (err)=>{
+                    console.log(err);
+                }
+            });
+        } else {
+            $('.login-popup').toggle();
+        }
+    }
 
     scrollToTop.addEventListener('click', ()=>{
         document.documentElement.scrollTop = 0;

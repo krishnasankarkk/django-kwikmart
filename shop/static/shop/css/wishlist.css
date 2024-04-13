@@ -15,13 +15,13 @@
     align-items: center;
     justify-content: center;
     border-radius: 1rem;
-    box-shadow: 0 0 .5rem slategray;
     min-width: 12rem;
     min-height: 15rem;
     font-weight: bold;
     gap: 1rem;
     cursor: pointer;
     transition: transform .2s ease;
+    background-color: var(--theme-2);
 }
 .wishlist-items .item:hover {
     transform: scale(1.1);
