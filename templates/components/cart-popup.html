@@ -39,6 +39,6 @@
     </div>
     <div class="checkout-button">
         <span>Sub Total: <b class="price">₹{{total_price|intcomma}}</b></span>
-        <a>Checkout</a>
+        <a href="{% url 'shop:checkout' %}">Checkout</a>
     </div>
 </div>

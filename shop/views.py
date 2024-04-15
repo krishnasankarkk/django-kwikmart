@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 # from django_redis import get_redis_connection
+import requests
 import redis
 import json
 from django.http import JsonResponse, HttpResponse
@@ -12,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.models import User
-from .models import Product, Carousel, Category, Cart, WishList
+from .models import Product, Carousel, Category, Cart, WishList, Order, OrderItem
 
 def login(request):
     if request.method == 'POST':
@@ -26,9 +27,9 @@ def login(request):
             return redirect(next_page)
         else:
             messages.warning(request, 'Invalid username or password! ')
-            return render(request, 'login.html', {'error': 'Invalid username or password'})
+            return render(request, 'user/login.html', {'error': 'Invalid username or password'})
     else:
-        return render(request, 'login.html')
+        return render(request, 'user/login.html')
     
 def signup(request):
     if request.method == 'POST':
@@ -39,7 +40,7 @@ def signup(request):
             return redirect('login')
     else:
         form = UserCreationForm()    
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'user/signup.html', {'form': form})
 
 def logout(request):
     get_out(request)
@@ -55,7 +56,7 @@ def home(request):
         'categories': categories,
         'products': products,
     }
-    return render(request, 'home.html', context)
+    return render(request, 'pages/home.html', context)
 
 def shop(request):
     categories = Category.objects.all()
@@ -68,7 +69,7 @@ def shop(request):
         'products': products,
         'breadcrumbs':breadcrumbs,
     }
-    return render(request, 'shop.html', context)
+    return render(request, 'pages/shop.html', context)
 
 def product(request, product_id):
     product = Product.objects.get(id=product_id)
@@ -82,7 +83,7 @@ def product(request, product_id):
         'categories': categories,
         'breadcrumbs':breadcrumbs,
     }
-    return render(request, "product-detail.html", context)
+    return render(request, "pages/product-detail.html", context)
 
 def add_to_cart(request):
     try:
@@ -104,7 +105,7 @@ def add_to_cart(request):
             message = 'Item added to cart successfully! ✔'
             
         cart_items = Cart.objects.filter(user_session=user_session).order_by('created_at')
-        total_price = sum(item.product.price * item.quantity for item in cart_items)
+        total_price = sum(item.subtotal() for item in cart_items)
         
         # Serialize cart_items queryset into a list of dictionaries
         serialized_cart_items = []
@@ -155,7 +156,7 @@ def decrease_from_cart(request):
             message = 'Cart updated successfully! ✔'
         
         cart_items = Cart.objects.filter(user_session=user_session).order_by('created_at')
-        total_price = sum(item.product.price * item.quantity for item in cart_items)
+        total_price = sum(item.subtotal() for item in cart_items)
         
         # Serialize cart_items queryset into a list of dictionaries
         serialized_cart_items = []
@@ -198,7 +199,7 @@ def delete_from_cart(request, cart_item_id):
             user_session = request.session.session_key
         
         cart_items = Cart.objects.filter(user_session=user_session)
-        total_price = sum(item.product.price * item.quantity for item in cart_items)
+        total_price = sum(item.subtotal() for item in cart_items)
         # Serialize cart_items queryset into a list of dictionaries
         serialized_cart_items = []
         for item in cart_items:
@@ -228,7 +229,7 @@ def delete_from_cart(request, cart_item_id):
 def cart_view(request):
     user_session = request.session.session_key
     cart_items = Cart.objects.filter(user_session=user_session).order_by('created_at')
-    total_price = sum(item.product.price * item.quantity for item in cart_items)
+    total_price = sum(item.subtotal() for item in cart_items)
     total_items = sum(item.quantity for item in cart_items)
     
     # Serialize cart_items queryset into a list of dictionaries
@@ -253,7 +254,7 @@ def cart_view(request):
         'total_items': total_items,
         'breadcrumbs': breadcrumbs,
     }
-    return render(request, 'cart.html', context)
+    return render(request, 'pages/cart.html', context)
 
 @login_required
 def add_to_wishlist(request):
@@ -291,7 +292,7 @@ def show_wishlist(request):
         'items_count': items_count,
         'breadcrumbs': breadcrumbs,
     }
-    return render(request, 'wishlist.html', context)
+    return render(request, 'pages/wishlist.html', context)
 
 def checkout_view(request):
     
@@ -302,15 +303,39 @@ def checkout_view(request):
     context = {
         'breadcrumbs': breadcrumbs,
     }
-    return render(request, 'checkout.html', context)
+    return render(request, 'pages/checkout.html', context)
 
 def save_order(request):
-    
-    breadcrumbs = [
-        {'name': 'Cart', 'url': '/cart'},
-        {'name': 'Checkout', 'url': ''},
-    ]
-    context = {
-        'breadcrumbs': breadcrumbs,
-    }
-    return render(request, 'checkout.html', context)
+    if request.method == 'POST':
+        user_session = request.session.session_key
+        new_order = Order(
+            user_session = user_session,
+            billing_name = request.POST['name'],
+            billing_address = request.POST['address'],
+            billing_email = request.POST['email'],
+            billing_city = request.POST['city'],
+            billing_postal_code = request.POST['postal_code'],
+            billing_country = request.POST['country'],
+            payment_method = request.POST['payment_method'],
+            total_amount = float(request.POST['total_amount']),
+        )
+        new_order.save()
+        cart_items = json.loads(request.POST.get('cart_items'))
+        for item in cart_items:
+            try:
+                product = Product.objects.get(id=item['product_id'])
+            except Product.DoesNotExist:
+                JsonResponse({'error': 'Product not Found!'})
+            else:
+                new_order_item = OrderItem(
+                    order = new_order,
+                    product = product,
+                    quantity = item['quantity'],
+                )
+                new_order_item.save()
+        Cart.objects.filter(user_session=user_session).delete()
+        return JsonResponse({'message': 'Order saved successfully'})
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+

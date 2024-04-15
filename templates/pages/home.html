@@ -3,7 +3,7 @@
 {% load humanize %}
 {% block title %}Kwikmart Online Shopping{% endblock title %}
 {% block main %}
-    {% include 'navbar.html' %}
+    {% include 'components/navbar.html' %}
     <div class="main">
         <div class="carousel">
             <div class="carousel-inner">
@@ -192,7 +192,7 @@
         {% endif %}
               
     </div>
-    {% include 'footer.html' %}
+    {% include 'components/footer.html' %}
 {% endblock main %}
 {% block script %}
 <script>

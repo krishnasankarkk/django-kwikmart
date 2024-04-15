@@ -1,3 +1,7 @@
+body{
+    margin-top: 6.5rem;
+    overflow-x: hidden;
+}
 .shop {
     background-color: var(--theme-1);
     color: var(--theme-5);

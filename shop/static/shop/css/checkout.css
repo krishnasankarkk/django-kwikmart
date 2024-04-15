@@ -1,6 +1,176 @@
+body {
+    overflow: hidden;
+    overflow-y: auto;
+    margin-top: 5rem;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
 .checkout-section {
-    margin: 1rem;
+    margin: 0 1rem;
     background-color: var(--theme-2);
     border-radius: 1rem;
     padding: 1rem;
+}
+.checkout-form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: start;
+    justify-content: space-between;
+    padding-top: 1rem;
+    gap: 1rem;
+}
+.checkout-form .billing {
+    background-color: var(--theme-1);
+    padding: 2rem;
+    padding-top: 0%;
+    border-radius: 1rem;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    /* gap: 1rem; */
+}
+.checkout-form .billing .details-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.checkout-form .submit-button {
+    background-color: var(--theme-4);
+    color: var(--theme-1);
+    border: none;
+    border-radius: 1rem;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: large;
+    padding: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all .2s ease;
+}
+.checkout-form .submit-button:hover {
+    transform: scale(1.05);
+    background-color: var(--theme-3);
+}
+.checkout-form .billing h3, .checkout-form .orders h3 {
+    color: var(--theme-3);
+}
+.checkout-form label {
+    color: var(--theme-4);
+    font-size: 1rem;
+}
+.checkout-form input, .checkout-form textarea {
+    max-width: 40rem;
+    min-width: 40rem;
+    min-height: 1rem;
+    background-color: transparent;
+    border: none;
+    background-color: var(--theme-2);
+    border-bottom: .1rem solid var(--theme-3);
+    font-family: inherit;
+    color: var(--theme-5);
+    outline: none;
+    padding: .5rem;
+}
+.checkout-form input:-webkit-autofill, .checkout-form textarea:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--theme-2) inset;
+    -webkit-text-fill-color: var(--theme-5);
+}
+.checkout-form .order-section {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 1rem;
+    width: 100%;
+}
+.checkout-form .order-section b {
+    color: var(--theme-3);
+}
+.checkout-form .order-section .payment-methods {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+    width: 100%;
+}
+.checkout-form .order-section .payment-methods .payment-provider input {
+    display: none;
+}
+.checkout-form .order-section .payment-methods .payment-provider label {
+    background-color: var(--theme-5);
+    color: var(--theme-1);
+    font-weight: bold;
+    padding: .5rem;
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5rem;
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+.checkout-form .order-section .payment-methods .payment-provider label:hover {
+    background-color: var(--theme-4);
+}
+.checkout-form .order-section .payment-methods .payment-provider img {
+    width: 2rem;
+    height: auto;
+}
+.checkout-form .order-section .payment-methods .payment-provider input[name="payment_method"]:checked + label {
+    background-color: var(--theme-6);
+}
+.checkout-form .orders {
+    background-color: var(--theme-1);
+    padding: 2rem;
+    padding-top: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+    width: auto;
+}
+.checkout-form .orders .cart_items {
+    max-height: 15rem;
+    overflow-y: auto;
+    background-color: var(--theme-2);
+    border-radius: 1rem;
+    width: 100%;
+    padding: 1rem 0 1rem 1rem;
+}
+.checkout-form .orders .cart_items tr {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+    margin: 1rem;
+}
+.checkout-form .payment-details {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    width: 100%;
+}
+.checkout-form .card-details input {
+    max-width: 100%;
+}
+.checkout-form .total {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+    gap: 1rem;
+    font-size: 1.2rem;
+}
+.checkout-form .total #total_price {
+    background-color: var(--theme-2);
+    padding: 1rem;
+    border-radius: .5rem;
+    font-size: 1.3rem;
 }

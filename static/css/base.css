@@ -38,8 +38,7 @@ body {
     color: var(--theme-5);
     margin: 0;
     position: relative;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: auto;
 }
 /* Style for the scrollbar track */
 ::-webkit-scrollbar {
@@ -193,24 +192,37 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: start;
     gap: .3rem;
-    padding: .5rem 1rem;
+    background-color: var(--theme-1);
     color: var(--theme-1);
+    border: .1rem solid var(--theme-3);
     border-radius: 2rem;
     z-index: 98;
     font-size: .8rem;
     font-weight: bold;
     color: var(--theme-5);
-    margin-top: 5rem;
+    position: absolute;
+    bottom: -3.1rem;
+    left: 0;
+    margin-left: .5rem;
+    padding: .3rem .5rem .1rem .5rem;
+    padding-right: 1rem;
+    width: auto; /* Initially set to auto width */
+    overflow: hidden; /* Hide overflowed content */
+    transition: width 0.3s ease; /* Smooth transition for width change */
+}
+.breadcrumbs .home-logo {
+   width: 1rem;
+   margin-right: 1rem;
 }
 .breadcrumbs .item:hover {
     cursor: pointer;
     color: var(--theme-3);
 }
-.breadcrumbs img {
-    width: 1.2rem;
-    border-radius: 1rem;
-    padding: .5rem;
+.navbar .breadcrumbs img {
+    width: 1.5rem;
+    height: auto;
 }
 .login-popup {
     position: fixed;

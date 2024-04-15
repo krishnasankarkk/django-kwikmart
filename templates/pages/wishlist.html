@@ -5,8 +5,7 @@
 {% load static %}
 
 {% block main %}
-{% include 'navbar.html' %}
-{% include 'breadcrumbs.html' %}
+{% include 'components/navbar.html' %}
 <link rel="stylesheet" href="{% static 'shop/css/wishlist.css' %}">
 <div class="wishlist-section">
     <h1>Wishlist <span style="font-size:1.3rem">({{items_count}} items added)</span></h1>

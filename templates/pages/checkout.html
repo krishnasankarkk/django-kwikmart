@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static%}
+{% load custom_filters %}
+{% load humanize %}
+{% block title %}Kwikmart • Checkout{% endblock title %}
+
+{% block main %}
+{% include 'components/navbar.html' %}
+<link rel="stylesheet" href="{% static 'shop/css/checkout.css' %}">
+<div class="checkout-section">
+    <h2>Checkout</h2>
+    <div class="line"></div>
+    <form method="post" action="{% url 'shop:save-order' %}" class="checkout-form">
+        {% csrf_token %}
+        <div class="billing">
+            <h3>Billing details</h3>
+            <div class="details-form">
+                <label class="input-label" for="id_name">Name</label>
+                <input type="text" id="id_name" name="name" maxlength="100" placeholder="Full Name" required><br>
+
+                <label class="input-label" for="id_email">Email</label>
+                <input type="email" id="id_email" name="email" maxlength="100" placeholder="Email" required><br>
+                
+                <label class="input-label" for="id_address">Address</label>
+                <textarea id="id_address" name="address" placeholder="Billing Address" required></textarea><br>
+                
+                <label class="input-label" for="id_city">City</label>
+                <input type="text" id="id_city" name="city" maxlength="100" placeholder="City" required><br>
+                
+                <label class="input-label" for="id_postal_code">Postal Code</label>
+                <input type="text" id="id_postal_code" name="postal_code" maxlength="10" placeholder="Postal Code" required><br>
+                
+                <label class="input-label" for="id_country">Country</label>
+                <input type="text" id="id_country" name="country" maxlength="100" placeholder="Country" required><br>
+                
+                <!-- Add more fields for payment information if needed -->
+
+            </div>
+        </div>
+        <div class="order-section">
+            <div class="orders">
+                <b>Payment methods</b>
+                <div class="payment-methods">
+                    <div class="payment-provider">
+                        <input type="radio" id="card" name="payment_method" value="card">
+                        <label for="card">
+                            <img src="{% static 'images/credit-card.png' %}" alt="">
+                            <span>Card</span>
+                        </label>
+                    </div>
+                    <div class="payment-provider">
+                        <input type="radio" id="google_pay" name="payment_method" value="google_pay">
+                        <label for="google_pay">
+                            <img src="{% static 'images/google.png' %}" alt="">
+                            <span>Google Pay</span>
+                        </label>
+                    </div>
+                    <div class="payment-provider">
+                        <input type="radio" id="paypal" name="payment_method" value="paypal">
+                        <label for="paypal">
+                            <img src="{% static 'images/paypal.png' %}" alt="">
+                            <span>Paypal</span>
+                        </label>
+                    </div>
+                    <div class="payment-provider">
+                        <input type="radio" id="cash_on_delivery" name="payment_method" value="cash_on_delivery">
+                        <label for="cash_on_delivery">
+                            <img src="{% static 'images/cash-on-delivery.png' %}" alt="">
+                            <span>Cash On Delivery</span>
+                        </label>
+                    </div>
+                </div>
+                {% comment %} <div id="card-details" class="payment-details">
+                    <label class="input-label" for="id_cardholders_name">Cardholder's Name</label>
+                    <input type="text" id="id_cardholders_name" name="cardholder-name" maxlength="100" placeholder="Cardholder's Name" required><br>
+                    
+                    <label class="input-label" for="id_card_number">Card Number</label>
+                    <input type="text" id="id_card_number" name="card-number" maxlength="16" placeholder="Card Number" required><br>
+                    
+                    <label class="input-label" for="id_expiry_date">Expiry Date (MM/YY)</label>
+                    <input type="text" id="id_expiry_date" name="expiry-date" maxlength="5" placeholder="Expiry Date (MM/YY)" required><br>
+                    
+                    <label class="input-label" for="id_cvv">CVV</label>
+                    <input type="text" id="id_cvv" name="cvv" maxlength="3" placeholder="CVV" required><br>
+                </div>
+                <div id="google_pay-details" class="payment-details">
+                    <label class="input-label" for="id_cardholders_name">Cardholder's Name</label>
+                    <input type="text" id="id_cardholders_name" name="cardholder-name" maxlength="100" placeholder="Cardholder's Name" required><br>
+                    <h1>GooglePay</h1>
+                </div>
+                <div id="paypal-details" class="payment-details">
+                    <h1>PayPal</h1>
+                    <label class="input-label" for="id_cardholders_name">Cardholder's Name</label>
+                    <input type="text" id="id_cardholders_name" name="cardholder-name" maxlength="100" placeholder="Cardholder's Name" required><br>
+                    
+                    <label class="input-label" for="id_card_number">Card Number</label>
+                    <input type="text" id="id_card_number" name="card-number" maxlength="16" placeholder="Card Number" required><br>
+                    
+                    <label class="input-label" for="id_expiry_date">Expiry Date (MM/YY)</label>
+                    <input type="text" id="id_expiry_date" name="expiry-date" maxlength="5" placeholder="Expiry Date (MM/YY)" required><br>
+                    
+                    <label class="input-label" for="id_cvv">CVV</label>
+                    <input type="text" id="id_cvv" name="cvv" maxlength="3" placeholder="CVV" required><br>
+                </div>
+                <div id="cash_on_delivery-details" class="payment-details">
+                    <h1>ONDEVLIVERY</h1>
+                    <label class="input-label" for="id_cardholders_name">Cardholder's Name</label>
+                    <input type="text" id="id_cardholders_name" name="cardholder-name" maxlength="100" placeholder="Cardholder's Name" required><br>
+                    
+                    <label class="input-label" for="id_card_number">Card Number</label>
+                    <input type="text" id="id_card_number" name="card-number" maxlength="16" placeholder="Card Number" required><br>
+                    
+                    <label class="input-label" for="id_expiry_date">Expiry Date (MM/YY)</label>
+                    <input type="text" id="id_expiry_date" name="expiry-date" maxlength="5" placeholder="Expiry Date (MM/YY)" required><br>
+                    
+                    <label class="input-label" for="id_cvv">CVV</label>
+                    <input type="text" id="id_cvv" name="cvv" maxlength="3" placeholder="CVV" required><br>
+                </div> {% endcomment %}
+            </div>
+            <div class="orders">
+                <b>Order summary</b>
+                <div class="cart_items">
+                    <table>
+                        <tbody>
+                            {% if items_in_cart %}
+                                {% for item in items_in_cart %}
+                                    <tr class="cart-item" id="{{item.id}}" data-product-id="{{item.product.id}}" data-quantity="{{item.quantity}}">
+                                        <td>
+                                            <span>{{forloop.counter}}.</span>
+                                        </td>
+                                        <td class="product-name">
+                                            <span>{{item.product.name|truncatechars:20}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.quantity}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="price">₹{{item.product.price|multiply:item.quantity|intcomma}}</span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr class="no-items">
+                                    <span>No items in cart</span>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="total">
+                    <span>Total Payable :</span>
+                    <span class="price" id="total_price" data-total-price="{{total_price}}"> ₹{{total_price|intcomma}}</span>
+                </div>
+                <button class="submit-button" type="submit">Place Order</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock main %}
+{% block script %}
+<script>
+    $(".payment-details").hide();
+    $("input[name='payment_method'][id='card']").prop('checked', true);
+    $("#card-details").show();
+    $("input[name='payment_method']").change(function(){
+        const selectedPaymentMethod = $("input[name='payment_method']:checked").val();
+        $(".payment-details").hide();
+        $("#"+selectedPaymentMethod+"-details").show();
+    })
+</script>
+{% endblock script %}

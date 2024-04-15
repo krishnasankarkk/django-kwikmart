@@ -1,3 +1,7 @@
+body {
+    overflow: hidden;
+    margin-top: 5rem;
+}
 .cart-main {
     width: 100%;
     gap: 1rem;
@@ -9,7 +13,6 @@
     background-color: var(--theme-1);
     color: var(--theme-5);
 }
-
 .cart-section {
     background-color: var(--theme-2);
     border-radius: 2rem;
@@ -18,12 +21,19 @@
     padding: 2rem;
     display: flex;
     flex-direction: column;
+    height: 35rem;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.cart-section::-webkit-scrollbar {
+    margin-right: 2rem;
 }
 .cart-head {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    border-bottom: .2rem solid var(--theme-3);
 }
 .cart-head a {
     padding: 1rem;
@@ -129,6 +139,8 @@ td {
 .checkout h1 {
     font-size:1.9rem;
     font-weight:bold;
+    padding-bottom: 1rem;
+    border-bottom: .2rem solid var(--theme-3);
 }
 .sub-total {
     display: flex;

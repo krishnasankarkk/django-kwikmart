@@ -32,5 +32,8 @@
             <span class="count">{{cart_item_count}}</span>
         </div>
     </div>
-    {% include 'cart-popup.html' %}
+    {% include 'components/cart-popup.html' %}
+    {% if request.path != '/' %}
+        {% include 'components/breadcrumbs.html' %}
+    {% endif %}
 </div>

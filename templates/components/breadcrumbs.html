@@ -1,13 +1,13 @@
 {% load static %}
 <div class="breadcrumbs">
-    <a href="{% url 'shop:home' %}" class="item">
+    <a href="{% url 'shop:home' %}" class="home-logo">
         <img src="{% static 'images/home.png' %}" alt="">
     </a>
     {% if breadcrumbs %}
         {% for item in breadcrumbs %}
             <span>>></span>
             <a href="{{item.url}}" class="item">
-                <span>{{item.name}}</span>
+                <b>{{item.name}}</b>
             </a>
         {% endfor %}
     {% endif %}
