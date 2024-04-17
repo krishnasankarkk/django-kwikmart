@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="offers">
-            <div class="offer" style="margin-left:2rem;">
+            <div class="offer">
                 <span class="offer-title">Appliances for your home | Up to 55% off</span>
                 <div class="offer-items">
                     <div class="offer-item">
@@ -87,7 +87,11 @@
                 </div>
                 <a>Explore all</a>
             </div>
-            <div class="offer" style="margin-right:2rem;">
+            <div class="offer">
+                <span class="offer-title">Own your Iphone now | Exciting offers.</span>
+                <img src="{% static 'images/offers/iphone.jpg' %}" alt="">
+            </div>
+            <div class="offer">
                 <span class="offer-title">Up to 75% off | Headphones</span>
                 <div class="offer-items">
                     <div class="offer-item">
@@ -109,6 +113,72 @@
                 </div>
                 <a>See all offers</a>
             </div>
+            <div class="offer">
+                <span class="offer-title">Starting ₹99 | All your home improvement needs</span>
+                <div class="offer-items">
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/floorcleaner.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Spin mops, wipes & more</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/towel.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Bathroom accessories</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/hammer.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Hammers, screwdrivers & more</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/extension.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Extension boards, plugs</span>
+                    </div>
+                </div>
+                <a>Explore all</a>
+            </div>
+            <div class="offer">
+                <span class="offer-title">Up to 60% off | Styles for women</span>
+                <div class="offer-items">
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/womencloth.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Women's clothing</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/womenbag.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Footwears & Bags</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/womenwatch.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Watches</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/necklase.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Fashion jwellery</span>
+                    </div>
+                </div>
+                <a>End of season sale</a>
+            </div>
+            <div class="offer">
+                <span class="offer-title">Min. 40% off | Baby care & toys | Amazon Brands & more</span>
+                <div class="offer-items">
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/pampers.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Baby essentials</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/toy.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Play gyms & more</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/penguin.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Soft toys</span>
+                    </div>
+                    <div class="offer-item">
+                        <img src="{% static 'images/offers/unicorn.jpg' %}" alt="">
+                        <span style="font-size:.8rem;">Outdoor games</span>
+                    </div>
+                </div>
+                <a>See all deals</a>
+            </div>
         </div>
         <div class="deals">
             <div class="title">
@@ -120,8 +190,9 @@
                 {% for product in products %}
                     <div class="product" title="{{product.name}}">
                         <img id="productImage" src="{{ product.image.url }}" alt="">
+                        <img class="offer" src="{% static 'images/offer.png' %}" alt="">
                         <div class="product-details">
-                            <span>{{ product.name|truncatechars:15}}</span>
+                            <span>{{ product.name|truncatechars:18}}</span>
                             <div class="review">
                                 {% if product.stars == 5 %}
                                     {% for star in "12345"  %}
@@ -161,7 +232,211 @@
                                     {% endfor %}
                                 {% endif %}
                             </div>
-                            <span class="price">₹{{ product.price|intcomma  }}</span>
+                            <span>₹<span class="mrp">{{ product.original_price|intcomma  }}</span></span>
+                            <span class="price">₹{{ product.offer_price|intcomma  }}<span class="discount">-{{product.discount}}%</span></span>
+                        </div>
+                        <div class="actions">
+                            <img class="add-to-wishlist" id={{product.id}} onclick="handleAddToWishlist({{product.id}})" src="{% static 'images/heart.png' %}" alt="" title="Add to wishlist">
+                            <img src="{% static 'images/cart.png' %}" onclick="handleAddToCart({{product.id}})" alt="" title="Add to cart">
+                            <a href="{% url 'shop:product-detail' product_id=product.id %}">
+                                <img src="{% static 'images/view.png' %}" alt="" title="View product">
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="prev-prod">
+                    <img src="{% static 'images/before.png' %}" alt="">
+                </div>
+                <div class="next-prod">
+                    <img src="{% static 'images/next.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="best-deal">
+            {% if best_deal %}
+            <div class="product">
+                <img id="best-buy" src="{% static 'images/best-buy.png' %}" alt="">
+                <div id="best-seller">
+                    <span>Best deal</span>
+                    <img src="{% static 'images/best-seller.png' %}" alt="">
+                </div>
+                <img src="{{best_deal.image.url}}" alt="">
+                <div class="details">
+                    <span>{{best_deal.name}}</span>
+                    <div class="review">
+                        {% if best_deal.stars == 5 %}
+                            {% for star in "12345"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                        {% elif best_deal.stars == 4 %}
+                            {% for star in "1234"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                            {% for star in "1"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% elif best_deal.stars == 3 %}
+                            {% for star in "123"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                            {% for star in "12"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% elif best_deal.stars == 2 %}
+                            {% for star in "12"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                            {% for star in "123"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% elif best_deal.stars == 1 %}
+                            {% for star in "1"  %}
+                                <img src="{% static 'images/star.png' %}" alt="">
+                            {% endfor %}
+                            {% for star in "1234"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% else %}
+                            {% for star in "12345"  %}
+                                <img src="{% static 'images/starline.png' %}" alt="">
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <span>₹<span class="mrp">{{ best_deal.original_price|intcomma  }}</span></span>
+                    <span class="price">₹{{ best_deal.offer_price|intcomma  }}<span class="discount">-{{best_deal.discount}}%</span></span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="deals">
+            <div class="title">
+                <h1>Recommended items</h1>
+                <a href="{% url 'shop:shop' %}">See all deals</a>
+            </div>
+            <div class="line"></div>
+            <div class="products">
+                {% for product in products %}
+                    <div class="product" title="{{product.name}}">
+                        <img id="productImage" src="{{ product.image.url }}" alt="">
+                        <img class="offer" src="{% static 'images/offer.png' %}" alt="">
+                        <div class="product-details">
+                            <span>{{ product.name|truncatechars:18}}</span>
+                            <div class="review">
+                                {% if product.stars == 5 %}
+                                    {% for star in "12345"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif product.stars == 4 %}
+                                    {% for star in "1234"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "1"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif product.stars == 3 %}
+                                    {% for star in "123"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "12"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif product.stars == 2 %}
+                                    {% for star in "12"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "123"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif product.stars == 1 %}
+                                    {% for star in "1"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "1234"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% else %}
+                                    {% for star in "12345"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <span>₹<span class="mrp">{{ product.original_price|intcomma  }}</span></span>
+                            <span class="price">₹{{ product.offer_price|intcomma  }}<span class="discount">-{{product.discount}}%</span></span>
+                        </div>
+                        <div class="actions">
+                            <img class="add-to-wishlist" id={{product.id}} onclick="handleAddToWishlist({{product.id}})" src="{% static 'images/heart.png' %}" alt="" title="Add to wishlist">
+                            <img src="{% static 'images/cart.png' %}" onclick="handleAddToCart({{product.id}})" alt="" title="Add to cart">
+                            <a href="{% url 'shop:product-detail' product_id=product.id %}">
+                                <img src="{% static 'images/view.png' %}" alt="" title="View product">
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="prev-prod">
+                    <img src="{% static 'images/before.png' %}" alt="">
+                </div>
+                <div class="next-prod">
+                    <img src="{% static 'images/next.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="deals">
+            <div class="title">
+                <h1>New arrivals</h1>
+                <a href="{% url 'shop:shop' %}">See all deals</a>
+            </div>
+            <div class="line"></div>
+            <div class="products">
+                {% for product in products %}
+                <div class="product" title="{{product.name}}">
+                        <img id="productImage" src="{{ product.image.url }}" alt="">
+                        <img class="offer" src="{% static 'images/offer.png' %}" alt="">
+                        {% if is_new %}
+                            <img class="new" src="{% static 'images/new.png' %}" alt="">
+                        {% endif %}
+                        <div class="product-details">
+                            <span>{{ product.name|truncatechars:18}}</span>
+                            <div class="review">
+                                {% if product.stars == 5 %}
+                                    {% for star in "12345"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif product.stars == 4 %}
+                                    {% for star in "1234"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "1"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif product.stars == 3 %}
+                                    {% for star in "123"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "12"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif product.stars == 2 %}
+                                    {% for star in "12"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "123"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif product.stars == 1 %}
+                                    {% for star in "1"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "1234"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% else %}
+                                    {% for star in "12345"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <span>₹<span class="mrp">{{ product.original_price|intcomma  }}</span></span>
+                            <span class="price">₹{{ product.offer_price|intcomma  }}<span class="discount">-{{product.discount}}%</span></span>
                         </div>
                         <div class="actions">
                             <img class="add-to-wishlist" id={{product.id}} onclick="handleAddToWishlist({{product.id}})" src="{% static 'images/heart.png' %}" alt="" title="Add to wishlist">

@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 # from django_redis import get_redis_connection
-import requests
+from datetime import datetime, timedelta
 import redis
 import json
 from django.http import JsonResponse, HttpResponse
@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.models import User
-from .models import Product, Carousel, Category, Cart, WishList, Order, OrderItem
+from .models import Product, Carousel, Category, Cart, WishList, Order, OrderItem, Review
 
 def login(request):
     if request.method == 'POST':
@@ -51,10 +51,14 @@ def home(request):
     carousel = Carousel.objects.all()
     categories = Category.objects.all()
     products = Product.objects.all()
+    best_deal = Product.objects.filter(discount__gt=0).order_by('-discount').first()
+    threshold_date = datetime.now() - timedelta(days=7)
     context = {
         'carousel': carousel,
         'categories': categories,
         'products': products,
+        'best_deal': best_deal,
+        'is_new': datetime.now()>threshold_date,
     }
     return render(request, 'pages/home.html', context)
 
@@ -74,14 +78,16 @@ def shop(request):
 def product(request, product_id):
     product = Product.objects.get(id=product_id)
     categories = Category.objects.all()
+    reviews = Review.objects.filter(product_id=product_id)
     breadcrumbs = [
         {'name': 'Shop', 'url': '/shop'},
-        {'name': 'Product Details', 'url': ''},
+        {'name': 'Product', 'url': ''},
     ]
     context = {
         'product': product,
         'categories': categories,
-        'breadcrumbs':breadcrumbs,
+        'breadcrumbs': breadcrumbs,
+        'reviews': reviews,
     }
     return render(request, "pages/product-detail.html", context)
 
@@ -119,7 +125,7 @@ def add_to_cart(request):
                 'category': item.product.category.name,
                 'image': image_url,
                 'quantity': item.quantity,
-                'price': item.product.price,
+                'price': item.product._get_offer_price(),
             })
         cart_items_count = cart_items.count()
         context = {
@@ -170,7 +176,7 @@ def decrease_from_cart(request):
                 'category': item.product.category.name,
                 'image': image_url,
                 'quantity': item.quantity,
-                'price': item.product.price,
+                'price': item.product._get_offer_price(),
             })
         cart_items_count = cart_items.count()
         context = {
@@ -212,7 +218,7 @@ def delete_from_cart(request, cart_item_id):
                 'category': item.product.category.name,
                 'image': image_url,
                 'quantity': item.quantity,
-                'price': item.product.price,
+                'price': item.product._get_offer_price(),
             })
         cart_items_count = cart_items.count()
         context = {
@@ -243,7 +249,7 @@ def cart_view(request):
             'category': item.product.category,
             'image': image_url,
             'quantity': item.quantity,
-            'price': item.product.price,
+            'price': item.product._get_offer_price(),
         })
     breadcrumbs = [
         {'name': 'Cart', 'url': ''},
@@ -338,4 +344,5 @@ def save_order(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-
+def orders_view(request):
+    return render(request, 'pages/orders.html')

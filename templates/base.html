@@ -44,6 +44,29 @@
             return cookieValue;
         }
 
+        var timeout;
+
+        $('#loggined-user').hover(function(){
+            clearTimeout(timeout); // Clear any previous timeout
+            $('.user-options').show();
+        }, function(){
+            // Set a timeout to hide user options after 500 milliseconds
+            timeout = setTimeout(function(){
+                $('.user-options').hide();
+            }, 500);
+        });
+
+        $('.user-options').hover(function(){
+            clearTimeout(timeout); // Clear the timeout if user options are hovered
+        }, function(){
+            // Set a timeout to hide user options after 500 milliseconds
+            timeout = setTimeout(function(){
+                $('.user-options').hide();
+            }, 500);
+        });
+
+        
+
         // Handle form submission
         $('.checkout-form').submit(function(event) {
             // Prevent the default form submission

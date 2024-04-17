@@ -1,5 +1,5 @@
 .product-detail {
-    margin: 1rem;
+    margin: 5rem 1rem;
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -32,6 +32,16 @@
     align-items: start;
     justify-content: space-evenly;
     gap: 1rem;
+}
+.product-detail .product .details .mrp {
+    text-decoration: line-through;
+    font-size: 1.5rem;
+}
+.product-detail .product .details .offer-price {
+    font-size: 2.5rem;
+}
+.product-detail .product .details .discount {
+    color: var(--theme-7);
 }
 .product-detail .product .details .review {
     display: flex;
@@ -95,4 +105,21 @@
 .description {
     display: flex;
     flex-direction: column;
+}
+.description .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.description .title span {
+    background-color: var(--theme-2);
+    padding: .5rem;
+    border-radius: 1rem 1rem 0 0;
+    cursor: pointer;
+}
+.description .title span:hover {
+    background-color: var(--theme-3);
+    color: var(--theme-1);
 }

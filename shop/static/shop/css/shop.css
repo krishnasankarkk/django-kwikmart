@@ -28,17 +28,28 @@ body{
 }
 .categories {
     background-color: var(--theme-2);
-    border-radius: 1rem;
-    padding: 1rem;
+    border-radius: .5rem;
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
+}
+.categories .title {
+    font-size: 1rem;
+    background-color: var(--theme-3);
+    color: var(--theme-1);
+    padding: .5rem;
+    border-radius: .5rem .5rem 0 0;
 }
 .category {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 5px;
+    padding: .5rem;
+    cursor: pointer;
+}
+.category:hover {
+    color: var(--theme-3);
 }
 .radio-button-label {
     display: block;
@@ -115,6 +126,19 @@ input[type="checkbox"] {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-size: 1.2rem;
+}
+.products .product .product-details .mrp {
+    font-size: 1rem;
+    text-decoration: line-through;
+    color: var(--theme-5);
+}
+.products .product .product-details .price {
+    font-size: 1.2rem;
+}
+.products .product .product-details .price .discount {
+    color: var(--theme-7);
+    font-size: .8rem;
 }
 .products .product:hover .actions img, .products .product:hover .review img {
     opacity: 100%;

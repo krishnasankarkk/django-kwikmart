@@ -52,6 +52,7 @@
     color: var(--theme-1);
     padding: .5rem;
     border-radius: .5rem 0 0 .5rem;
+    font-weight: bold;
     font-family: inherit;
 }
 .navbar .search-product img {
@@ -71,7 +72,7 @@
 }
 .navbar input{
     background-color: var(--theme-1);
-    color: var(--theme-1);
+    color: var(--theme-5);
     border: none;
     border-radius: 0 .5rem .5rem 0;
     padding: 10px;
@@ -85,6 +86,7 @@
     align-items: start;
     justify-content: center;
     gap: 10px;
+    position: relative;
 }
 .navbar .login .signup {
     color:var(--theme-3);
@@ -123,6 +125,39 @@
     align-items: center;
     justify-content: center;
     padding: 4px;
+}
+.user-options {
+    display: none;
+    min-width: 15rem;
+    position: fixed;
+    height: fit-content;
+    top: 4.15rem;
+    right: 5rem;
+    z-index: 999;
+    background-color: var(--theme-1);
+    color: var(--theme-5);
+    border-radius: 0 0 1rem 1rem;
+    border: .2rem solid var(--theme-3);
+    border-top: none;
+    animation: fall .2s forwards;
+    padding-bottom: 1rem;
+}
+.user-options .user-option {
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:start ;
+    gap: .5rem;
+    width: auto;
+    cursor: pointer;
+}
+.user-options .user-option img {
+    width: 2rem;
+    height: auto;
+}
+.user-options .user-option:hover {
+    background-color: #353844;
 }
 .cart-popup {
     min-width: 25rem;
