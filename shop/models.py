@@ -32,7 +32,7 @@ class Product(models.Model):
     discount = models.IntegerField(default=0)
     image = CloudinaryField('image')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    stars = models.IntegerField(default=0, validators=[MaxValueValidator(5)])
+    rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)], default=1)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
@@ -62,7 +62,14 @@ class Product(models.Model):
 
     def _calculate_offer_price(self):
         return math.ceil(float(float(self.original_price) * (1 - (float(self.discount) / 100)))/100)*100
-
+    
+    def _update_rating(self):
+        all_reviews = []
+        all_reviews.extend(self.user_reviews.all())
+        avg_rating = sum(review.rating for review in all_reviews)/len(all_reviews) if all_reviews else 0
+        
+        self.rating = math.floor(avg_rating)
+        self.save()
 
 class Carousel(models.Model):
     name = models.CharField(max_length=100)
@@ -73,10 +80,12 @@ class Cart(models.Model):
     user_session = models.CharField(max_length=100)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
+    sub_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     
-    def subtotal(self):
-        return self.quantity * self.product._get_offer_price()
+    def save(self, *args, **kwargs):
+        self.sub_total = self.quantity * self.product.offer_price
+        super().save(*args, **kwargs)
 
 class WishList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -137,19 +146,20 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+    
     created_at = models.DateTimeField(auto_now_add=True)
 
     def subtotal(self):
-        return self.quantity * self.product._get_offer_price()
+        return self.quantity * self.product.offer_price
 
     def __str__(self):
         return f"OrderNo: {self.order.order_number} - Product: {self.product}, Quantity: {self.quantity}"
 
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name="user_reviews", on_delete=models.CASCADE)
     rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
-    comment = models.TextField()
+    comment = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):

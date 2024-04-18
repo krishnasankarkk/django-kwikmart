@@ -50,6 +50,117 @@
     justify-content: start;
     cursor: pointer;
 }
+#review {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+#review .review {
+    /* background-color: var(--theme-2); */
+    padding: 1rem;
+    border-radius: .5rem;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 8rem;
+}
+#review .review .user-section {
+    width: auto;
+    /* background-color: var(--theme-2); */
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: end;
+    gap: 1rem;
+    padding-left: 2rem;
+}
+#review .review .user-section .user-name {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--theme-3);
+}
+#review .review .user-section img {
+    width: 3rem;
+    height: auto;
+}
+#review .review .user-section .user-details {
+    display: flex;
+    flex-direction: column;
+}
+#review .review .review-section {
+    width: auto;
+    background-color: var(--theme-2);
+    padding: 2rem;
+    border-radius: 0 2rem 2rem 2rem;
+    position: relative;
+}
+#review .review .review-section img {
+    width: 1rem;
+    height: auto;
+}
+#review .review .review-section .comment {
+    font-size: 1.2rem;
+    color: var(--theme-5);
+}
+#review .write-comment {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 5rem;
+}
+#review .write-comment .comment {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+#review .write-comment .comment .rating {
+    display: f;
+    flex-direction: row;
+    align-items: center;
+}
+#review .write-comment .comment .rating img {
+    width: 1.5rem;
+    height: auto;
+    cursor: pointer;
+}
+#review .write-comment button {
+    display: none;
+}
+#review .write-comment .comment input {
+    background-color: var(--theme-2);
+    color: var(--theme-5);
+    border: none;
+    padding: 1rem;
+    border-radius: 1rem;
+    font-family: inherit;
+    width: auto;
+}
+#review .write-comment #sent-review {
+    width: 2rem;
+    height: auto;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10%;
+    right: 1rem;
+}
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 6rem solid transparent;
+    border-right: 2rem transparent;
+    border-top: 2rem solid var(--theme-2);
+    position: absolute;
+    top: 0;
+    left: -6rem;
+}
 .product-detail .product .details .review img{
     width: 1.5rem;
     height: 1.5rem;
@@ -105,21 +216,25 @@
 .description {
     display: flex;
     flex-direction: column;
+    background-color: var(--theme-1);
 }
 .description .title {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: bold;
     display: flex;
     flex-direction: row;
     gap: 1rem;
 }
-.description .title span {
+.description .title input{
+    display: none;
+}
+.description .title label {
     background-color: var(--theme-2);
     padding: .5rem;
     border-radius: 1rem 1rem 0 0;
     cursor: pointer;
 }
-.description .title span:hover {
+.description .title label:hover {
     background-color: var(--theme-3);
     color: var(--theme-1);
 }

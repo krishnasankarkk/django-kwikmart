@@ -17,9 +17,13 @@
     {% include 'components/login-popup.html' %}
     {% include 'components/notifications.html' %}
     {% block main %}{% endblock main %}
+    {% include 'components/footer.html' %}
     {% block script %}{% endblock script %}
-
     <script>
+        $('.top').click(function(){
+            document.documentElement.scrollTop = 0;
+        });
+    
         $('.cart-popup').hide();
         $('.login-popup').hide();
 
@@ -191,7 +195,7 @@
                 row.append($('<td>').append($('<img>').attr('src', item.image)));
                 row.append($('<td>').addClass('product-name').append($('<span>')).text(item.product_name));
                 row.append($('<td>').append($('<span>')).text(item.quantity));
-                row.append($('<td>').append($('<span>').addClass('price').text('₹' + (item.price * item.quantity).toLocaleString())));
+                row.append($('<td>').append($('<span>').addClass('price').text('₹' + item.sub_total)));
                 row.append($('<td>').append($('<img>').addClass('delete').attr('src', '{% static "images/trash.png" %}').attr('title', 'Remove item from cart').attr('onclick', "deleteItemFromCart('"+item.id+"')")));
                 // Append the row to the table body
                 cartItemsContainer.append(row);
@@ -241,10 +245,10 @@
         }
 
         // Handle add to cart click.
-        function handleAddToCart(productId){
+        {% comment %} function handleAddToCart(productId){
             $.ajax({
                 type: 'POST',
-                url: '{% url "shop:add-to-cart" %}',
+                url: '',//{% url "shop:add-to-cart" %}
                 data: {
                     'product_id': productId,
                 },
@@ -280,7 +284,7 @@
                     console.log(err);
                 }
             });
-        }
+        } {% endcomment %}
 
         // Handle add to wishlist click.
         function handleAddToWishlist(productId){
@@ -376,11 +380,6 @@
                 $('.login-popup').css('display', 'flex');
                 event.stopPropagation();
             }
-        });
-        $('#login-button').click((event)=>{
-            const previousUrl = $(event.target).data('previous-url');
-            console.log(previousUrl)
-            window.location.href = "{% url 'login' %}?next=" + encodeURIComponent(previousUrl);
         });
 
         // Toggle cart popup

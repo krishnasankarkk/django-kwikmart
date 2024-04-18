@@ -91,9 +91,9 @@ def product(request, product_id):
     }
     return render(request, "pages/product-detail.html", context)
 
-def add_to_cart(request):
+def add_to_cart(request, product_id):
     try:
-        product_id = request.POST.get('product_id')
+        # product_id = request.POST.get('product_id')
         product = Product.objects.get(pk=product_id)
         user_session = request.session.session_key
         
@@ -111,7 +111,7 @@ def add_to_cart(request):
             message = 'Item added to cart successfully! ✔'
             
         cart_items = Cart.objects.filter(user_session=user_session).order_by('created_at')
-        total_price = sum(item.subtotal() for item in cart_items)
+        total_price = sum(item.sub_total for item in cart_items)
         
         # Serialize cart_items queryset into a list of dictionaries
         serialized_cart_items = []
@@ -125,7 +125,7 @@ def add_to_cart(request):
                 'category': item.product.category.name,
                 'image': image_url,
                 'quantity': item.quantity,
-                'price': item.product._get_offer_price(),
+                'sub_total': item.sub_total,
             })
         cart_items_count = cart_items.count()
         context = {
@@ -135,7 +135,9 @@ def add_to_cart(request):
             'cart_items_count': cart_items_count,
             'total_price': total_price,
         }
-        return JsonResponse(context, safe=False)
+        previous_url = request.META.get('HTTP_REFERER', '/')
+        return redirect(previous_url)
+
     
     except Product.DoesNotExist:
         context = {
@@ -162,7 +164,7 @@ def decrease_from_cart(request):
             message = 'Cart updated successfully! ✔'
         
         cart_items = Cart.objects.filter(user_session=user_session).order_by('created_at')
-        total_price = sum(item.subtotal() for item in cart_items)
+        total_price = sum(item.sub_total for item in cart_items)
         
         # Serialize cart_items queryset into a list of dictionaries
         serialized_cart_items = []
@@ -176,7 +178,6 @@ def decrease_from_cart(request):
                 'category': item.product.category.name,
                 'image': image_url,
                 'quantity': item.quantity,
-                'price': item.product._get_offer_price(),
             })
         cart_items_count = cart_items.count()
         context = {
@@ -205,7 +206,7 @@ def delete_from_cart(request, cart_item_id):
             user_session = request.session.session_key
         
         cart_items = Cart.objects.filter(user_session=user_session)
-        total_price = sum(item.subtotal() for item in cart_items)
+        total_price = sum(item.sub_total for item in cart_items)
         # Serialize cart_items queryset into a list of dictionaries
         serialized_cart_items = []
         for item in cart_items:
@@ -218,7 +219,6 @@ def delete_from_cart(request, cart_item_id):
                 'category': item.product.category.name,
                 'image': image_url,
                 'quantity': item.quantity,
-                'price': item.product._get_offer_price(),
             })
         cart_items_count = cart_items.count()
         context = {
@@ -235,7 +235,7 @@ def delete_from_cart(request, cart_item_id):
 def cart_view(request):
     user_session = request.session.session_key
     cart_items = Cart.objects.filter(user_session=user_session).order_by('created_at')
-    total_price = sum(item.subtotal() for item in cart_items)
+    total_price = sum(item.sub_total for item in cart_items)
     total_items = sum(item.quantity for item in cart_items)
     
     # Serialize cart_items queryset into a list of dictionaries
@@ -249,7 +249,6 @@ def cart_view(request):
             'category': item.product.category,
             'image': image_url,
             'quantity': item.quantity,
-            'price': item.product._get_offer_price(),
         })
     breadcrumbs = [
         {'name': 'Cart', 'url': ''},
@@ -344,5 +343,13 @@ def save_order(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
+def add_review(request):
+    if request.method == 'POST':
+        new_review = Review(
+            product = product,
+            
+        )
+
 def orders_view(request):
     return render(request, 'pages/orders.html')
+

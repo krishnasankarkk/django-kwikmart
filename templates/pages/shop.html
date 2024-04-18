@@ -115,32 +115,32 @@
                     <div class="product-details">
                         <span>{{ product.name|truncatechars:15}}</span>
                         <div class="review">
-                            {% if product.stars == 5 %}
+                            {% if product.rating == 5 %}
                                 {% for star in "12345"  %}
                                     <img src="{% static 'images/star.png' %}" alt="">
                                 {% endfor %}
-                            {% elif product.stars == 4 %}
+                            {% elif product.rating == 4 %}
                                 {% for star in "1234"  %}
                                     <img src="{% static 'images/star.png' %}" alt="">
                                 {% endfor %}
                                 {% for star in "1"  %}
                                     <img src="{% static 'images/starline.png' %}" alt="">
                                 {% endfor %}
-                            {% elif product.stars == 3 %}
+                            {% elif product.rating == 3 %}
                                 {% for star in "123"  %}
                                     <img src="{% static 'images/star.png' %}" alt="">
                                 {% endfor %}
                                 {% for star in "12"  %}
                                     <img src="{% static 'images/starline.png' %}" alt="">
                                 {% endfor %}
-                            {% elif product.stars == 2 %}
+                            {% elif product.rating == 2 %}
                                 {% for star in "12"  %}
                                     <img src="{% static 'images/star.png' %}" alt="">
                                 {% endfor %}
                                 {% for star in "123"  %}
                                     <img src="{% static 'images/starline.png' %}" alt="">
                                 {% endfor %}
-                            {% elif product.stars == 1 %}
+                            {% elif product.rating == 1 %}
                                 {% for star in "1"  %}
                                     <img src="{% static 'images/star.png' %}" alt="">
                                 {% endfor %}
@@ -158,7 +158,9 @@
                     </div>
                     <div class="actions">
                         <img class="add-to-wishlist" id={{product.id}} onclick="handleAddToWishlist({{product.id}})" src="{% static 'images/heart.png' %}" alt="" title="Add to wishlist">
-                        <img src="{% static 'images/cart.png' %}" onclick="handleAddToCart({{product.id}})" alt="" title="Add to cart">
+                        <a href="{% url 'shop:add-to-cart' product_id=product.id %}">
+                            <img src="{% static 'images/cart.png' %}" alt="" title="Add to cart">
+                        </a>
                         <a href="{% url 'shop:product-detail' product_id=product.id %}">
                             <img src="{% static 'images/view.png' %}" alt="" title="View product">
                         </a>

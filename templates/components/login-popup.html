@@ -1,7 +1,7 @@
 <div class="login-popup">
     <span>You need to Login</span>
     <div class="buttons">
-        <span id="login-button" style="background-color: var(--theme-3)" data-previous-url="{{ request.path }}">Login</span>
+        <a href="{% url 'login' %}?next={{request.path}}" style="background-color: var(--theme-3)">Login</a>
         <span class="cancel-login-popup" style="background-color: var(--theme-7)">Cancel</span>
     </div>
     <span class="close-login-popup">x</span>

@@ -16,32 +16,32 @@
                     <span><b>Category:</b> <a href="">{{product.category}}</a></span>
                     <span style="font-weight:bold;font-size:1.9rem;">{{product.name}}</span>
                     <a href="/" class="review">
-                        {% if product.stars == 5 %}
+                        {% if product.rating == 5 %}
                             {% for star in "12345"  %}
                                 <img src="{% static 'images/star.png' %}" alt="">
                             {% endfor %}
-                        {% elif product.stars == 4 %}
+                        {% elif product.rating == 4 %}
                             {% for star in "1234"  %}
                                 <img src="{% static 'images/star.png' %}" alt="">
                             {% endfor %}
                             {% for star in "1"  %}
                                 <img src="{% static 'images/starline.png' %}" alt="">
                             {% endfor %}
-                        {% elif product.stars == 3 %}
+                        {% elif product.rating == 3 %}
                             {% for star in "123"  %}
                                 <img src="{% static 'images/star.png' %}" alt="">
                             {% endfor %}
                             {% for star in "12"  %}
                                 <img src="{% static 'images/starline.png' %}" alt="">
                             {% endfor %}
-                        {% elif product.stars == 2 %}
+                        {% elif product.rating == 2 %}
                             {% for star in "12"  %}
                                 <img src="{% static 'images/star.png' %}" alt="">
                             {% endfor %}
                             {% for star in "123"  %}
                                 <img src="{% static 'images/starline.png' %}" alt="">
                             {% endfor %}
-                        {% elif product.stars == 1 %}
+                        {% elif product.rating == 1 %}
                             {% for star in "1"  %}
                                 <img src="{% static 'images/star.png' %}" alt="">
                             {% endfor %}
@@ -71,26 +71,105 @@
         </div>
         <div class="description">
             <div class="title">
-                <span id="description-button">Product Description</span>
-                <span id="review-button">User Reviews</span>
+                <input type="radio" name="description" id="description-button" value="description">
+                <label for="description-button">Product Description</label>
+                <input type="radio" name="review" id="review-button" value="review">
+                <label for="review-button">User Reviews ({{reviews|length}})</label>
             </div>
             <div class="line"></div>
             <span id="description">{{product.description|linebreaks}}</span>
             <div id="review">
-                
+                {% for review in reviews %}
+                    <div class="review">
+                        <div class="user-section">
+                            <img src="{% static 'images/people.png' %}" alt="">
+                            <div class="user-details">
+                                <span class="user-name">{{review.user.username|title}}</span>
+                                <span>Total spend : <b>₹100</b></span>
+                                <span>Total reviews : <b>5 Reviews</b></span>
+                            </div>
+                        </div>
+                        <div class="review-section">
+                            <div class="rating">
+                                {% if review.rating == 5 %}
+                                    {% for star in "12345"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif review.rating == 4 %}
+                                    {% for star in "1234"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "1"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif review.rating == 3 %}
+                                    {% for star in "123"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "12"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif review.rating == 2 %}
+                                    {% for star in "12"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "123"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% elif review.rating == 1 %}
+                                    {% for star in "1"  %}
+                                        <img src="{% static 'images/star.png' %}" alt="">
+                                    {% endfor %}
+                                    {% for star in "1234"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% else %}
+                                    {% for star in "12345"  %}
+                                        <img src="{% static 'images/starline.png' %}" alt="">
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            {% if review.comment %}
+                                <span class="comment">{{review.comment|linebreaks}}</span>
+                            {% endif %}
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% if request.user.is_authenticated %}
+                    <form class="write-comment" method="post" actions="{% url 'shop:add-review' %}">
+                        {% csrf_token %}
+                        <div class="comment">
+                            <div class="rating">
+                                <span>Your rating :</span>
+                                {% for star in "12345"  %}
+                                    <img src="{% static 'images/starline.png' %}" alt="">
+                                {% endfor %}
+                            </div>
+                            <input type="text" placeholder="Add a review" name="comment" value="">
+                            <img  id="sent-review" src="{% static 'images/send.png' %}" alt="">
+                        </div>
+                        <button type="submit">sent</button>
+                    </form>
+                {% endif %}
             </div>
+            <br>
+            <div class="line"></div>
         </div>
     </div>
 {% endblock main %} 
 {% block script %}
 <script>
+    $('#review').hide();
     $('#description-button').click(function(){
         $('#description').show();
         $('#review').hide();
-    })
+        $('#review-button').prop('checked', false);
+    });
     $('#review-button').click(function(){
         $('#review').show();
         $('#description').hide();
-    })
+        $('#description-button').prop('checked', false);
+    });
 </script>
 {% endblock script %}
