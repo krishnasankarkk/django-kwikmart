@@ -4,28 +4,32 @@ from cloudinary.models import CloudinaryResource
 from .models import Cart, Theme, UserTheme, SessionTheme
 
 def theme(request):
-    themes = Theme.objects.all()
-    if request.user.is_authenticated:
-        try:
-            user_theme = UserTheme.objects.get(user=request.user)
-            return {'selected_theme': user_theme.theme, 'themes': themes}
-        except UserTheme.DoesNotExist:
-            pass
+    try:
+        themes = Theme.objects.all()
+    except Theme.DoesNotExist:
+        return {}
     else:
-        user_session = request.session.session_key
-        if not user_session:
-            request.session.save()
-            user_session = request.session.session_key
-        try:
-            session_theme = SessionTheme.objects.get(user_session=user_session)
-        except SessionTheme.DoesNotExist:
+        if request.user.is_authenticated:
             try:
-                selected_theme = Theme.objects.get(selected=True)
-                return {'selected_theme': selected_theme, 'themes': themes}
-            except Theme.DoesNotExist:
-                return {'selected_theme': None, 'themes': themes}
+                user_theme = UserTheme.objects.get(user=request.user)
+                return {'selected_theme': user_theme.theme, 'themes': themes}
+            except UserTheme.DoesNotExist:
+                return {}
         else:
-            return {'selected_theme': session_theme.theme, 'themes': themes}
+            user_session = request.session.session_key
+            if not user_session:
+                request.session.save()
+                user_session = request.session.session_key
+            try:
+                session_theme = SessionTheme.objects.get(user_session=user_session)
+            except SessionTheme.DoesNotExist:
+                try:
+                    selected_theme = Theme.objects.get(selected=True)
+                    return {'selected_theme': selected_theme, 'themes': themes}
+                except Theme.DoesNotExist:
+                    return {'selected_theme': None, 'themes': themes}
+            else:
+                return {'selected_theme': session_theme.theme, 'themes': themes}
 
 
 def cart_items(request):
