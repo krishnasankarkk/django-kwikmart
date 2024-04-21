@@ -2,7 +2,7 @@
 
 {% block title %}Kwikmart • Wishlist{% endblock title %}
 
-{% load static %}
+{% load static custom_filters humanize %}
 
 {% block main %}
 {% include 'components/navbar.html' %}
@@ -12,10 +12,30 @@
     <div class="line"></div>
     <div class="wishlist-items">
         {% for item in wishlist %}
-            <a href="{% url 'shop:product-detail' product_id=item.product.id %}" class="item">
+            <div class="item">
                 <img src="{{item.product.image.url}}" alt="">
-                <span>{{item.product.name|truncatechars:20}}</span>
-            </a>
+                <span>{{item.product.name}}</span>
+                <img class="offer" src="{% static 'images/offer.png' %}" alt="">
+                <div class="product-details">
+                    <div class="review">
+                        {% for i in item.product.rating|custom_range %}
+                            <img src='{% static "images/star.png" %}' alt="">
+                        {% endfor %}
+                        {% for j in 5|subtract:item.product.rating|custom_range %}
+                            <img src='{% static "images/starline.png" %}' alt="">
+                        {% endfor %}
+                    </div>
+                    <span>₹<span class="mrp">{{ item.product.original_price|intcomma  }}</span></span>
+                    <span class="price">₹{{ item.product.offer_price|intcomma  }}<span class="discount">-{{item.product.discount}}%</span></span>
+                </div>
+                <div class="actions">
+                    <img src="{% static 'images/cart.png' %}" id={{item.product.id}} onclick="handleAddToCart({{item.product.id}})" alt="" title="Add to cart">
+                    <a href="{% url 'shop:product-detail' product_id=item.product.id %}">
+                        <img src="{% static 'images/view.png' %}" alt="" title="View product">
+                    </a>
+                    <img id="deleteItemFromWishlist" onclick="deleteItemFromWishlist({{item.product.id}})" src="{% static 'images/trash.png' %}" alt="">
+                </div>
+            </div>
         {% endfor %}
     </div>
 </div>

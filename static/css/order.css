@@ -1,0 +1,75 @@
+body{
+    margin-top: 5rem;
+}
+.orders-section {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: var(--theme-1);
+    margin: 1rem;
+    border-radius: 1rem;
+    gap: 1rem;
+}
+.orders-section .title {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+}
+.orders-section .title b {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+}
+.orders-section .title span {
+    background-color: var(--theme-2);
+    color: var(--theme-3); 
+    padding: .5rem;
+    border-radius: .5rem;
+}
+.orders-section .statistics {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+    margin-top: .5rem;
+}
+.orders-section .statistics .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--theme-2);
+    padding: .5rem;
+    border-radius: .5rem;
+}
+.orders-section .filters {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+    border-bottom: 1px solid var(--theme-5);
+    padding: .5rem;
+}
+.orders-section .filters span {
+    cursor: pointer;
+}
+.orders-section .filters span:hover {
+    color: var(--theme-3);
+}
+tr {
+    text-align: justify;
+}
+.orders-section table thead tr th {
+    background-color: var(--theme-2);
+    border-bottom: .15rem solid var(--theme-5);
+    color: var(--theme-5);
+    text-align: start;
+    padding-left: 2rem;
+}
+.orders-section table tbody tr td {
+    text-align: start;
+    padding-left: 2rem;
+    background-color: var(--theme-2);
+}

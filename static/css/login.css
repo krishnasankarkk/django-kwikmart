@@ -41,7 +41,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--theme-1);
+    background-color: var(--theme-4);
+    color: var(--theme-1);
     width: 90%;
     padding: 1rem;
     border-radius: 2rem;
@@ -53,11 +54,11 @@
 }
 .login-section form input {
     width: 90%;
-    background-color: var(--theme-4);
+    background-color: var(--theme-1);
     padding: 1rem;
     border-radius: 2rem;
     border: none;
-    color: var(--theme-1);
+    color: var(--theme-5);
     font-family: inherit;
 }
 .login-section form button {

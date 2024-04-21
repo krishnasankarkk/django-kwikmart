@@ -1,4 +1,5 @@
 # shop/models.py
+from typing import Any
 from django.db import models
 from cloudinary.models import CloudinaryField
 from django.core.validators import MaxValueValidator
@@ -33,6 +34,7 @@ class Product(models.Model):
     image = CloudinaryField('image')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)], default=1)
+    # today_deal = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
@@ -61,7 +63,7 @@ class Product(models.Model):
             return 0
 
     def _calculate_offer_price(self):
-        return math.ceil(float(float(self.original_price) * (1 - (float(self.discount) / 100)))/100)*100
+        return  math.ceil(float((self.original_price) - ((self.discount*self.original_price / 100))))   
     
     def _update_rating(self):
         all_reviews = []
@@ -77,7 +79,8 @@ class Carousel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Cart(models.Model):
-    user_session = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    user_session = models.CharField(max_length=100, null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     sub_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -86,6 +89,14 @@ class Cart(models.Model):
     def save(self, *args, **kwargs):
         self.sub_total = self.quantity * self.product.offer_price
         super().save(*args, **kwargs)
+        
+    def __str__(self):
+        if self.user:
+            return f"{self.product.name} IN CART OF USER '{self.user.username}'"
+        elif self.user_session:
+            return f"{self.product.name} IN CART WITH SESSION '{self.user_session}'"
+        else:
+            return f"{self.product.name} IN CART"
 
 class WishList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -107,6 +118,7 @@ class WishList(models.Model):
         super().save(*args, **kwargs)
 
 class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     user_session = models.CharField(max_length=100)
     billing_name = models.CharField(max_length=255)
     billing_address = models.TextField()
@@ -115,6 +127,7 @@ class Order(models.Model):
     billing_postal_code = models.CharField(max_length=20)
     billing_country = models.CharField(max_length=100)
     payment_method = models.CharField(max_length=50)
+    payment_status = models.BooleanField(default=False)
     order_number = models.CharField(max_length=20, unique=True)
     order_date = models.DateTimeField(auto_now_add=True)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -136,11 +149,11 @@ class Order(models.Model):
         return f"Order {self.order_number}"
     
     def _generate_order_number(self):
-        prefix = 'KM-ORDER'
+        prefix = 'KMO'
         last_order = Order.objects.order_by('-id').first()
         last_order_number = last_order.id if last_order else 0
         new_order_number = (last_order_number) + 1
-        return f'{prefix}:{str(new_order_number).zfill(6)}'
+        return f'{prefix}-{str(new_order_number).zfill(6)}'
     
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
@@ -164,3 +177,33 @@ class Review(models.Model):
     
     def __str__(self):
         return f"Review by {self.user.username} for {self.product.name}"
+
+class Theme(models.Model):
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(unique=True)
+    primary_color = models.CharField(max_length=50, blank=True, null=True)
+    selected = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.name
+    
+    def save(self, *args, **kwargs):
+        if self.selected:
+            # Deselect all other themes
+            Theme.objects.exclude(pk=self.pk).update(selected=False)
+        super().save(*args, **kwargs)
+         
+class UserTheme(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"User : {self.user.username} | Theme : {self.theme.name} "
+    
+class SessionTheme(models.Model):
+    user_session = models.CharField(max_length=100, null=True, blank=True)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"User Session : {self.user_session} | Theme : {self.theme.name} "
+

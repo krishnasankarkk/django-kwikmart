@@ -1,5 +1,76 @@
 {% extends 'base.html' %}
+{% load static custom_filters %}
 {% block title %}Kwikmart • Orders{% endblock title %}
 {% block main %}
 {% include 'components/navbar.html' %}
+<link rel="stylesheet" href="{% static 'css/order.css' %}">
+<div class="orders-section">
+    <div class="title">
+        <b>Orders</b>
+        <span>Export</span>
+    </div>
+    <div class="line"></div>
+    {% if orders %}
+        <div class="statistics">
+            <div class="item">
+                <span>Total Orders</span>
+                <span>0</span>
+            </div>
+            <div class="item">
+                <span>Total Returns</span>
+                <span>0</span>
+            </div>
+            <div class="item">
+                <span>Total Spent</span>
+                <span>0</span>
+            </div>
+            <div class="item">
+                <span>Total Earnings</span>
+                <span>0</span>
+            </div>
+        </div>
+        <div class="filters">
+            <span>All orders ({{orders|length}})</span>
+            <span>Pending (0)</span>
+            <span>Processing (0)</span>
+            <span>Shipped (0)</span>
+            <span>Delivered (0)</span>
+            <span>Cancelled (0)</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Billing Name</th>
+                    <th>Total Items</th>
+                    <th>Total Amount</th>
+                    <th>Payment Method</th>
+                    <th>Payment Status</th>
+                    <th>Order Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>{{order.order_number}}</td>
+                        <td>{{order.order_date}}</td>
+                        <td>{{order.billing_name}}</td>
+                        <td>{{order.total_quantity}}</td>
+                        <td>₹{{order.total_amount}}</td>
+                        <td>{{order.payment_method|replace:"_"|title}}</td>
+                        
+                        {% if order.payment_status %}
+                            <td style="color:var(--theme-6)">Paid</td>
+                        {% else %}
+                            <td style="color:var(--theme-7)">Not Paid</td>
+                        {% endif %}
+                            
+                        <td>{{order.status}}</td>
+                    </tr>
+                {% endfor %} 
+            </tbody>
+        </table>
+    {% endif %}
+</div>
 {% endblock main %}

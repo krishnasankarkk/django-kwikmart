@@ -34,7 +34,7 @@ SECRET_KEY = config('SECRET_KEY', default='')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', 'localhost', '13.201.18.50']
 
 LOGIN_URL = '/login/'
 
@@ -77,7 +77,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'shop.context_processors.cart_item_count',
+                'shop.context_processors.cart_items',
+                'shop.context_processors.theme',
             ],
         },
     },

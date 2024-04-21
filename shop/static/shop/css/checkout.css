@@ -8,7 +8,7 @@ body::-webkit-scrollbar {
 }
 .checkout-section {
     margin: 0 1rem;
-    background-color: var(--theme-2);
+    background-color: var(--theme-1);
     border-radius: 1rem;
     padding: 1rem;
 }
@@ -22,8 +22,7 @@ body::-webkit-scrollbar {
     gap: 1rem;
 }
 .checkout-form .billing {
-    background-color: var(--theme-1);
-    padding: 2rem;
+    background-color: var(--theme-2);
     padding-top: 0%;
     border-radius: 1rem;
     width: auto;
@@ -36,46 +35,38 @@ body::-webkit-scrollbar {
     display: flex;
     flex-direction: column;
     width: 100%;
-}
-.checkout-form .submit-button {
-    background-color: var(--theme-4);
-    color: var(--theme-1);
-    border: none;
-    border-radius: 1rem;
-    font-family: inherit;
-    font-weight: bold;
-    font-size: large;
     padding: 1rem;
-    cursor: pointer;
-    width: 100%;
-    transition: all .2s ease;
 }
-.checkout-form .submit-button:hover {
-    transform: scale(1.05);
+.checkout-form .title {
+    color: var(--theme-1);
     background-color: var(--theme-3);
+    width: 100%;
+    font-weight: 800;
+    font-size: 1.2rem;
+    border-radius: .5rem .5rem 0 0;
 }
-.checkout-form .billing h3, .checkout-form .orders h3 {
-    color: var(--theme-3);
+.checkout-form .title span {
+    margin-left: 1rem;
 }
 .checkout-form label {
-    color: var(--theme-4);
+    color: var(--theme-3);
     font-size: 1rem;
 }
 .checkout-form input, .checkout-form textarea {
     max-width: 40rem;
     min-width: 40rem;
     min-height: 1rem;
-    background-color: transparent;
     border: none;
-    background-color: var(--theme-2);
-    border-bottom: .1rem solid var(--theme-3);
+    background-color: var(--theme-1);
+    border-radius: 0 .5rem .5rem .5rem;
+    border-bottom: .1rem solid var(--theme-4);
     font-family: inherit;
     color: var(--theme-5);
     outline: none;
     padding: .5rem;
 }
 .checkout-form input:-webkit-autofill, .checkout-form textarea:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px var(--theme-2) inset;
+    -webkit-box-shadow: 0 0 0 1000px var(--theme-1) inset;
     -webkit-text-fill-color: var(--theme-5);
 }
 .checkout-form .order-section {
@@ -96,14 +87,16 @@ body::-webkit-scrollbar {
     justify-content: start;
     gap: 1rem;
     width: 100%;
+    padding: 1rem;
 }
 .checkout-form .order-section .payment-methods .payment-provider input {
     display: none;
 }
 .checkout-form .order-section .payment-methods .payment-provider label {
-    background-color: var(--theme-5);
-    color: var(--theme-1);
+    background-color: whitesmoke;
+    color: rgb(30, 36, 43);
     font-weight: bold;
+    font-size: .8rem;
     padding: .5rem;
     border-radius: .5rem;
     display: flex;
@@ -117,38 +110,48 @@ body::-webkit-scrollbar {
     background-color: var(--theme-4);
 }
 .checkout-form .order-section .payment-methods .payment-provider img {
-    width: 2rem;
+    width: 1.5rem;
     height: auto;
 }
 .checkout-form .order-section .payment-methods .payment-provider input[name="payment_method"]:checked + label {
     background-color: var(--theme-6);
 }
 .checkout-form .orders {
-    background-color: var(--theme-1);
-    padding: 2rem;
-    padding-top: 1rem;
+    background-color: var(--theme-2);
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: 1rem;
     width: auto;
+}
+.checkout-form .orders .checkout-order-section {
+    /* padding: 1rem; */
+    background-color: var(--theme-2);
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 100%;
 }
 .checkout-form .orders .cart_items {
     max-height: 15rem;
     overflow-y: auto;
-    background-color: var(--theme-2);
-    border-radius: 1rem;
+    background-color: var(--theme-1);
+    padding: .5rem;
+    border-radius: .5rem;
+    width: auto;
+    margin: 1rem;
+}
+.checkout-form .orders .cart_items table {
     width: 100%;
-    padding: 1rem 0 1rem 1rem;
 }
 .checkout-form .orders .cart_items tr {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: start;
-    gap: 1rem;
-    margin: 1rem;
+    text-align: center;
+}
+.checkout-form .orders .cart_items table td {
+    text-align: center;
+    color: var(--theme-1);
+    background-color: var(--theme-4);
 }
 .checkout-form .payment-details {
     display: flex;
@@ -159,18 +162,48 @@ body::-webkit-scrollbar {
 .checkout-form .card-details input {
     max-width: 100%;
 }
-.checkout-form .total {
+.checkout-form .place-order {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: auto;
+    gap: .5rem ;
+}
+.charges {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: end;
-    width: 100%;
-    gap: 1rem;
-    font-size: 1.2rem;
-}
-.checkout-form .total #total_price {
-    background-color: var(--theme-2);
-    padding: 1rem;
+    justify-content: space-between;
+    background-color: var(--theme-1);
     border-radius: .5rem;
+    padding: .5rem;
+    gap: 1rem;
+    width: 97%;
+}
+.checkout-form .charges #total_price {
+    background-color: var(--theme-2);
+    padding: .5rem;
+    border-radius: .5rem;
+    color: var(--theme-6);
+    font-weight: bold;
     font-size: 1.3rem;
+}
+.checkout-form .no-items {
+    text-align: center;
+}
+.checkout-form .submit-button {
+    background-color: var(--theme-3);
+    color: var(--theme-1);
+    border: none;
+    border-radius: .5rem;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: large;
+    padding: .5rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all .2s ease;
+}
+.checkout-form .submit-button:hover {
+    background-color: var(--theme-6);
 }

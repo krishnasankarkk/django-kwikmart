@@ -1,0 +1,737 @@
+{% load static %}
+<script>
+    $('.top').click(function(){
+        $("html").scrollTop(0);
+    });
+    Array.prototype.remove = function(value) {
+        var index = this.indexOf(value);
+        if (index !== -1) {
+            this.splice(index, 1);
+        }
+        return this;
+    };
+    
+    // Function to fetch cart data via AJAX
+    var csrftoken = getCookie('csrftoken'); 
+        
+    // Function to get CSRF token from cookie
+    function getCookie(name) {
+        var cookieValue = [];
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // update messages.
+    function updateMessages(res){
+        var message = $('<div>');
+            message.addClass('message');
+            if(res.success){
+                message.addClass('success');
+            }else {
+                message.addClass('warning');
+            }
+            message.text(res.message);
+            $('.messages').empty();
+            $('.messages').append(message);
+            $('.messages').show();
+
+            // Hide the message after 5 seconds (adjust as needed)
+            setTimeout(() => {
+                message.remove();
+            }, 1000);
+    }
+
+    
+
+    // Clear products filters.
+    function clearProductFilters(){
+        $('input[type="checkbox"]').prop('check', false);
+    }
+
+    // Function to filter products.
+    function filterProducts(){
+        var categories = [];
+        var brands = [];
+        var ratings = [];
+        var offers = [];
+        var prices = [];
+        $('input[name="category"]').each(function(){
+            if ($(this).prop('checked')) {
+                categories.push($(this).attr('value'));
+            } else {
+                categories.remove($(this).attr('value'));
+            }
+        })
+        $('input[name="price-range"]').each(function(){
+            if ($(this).prop('checked')) {
+                console.log($(this).attr('name'), $(this).attr('value'))
+                prices.push($(this).attr('value'));
+            } else {
+                prices.remove($(this).attr('value'));
+            }
+        })
+        $('input[name="brand"]').each(function(){
+            if ($(this).prop('checked')) {
+                brands.push($(this).attr('value'));
+            } else {
+                brands.remove($(this).attr('value'));
+            }
+        })
+        $('input[name="rating"]').each(function(){
+            if ($(this).prop('checked')) {
+                ratings.push($(this).attr('value'));
+            } else {
+                ratings.remove($(this).attr('value'));
+            }
+        })
+        $('input[name="offer"]').each(function(){
+            if ($(this).prop('checked')) {
+                offers.push($(this).attr('value'));
+            } else {
+                offers.remove($(this).attr('value'));
+            }
+        })
+        filters = {
+            'categories': JSON.stringify(categories),
+            'prices': JSON.stringify(prices),
+            'brands': JSON.stringify(brands),
+            'ratings': JSON.stringify(ratings),
+            'offers': JSON.stringify(offers),
+        }
+        $('#loading-screen').show();
+        $.ajax({
+            type: 'GET',
+            url: '{% url "shop:filter-products" %}',
+            data: filters,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            dataType: 'json',
+            success: (res)=>{
+                $('#loading-screen').hide();
+                if(res){
+                    updateMessages(res);
+                    var productsContainer = $('#shop-products');
+                    productsContainer.empty();
+                    // Append new products to the container
+                    res.products.forEach(function(product) {
+                        var product_id = parseInt(product.id);
+                        var productViewUrl = "/product-detail/"+product_id+"/";
+                        var productHtml = `
+                            <div class="product" title="${product.name}">
+                                <img id="productImage" src="${product.image_url}" alt="">
+                                <div class="product-details">
+                                    <span>${product.name.substring(0, 15)}</span>
+                                    <div class="review">
+                                        ${updateRating(product.rating)}
+                                    </div>
+                                    <span>₹<span class="mrp">${product.original_price}</span></span>
+                                    <span class="price">₹${product.offer_price}<span class="discount">-${product.discount}%</span></span>
+                                </div>
+                                <div class="actions">
+                                    <img class="add-to-wishlist" id="${product.id}" onclick="handleAddToWishlist(${product.id})" src="{% static 'images/heart.png' %}" alt="" title="Add to wishlist">
+                                    <img src="{% static 'images/cart.png' %}" id="${product.id}" onclick="handleAddToCart(${product.id})" alt="" title="Add to cart">
+                                    <a href="${productViewUrl}">
+                                        <img src="{% static 'images/view.png' %}" alt="" title="View product">
+                                    </a>
+                                </div>
+                            </div>`;
+                        
+                        productsContainer.append(productHtml);
+                    });
+                }
+            },
+            error: (err)=>{
+                $('#loading-screen').hide();
+                console.log(err);
+            }
+        });
+        
+    }
+    $(document).ready(function(){
+        $('input[type="checkbox"]').change(function(){
+            filterProducts();
+        })
+    })
+    // Function to handle checkbox state change
+    function handleCheckboxState() {
+        // Loop through each checkbox
+        $('input[type="checkbox"]').each(function() {
+            // Check if the current checkbox is checked
+            if ($(this).prop('checked')) {
+                
+                // Show the corresponding checked element and hide the unchecked element
+                $(this).siblings('.checkbox-checked').show();
+                $(this).siblings('.checkbox-unchecked').hide();
+            } else {
+                // Hide the corresponding checked element and show the unchecked element
+                $(this).siblings('.checkbox-checked').hide();
+                $(this).siblings('.checkbox-unchecked').show();
+            }
+        });
+    }
+
+    // Event handler for checkbox change
+    $('input[type="checkbox"]').change(function() {
+        handleCheckboxState();
+    });
+
+    // Event handler for clicking on the checkbox icon
+    $('.checkbox').click(function() {
+        // Find the corresponding checkbox and toggle its state
+        var checkbox = $(this).siblings('input[type="checkbox"]');
+        checkbox.prop('checked', !checkbox.prop('checked'));
+        // Update the checkbox state
+        handleCheckboxState();
+    });
+
+    
+    
+    function toggleCheck(event) {
+        const checkbox = event.target;
+        const label = checkbox.parentNode;
+
+        if (checkbox.checked) {
+            label.style.backgroundImage = 'url("/static/images/checkbox.png")';
+        } else {
+            label.style.backgroundImage = 'url("/static/images/unchecked.png")';
+        }
+    }
+    //update rating stars.
+    function updateRating(rating){
+        var starsHTML = '';
+        for (var i = 0; i < rating; i++) {
+            starsHTML += '<img src="{% static "images/star.png" %}" alt="">';
+        }
+        for (var j = rating; j < 5; j++) {
+            starsHTML += '<img src="{% static "images/starline.png" %}" alt="">';
+        }
+        return starsHTML;
+    }
+
+    // Update cart popup.
+    function updateCartItems(cartItems) {
+        var cartItemsContainer = $('.cart_items tbody');
+        cartItemsContainer.empty(); // Clear existing cart items
+        
+        // Show or hide the "No items in cart" message based on cart items existence
+        if (cartItems.length === 0) {
+            $('.cart-popup').find('.cart_items').append($('<span>').text('No items in cart'));
+        } else {
+            $('.cart-popup').find('.cart_items span').remove(); // Remove the message if cart is not empty
+        }
+
+        // Loop through the received cart items and append them to the table body
+        cartItems.forEach(function(item) {
+            var row = $('<tr>').addClass('cart-item');
+            // Append table data for each cart item
+            row.append($('<td>').append($('<img>').attr('src', item.image)));
+            row.append($('<td>').addClass('product-name').append($('<span>')).text(item.product_name));
+            row.append($('<td>').append($('<span>')).text(item.quantity));
+            row.append($('<td>').append($('<span>').addClass('price').text('₹' + item.sub_total)));
+            row.append($('<td>').append($('<img>').addClass('delete').attr('src', '{% static "images/trash.png" %}').attr('title', 'Remove item from cart').attr('onclick', "deleteItemFromCart('"+item.id+"')")));
+            // Append the row to the table body
+            cartItemsContainer.append(row);
+        });
+    }
+    // Handle decrease item from cart.
+    function decreaseItemFromCart(productId){
+        $('#loading-screen').show();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "shop:decrease-item-from-cart" %}',
+            data: {
+                'product_id': productId,
+            },
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            dataType: 'json',
+            success: (res)=>{
+                $('#loading-screen').hide();
+                if(res){
+                    updateMessages(res)
+                    updateCartItems(res.cart_items);
+                    $('.count').text(res.cart_items_count);
+                    $('.checkout-button .price').text('₹' + res.total_price.toLocaleString());
+                    $('#total_price').text('₹' + res.total_price.toLocaleString());
+                }
+            },
+            error: (err)=>{
+                $('#loading-screen').hide();
+                console.log(err);
+            }
+        });
+    }
+    
+    // Handle add to cart click.
+    function handleAddToCart(productId){
+        $.ajax({
+            type: 'POST',
+            url: '{% url "shop:add-to-cart" %}',
+            data: {
+                'product_id': productId,
+            },
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            dataType: 'json',
+            success: (res)=>{
+                if(res){
+                    var message = $('<div>');
+                    message.addClass('message');
+                    if(res.success){
+                        message.addClass('success');
+                    }else {
+                        message.addClass('warning');
+                    }
+                    message.text(res.message);
+                    $('.messages').empty();
+                    $('.messages').append(message);
+                    $('.messages').show();
+                    updateCartItems(res.cart_items);
+                    $('.count').text(res.cart_items_count);
+                    $('.checkout-button .price').text('₹' + res.total_price.toLocaleString());
+                    $('#total_price').text('₹' + res.total_price.toLocaleString());
+    
+                    // Hide the message after 5 seconds (adjust as needed)
+                    setTimeout(() => {
+                        message.remove();
+                    }, 1000);
+                }
+            },
+            error: (err)=>{
+                console.log(err);
+            }
+        });
+    }
+    
+    // Handle add to wishlist click.
+    function handleAddToWishlist(productId){
+        if(isLoggedIn=='True'){
+            $('#loading-screen').show();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "shop:add-to-wishlist" %}',
+                data: {
+                    'product_id': productId,
+                    'name':'name',
+                },
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                dataType: 'json',
+                success: (res)=>{
+                    $('#loading-screen').hide();
+                    if(res){
+                        var message = $('<div>');
+                        message.addClass('message');
+                        if(res.success){
+                            message.addClass('success');
+                        }else {
+                            message.addClass('warning');
+                        }
+                        message.text(res.message);
+                        $('.messages').empty();
+                        $('.messages').append(message);
+                        $('.messages').show();
+    
+                        // Hide the message after 5 seconds (adjust as needed)
+                        setTimeout(() => {
+                            message.remove();
+                        }, 3000);
+                    }
+                },
+                error: (err)=>{
+                    $('#loading-screen').hide();
+                    console.log(err);
+                }
+            });
+        } else {
+            $('.login-popup').toggle();
+            $('.login-popup').css('display', 'flex');
+        }
+    }
+    var isLoggedIn = '{{request.user.is_authenticated}}';
+    
+    // delete item from cart.
+    function deleteItemFromCart(cart_item_id){
+        var url = '/delete-item-from-cart/'+cart_item_id;
+        $('#loading-screen').show();
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            success: (res)=>{
+                $('#loading-screen').hide();
+                if(res){
+                    updateMessages(res);
+                    $('.count').text(res.cart_items_count);
+                    $('.checkout-button .price').text('₹' + res.total_price.toLocaleString());
+                    updateCartItems(res.cart_items);
+                    location.reload();
+                }
+            },
+            error: (err)=>{
+                $('#loading-screen').hide();
+                console.log(err);
+            },
+        })
+    }
+    // delete item from wishlist.
+    //$("#deleteItemFromWishlist").click(deleteItemFromWishlist())
+    function deleteItemFromWishlist(product_id){
+        var url = '/delete-item-from-wishlist/'+product_id;
+        $('#loading-screen').show();
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            success: (res)=>{
+                $('#loading-screen').hide();
+                if(res){
+                    updateMessages(res);
+                    location.reload();
+                }
+            },
+            error: (err)=>{
+                $('#loading-screen').hide();
+                console.log(err);
+            },
+        })
+    }
+
+    // submit review if rating and comment is entered and clicked enter or send button.
+    function submitReview(product_id){
+        var comment = $('#written-comment').val();
+        var rating = $('input[name="rating"]:checked').val();
+        var data = {
+            'product_id': product_id,
+            'comment': comment,
+            'rating': rating,
+        }
+        if(rating){
+            $('#loading-screen').show();
+            $.ajax({
+                url: '{% url "shop:add-review" %}',
+                type: 'POST',
+                data: data,
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                },
+                success: function(response) {
+                    $('#loading-screen').hide();
+                    if(response){
+                        updateMessages(response);
+                        $('#productDetailReview').empty();
+                        $('#productDetailReview').append(updateRating(response.rating));
+                        $('#reviewsCount').empty();
+                        $('#reviewsCount').text(response.total_reviews+" Reviews");
+                        // Append the new review HTML to the reviews section
+                        
+                        var username = '{{request.user.username|title}}'
+                        var comment = response.review.comment
+                        var rating = response.review.rating
+                        var userImage = "{% static 'images/people.png' %}"
+                        {% verbatim %}
+                        var newReviewHTML = `
+                        <div class="review">
+                            <div class="user-section">
+                                <img src=${userImage} alt="">
+                                <div class="user-details">
+                                    <span class="user-name">${username}</span>
+                                </div>
+                            </div>
+                            <div class="review-section">
+                                <div class="rating">
+                                    ${updateRating(rating)}
+                                </div>
+                                <span class="comment" style="${comment ? '' : 'display:none;'}">${comment}</span>
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        `;
+                        {% endverbatim %}
+                        $(newReviewHTML).insertBefore('.write-comment');
+                        var currentCount = parseInt($('#reviews_count').text());
+                        $('#reviews_count').text(currentCount + 1);
+
+                        // Optionally, you can clear the comment field and reset the rating
+                        $('#written-comment').val('');
+                        $('input[name="rating"]').prop('checked', false);
+                        $('.star').attr('src', '{% static "images/starline.png" %}');
+                    }
+                },
+                error: function(error) {
+                    $('#loading-screen').hide();
+                    console.log(error)
+                }
+            });
+        }else {
+            var message = {
+                'success': false,
+                'message': 'Please add a rating!',
+            }
+            updateMessages(message)
+        }
+    }
+    $(document).ready(function() {
+        // product-detail.html
+        $('#reviews').hide();
+        $('#description-button').click(function(){
+            $('#description').show();
+            $('#reviews').hide();
+            $('#review-button').prop('checked', false);
+        });
+        $('#review-button').click(function(){
+            $('#reviews').show();
+            $('#description').hide();
+            $('#description-button').prop('checked', false);
+        });
+
+        $('#loading-screen').hide();
+        $('.cart-popup').hide();
+        $('.login-popup').hide();
+        $('.input-label').hide();
+
+        $('.star-label').hover(
+            function() {
+                var index = $(this).index('.star-label');
+    
+                $('.star-label').each(function(i) {
+                    if (i <= index) {
+                        $(this).find('.star').attr('src', '{% static "images/star.png" %}');
+                    } else {
+                        $(this).find('.star').attr('src', '{% static "images/starline.png" %}');
+                    }
+                });
+            },
+            function() {
+                // Reset stars after the checked star
+                var selectedRating = $('input[name="rating"]:checked').val();
+                $('.star').attr('src', '{% static "images/starline.png" %}');
+                $('.star-label').each(function(i) {
+                    if (i >= selectedRating) {
+                        $(this).find('.star').attr('src', '{% static "images/starline.png" %}');
+                    }else if(selectedRating){
+                        $(this).find('.star').attr('src', '{% static "images/star.png" %}');
+                    }
+                });
+            }
+        );
+    
+        // Attach change event handler to the radio buttons with name "rating"
+        $('input[name="rating"]').change(function() {
+            var selectedRating = $('input[name="rating"]:checked').val();
+    
+            $('.star').attr('src', '{% static "images/starline.png" %}');
+    
+            $('.star-label').each(function(i) {
+                if (i <= selectedRating) {
+                    $(this).find('.star').attr('src', '{% static "images/star.png" %}');
+                }
+            });
+        });
+
+        $('#written-comment').keypress((event)=>{
+            if(event.key == "Enter"){
+                submitReview($('#written-comment').data('product-id'));
+            }
+        });
+
+        var timeout;
+        
+        function hideAll(){
+            $('.themes').hide();
+            $('.user-options').hide();
+            $('.cart-popup').hide();
+        }
+
+        $('.theme').hover(function(){
+            hideAll();
+            clearTimeout(timeout); // Clear any previous timeout
+            $('.themes').show();
+        }, function(){
+            // Set a timeout to hide user options after 500 milliseconds
+            timeout = setTimeout(function(){
+                $('.themes').hide();
+            }, 500);
+        });
+
+        $('.themes').hover(function(){
+            clearTimeout(timeout); // Clear the timeout if user options are hovered
+        }, function(){
+            timeout = setTimeout(function(){
+                $('.themes').hide();
+            }, 500);
+        });
+        $('#loggined-user').hover(function(){
+            hideAll();
+            clearTimeout(timeout); // Clear any previous timeout
+            $('.user-options').show();
+        }, function(){
+            timeout = setTimeout(function(){
+                $('.user-options').hide();
+            }, 500);
+        });
+
+        $('.user-options').hover(function(){
+            clearTimeout(timeout); // Clear the timeout if user options are hovered
+        }, function(){
+            timeout = setTimeout(function(){
+                $('.user-options').hide();
+            }, 500);
+        });
+
+        $('.cart').hover(function(){
+            clearTimeout(timeout); // Clear any previous timeout
+            $('.themes').hide();
+            $('.cart-popup').show();
+        }, function(){
+            timeout = setTimeout(function(){
+                $('.cart-popup').hide();
+            }, 500);
+        });
+
+        $('.cart-popup').hover(function(){
+            $('.user-options').hide();
+            clearTimeout(timeout); // Clear the timeout if user options are hovered
+        }, function(){
+            // Set a timeout to hide user options after 500 milliseconds
+            timeout = setTimeout(function(){
+                $('.cart-popup').hide();
+            }, 500);
+        });
+        
+        // Handle form submission
+        $('.checkout-form').submit(function(event) {
+            // Prevent the default form submission
+            event.preventDefault();
+            const billingName = $('input[name="name"]').val();
+            const billingAddress = $('textarea[name="address"]').val();
+            const billingEmail = $('input[name="email"]').val();
+            const billingCity = $('input[name="city"]').val();
+            const billingPostalCode = $('input[name="postal_code"]').val();
+            const billingCountry = $('input[name="country"]').val();
+            const selectedPaymentMethod = $('input[name="payment_method"]:checked').val();
+            const totalAmount = parseInt($('#total_price').data('total-price'));
+            
+            // products from cart.
+            var cartItems = [] 
+            $('.cart-item').each(function(){
+                var productId = $(this).data("product-id");
+                var quantity = $(this).data("quantity");
+                if(productId){
+                    cartItems.push({
+                        'product_id': productId,
+                        'quantity': quantity,
+                    });
+                }
+            });
+        
+            // Data to place order.
+            const data = {
+                'name' : billingName,
+                'address' : billingAddress,
+                'email' : billingEmail,
+                'city' : billingCity,
+                'postal_code' : billingPostalCode,
+                'country' : billingCountry,
+                'payment_method' : selectedPaymentMethod,
+                'total_amount' : totalAmount,
+                'cart_items': JSON.stringify(cartItems),
+            }
+        
+            // Example: Send the selected value in an AJAX request
+            if(cartItems.length>0){
+                $('#loading-screen').show();
+                $.ajax({
+                    url: '{% url "shop:save-order" %}',
+                    type: 'POST',
+                    data: data,
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                    },
+                    success: function(response) {
+                        $('#loading-screen').hide();
+                        if(response){
+                            updateMessages(response);
+                        }
+                    },
+                    error: function(error) {
+                        $('#loading-screen').hide();
+                        console.log(error)
+                    }
+                });
+            }else {
+                var message = {
+                    'success': false,
+                    'message': 'No products in cart!',
+                }
+                updateMessages(message);
+            }
+        });
+        
+        // Show label when input field gains focus
+        $('input, textarea').focus(function() {
+            $(this).prev('.input-label').fadeIn();
+        });
+        
+        // Hide label when input field loses focus if no value entered
+        $('input, textarea').blur(function() {
+            if ($(this).val() === '') {
+                $(this).prev('.input-label').fadeOut();
+            }
+        });
+        
+        // Check for initial values and show labels accordingly
+        $('input, textarea').each(function() {
+            if ($(this).val() !== '') {
+                $(this).prev('.input-label').show();
+            }
+        });
+        const breadcrumbs = $('.breadcrumbs');
+        const homeLogo = $('.home-logo');
+        
+        // Calculate the initial width of the breadcrumbs container
+        const initialWidth = breadcrumbs.width();
+        
+        // Calculate the width of the home logo
+        const homeLogoWidth = homeLogo.width();
+        
+        // Decrease the width of the breadcrumbs container gradually until only the home logo is visible
+        let currentWidth = initialWidth;
+        const intervalId = setInterval(function() {
+            currentWidth -= 1; // Decrease width by 10 pixels (adjust as needed)
+            breadcrumbs.width(currentWidth);
+            
+            // Stop decreasing width when only the home logo is visible
+            if (currentWidth <= homeLogoWidth) {
+                clearInterval(intervalId);
+            }
+        }, 1); // Adjust the interval time as needed
+        
+        // When hovered, expand the breadcrumbs container back to its original width
+        breadcrumbs.mouseenter(function() {
+            breadcrumbs.width(initialWidth);
+        });
+        
+        // When not hovered, set the width back to only show the home logo
+        breadcrumbs.mouseleave(function() {
+            breadcrumbs.width(homeLogoWidth);
+        });
+    });
+</script>

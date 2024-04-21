@@ -16,7 +16,7 @@
                                 <img src="{{item.product.image.url}}" alt="">
                             </td>
                             <td class="product-name">
-                                <span>{{item.product.name|truncatechars:20}}</span>
+                                <span>{{item.product.name}}</span>
                             </td>
                             <td>
                                 <span>{{item.quantity}}</span>
@@ -38,7 +38,7 @@
         </table>
     </div>
     <div class="checkout-button">
-        <span>Sub Total: <b class="price">₹{{total_price|intcomma}}</b></span>
+        <span>Sub Total: <b class="price">₹{{total_offer_price|intcomma}}</b></span>
         <a href="{% url 'shop:checkout' %}">Checkout</a>
     </div>
 </div>

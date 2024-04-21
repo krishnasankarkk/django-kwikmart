@@ -8,15 +8,17 @@
     justify-content: center;
     width: 100%;
     height: 3rem;
-    background-color: var(--theme-2);
-    color: var(--theme-3);
+    background-color: var(--theme-1);
+    color: var(--theme-5);
+    box-shadow: 0 0 1rem black;
 }
 .footer .top:hover {
-    background-color: #3a3e44;
+    background-color: var(--theme-3);
+    color: var(--theme-5);
     cursor: pointer;
 }
 .footer .details {
-    background-color: #232b38;
+    background-color: var(--theme-2);
     width: 100%;
     height: 15rem;
     padding-top: 2rem;
@@ -62,7 +64,6 @@
     align-items: center;
     justify-content: center;
     color: var(--theme-5);
-    gap: 1rem;
 }
 .footer a {
     color: var(--theme-5);

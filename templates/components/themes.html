@@ -1,0 +1,5 @@
+<div class="themes">
+    {% for theme in themes %}
+        <a href="{% url 'shop:change-theme' theme_id=theme.id %}"><b style="background-color:{{theme.primary_color}};"></b>{{theme.name}}</a>
+    {% endfor %}
+</div>

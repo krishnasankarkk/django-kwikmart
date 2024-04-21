@@ -65,11 +65,11 @@
 }
 .signup-section form input {
     width: 90%;
-    background-color: var(--theme-4);
+    background-color: var(--theme-1);
     padding: 1rem;
     border-radius: 2rem;
     border: none;
-    color: var(--theme-1);
+    color: var(--theme-5);
     font-family: inherit;
 }
 .signup-section form ul {
@@ -91,12 +91,13 @@
 .signup-section form button:hover {
     transform: scale(1.05);
 }
-.signup-section .login a {
-    color: var(--theme-3);
+.signup-section .login {
+    color: var(--theme-1);
+    background-color: var(--theme-4);
     font-weight: bold;
     font-size: 1.1rem;
     cursor: pointer;
-    width: 100%;
+    width: 95%;
 }
 .signup-section .helptext {
     font-size: .8rem;

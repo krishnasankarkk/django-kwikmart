@@ -10,10 +10,12 @@
 <div class="checkout-section">
     <h2>Checkout</h2>
     <div class="line"></div>
-    <form method="post" action="{% url 'shop:save-order' %}" class="checkout-form">
+    <form method="POST" action="{% url 'shop:save-order' %}" class="checkout-form">
         {% csrf_token %}
         <div class="billing">
-            <h3>Billing details</h3>
+            <div class="title">
+                <span>Billing details</span>
+            </div>
             <div class="details-form">
                 <label class="input-label" for="id_name">Name</label>
                 <input type="text" id="id_name" name="name" maxlength="100" placeholder="Full Name" required><br>
@@ -39,7 +41,9 @@
         </div>
         <div class="order-section">
             <div class="orders">
-                <b>Payment methods</b>
+                <div class="title">
+                    <span>Payment methods</span>
+                </div>
                 <div class="payment-methods">
                     <div class="payment-provider">
                         <input type="radio" id="card" name="payment_method" value="card">
@@ -63,7 +67,7 @@
                         </label>
                     </div>
                     <div class="payment-provider">
-                        <input type="radio" id="cash_on_delivery" name="payment_method" value="cash_on_delivery">
+                        <input type="radio" id="cash_on_delivery" name="payment_method" value="cash_on_delivery" checked>
                         <label for="cash_on_delivery">
                             <img src="{% static 'images/cash-on-delivery.png' %}" alt="">
                             <span>Cash On Delivery</span>
@@ -118,40 +122,78 @@
                 </div> {% endcomment %}
             </div>
             <div class="orders">
-                <b>Order summary</b>
-                <div class="cart_items">
-                    <table>
-                        <tbody>
-                            {% if items_in_cart %}
-                                {% for item in items_in_cart %}
-                                    <tr class="cart-item" id="{{item.id}}" data-product-id="{{item.product.id}}" data-quantity="{{item.quantity}}">
-                                        <td>
-                                            <span>{{forloop.counter}}.</span>
-                                        </td>
-                                        <td class="product-name">
-                                            <span>{{item.product.name|truncatechars:20}}</span>
-                                        </td>
-                                        <td>
-                                            <span>{{item.quantity}}</span>
-                                        </td>
-                                        <td>
-                                            <span class="price">₹{{item.product.price|multiply:item.quantity|intcomma}}</span>
-                                        </td>
+                <div class="title">
+                    <span>Order summary</span>
+                </div>
+                <div class="checkout-order-section">
+                    <div class="cart_items">
+                        {% if items_in_cart %}
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Product</th>
+                                        <th>MRP</th>
+                                        <th>Quantity</th>
+                                        <th>Total MRP</th>
+                                        <th>Discount</th>
+                                        <th>Sub Total</th>
                                     </tr>
-                                {% endfor %}
-                            {% else %}
-                                <tr class="no-items">
-                                    <span>No items in cart</span>
-                                </tr>
-                            {% endif %}
-                        </tbody>
-                    </table>
+                                </thead>
+                                <tbody>
+                                    {% for item in cart_items %}
+                                        <tr class="cart-item" id="{{item.id}}" data-product-id="{{item.product_id}}" data-quantity="{{item.quantity}}">
+                                            <td>
+                                                <span>{{forloop.counter}}.</span>
+                                            </td>
+                                            <td class="product-name">
+                                                <span>{{item.product_name|truncatechars:20}}</span>
+                                            </td>
+                                            <td>
+                                                <span id="price">₹{{item.original_price}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{item.quantity}}</span>
+                                            </td>
+                                            <td>
+                                                <span id="price">₹{{item.total_mrp}}</span>
+                                            </td>
+                                            <td>
+                                                <span id="price">{{item.discount}}%</span>
+                                            </td>
+                                            <td>
+                                                <span id="price">₹{{item.sub_total|intcomma}}</span>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table> 
+                        {% else %}
+                            <div class="no-items">
+                                <span>No items in cart</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="place-order">
+                        <div class="charges">
+                            <span>Sub Total ({{cart_item_count}} items) :</span>
+                            <span>₹{{total_price|intcomma}}</span>
+                        </div>
+                        <div class="charges">
+                            <span>Delivery charges :</span>
+                            <span>+ ₹40</span>
+                        </div>
+                        <div class="charges">
+                            <span>Discount :</span>
+                            <span>- ₹{{total_discount_price}} ({{total_discount}}%)</span>
+                        </div>
+                        <div class="charges">
+                            <span style="font-size:1.5rem;">Total :</span>
+                            <span id="total_price" data-total-price="{{total_offer_price}}">₹{{total_offer_price|intcomma}}</span>
+                        </div>
+                        <button class="submit-button" type="submit">Place Order</button>
+                    </div>
                 </div>
-                <div class="total">
-                    <span>Total Payable :</span>
-                    <span class="price" id="total_price" data-total-price="{{total_price}}"> ₹{{total_price|intcomma}}</span>
-                </div>
-                <button class="submit-button" type="submit">Place Order</button>
             </div>
         </div>
     </form>
@@ -160,7 +202,7 @@
 {% block script %}
 <script>
     $(".payment-details").hide();
-    $("input[name='payment_method'][id='card']").prop('checked', true);
+    $("input[name='payment_method'][id='cash_on_delivery']").prop('checked', true);
     $("#card-details").show();
     $("input[name='payment_method']").change(function(){
         const selectedPaymentMethod = $("input[name='payment_method']:checked").val();

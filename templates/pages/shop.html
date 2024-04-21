@@ -1,166 +1,236 @@
 {% extends 'base.html' %}
-{% load static humanize %}
+{% load static humanize custom_filters%}
 {% block title %}Kwikmart • Shop{% endblock title %}
 {% block main %}
     {% include 'components/navbar.html' %}
     <link rel="stylesheet" href="{% static 'shop/css/shop.css' %}">
     <div class="shop">
         <div class="filters">
-            <span class="title">Filters</span>
+            <h1>Filters</h1>
             <div class="line"></div>
             <div class="categories">
-                <span class="title">Categories</span>
+                <span class="title">Categories 
+                    <img class="down" src="{% static 'images/chevron.png' %}" alt="">
+                    <img class="clear" src="{% static 'images/x.png' %}" alt="">
+                </span>
                 {% for category in categories %}
                     <div class="category">
-                        <label class="radio-button-label">
-                            <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
+                        <input type="checkbox" id="category-{{forloop.counter}}" name="category" class="category-check" value="{{category.id}}">
+                        <i class="checkbox checkbox-unchecked"></i>
+                        <i class="checkbox checkbox-checked"></i>
+                        <label for="category-{{forloop.counter}}" class="radio-button-label">
+                            <span>{{category.name}}</span>
                         </label>
-                        <span>{{category.name}}</span>
                     </div>
-                {% endfor %} 
+                {% endfor %}
             </div>
             <div class="categories">
 
-                <span class="title">Price Range</span>
+                <span class="title">Price Range
+                    <img class="down" src="{% static 'images/chevron.png' %}" alt="">
+                    <img class="clear" src="{% static 'images/x.png' %}" alt="">
+                </span>
                 <div class="category">
-                    <label class="radio-button-label">
-                        <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
+                    <input type="checkbox" id="price-1" name="price-range" class="category-check" value="1">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="price-1" class="radio-button-label">
+                        Below ₹1,000
                     </label>
-                    <span>Below ₹1,000</span>
                 </div>
                 <div class="category">
-                    <label class="radio-button-label">
-                        <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
+                    <input type="checkbox" id="price-2" name="price-range" class="category-check" value="2">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="price-2" class="radio-button-label">
+                        <span>₹1,000 - ₹5,000</span>
                     </label>
-                    <span>₹1,000 - ₹5,000</span>
                 </div>
                 <div class="category">
-                    <label class="radio-button-label">
-                        <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
+                    <input type="checkbox" id="price-3" name="price-range" class="category-check" value="3">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="price-3" class="radio-button-label">
+                        <span>₹5,000 - ₹10,000</span>
                     </label>
-                    <span>₹5,000 - ₹10,000</span>
                 </div>
                 <div class="category">
-                    <label class="radio-button-label">
-                        <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
+                    <input type="checkbox" id="price-4" name="price-range" class="category-check" value="4">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="price-4" class="radio-button-label">
+                        <span>₹10,000 - ₹20,000</span>
                     </label>
-                    <span>₹10,000 - ₹20,000</span>
                 </div>
                 <div class="category">
-                    <label class="radio-button-label">
-                        <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
+                    <input type="checkbox" id="price-5" name="price-range" class="category-check" value="5">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="price-5" class="radio-button-label">
+                        <span>₹20,000 - ₹30,000</span>
                     </label>
-                    <span>₹20,000 - ₹30,000</span>
                 </div>
                 <div class="category">
-                    <label class="radio-button-label">
-                        <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
+                    <input type="checkbox" id="price-6" name="price-range" class="category-check" value="6">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="price-6" class="radio-button-label">
+                        <span>₹30,000 - ₹40,000</span>
                     </label>
-                    <span>₹30,000 - ₹40,000</span>
                 </div>
                 <div class="category">
-                    <label class="radio-button-label">
-                        <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
+                    <input type="checkbox" id="price-7" name="price-range" class="category-check" value="7">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="price-7" class="radio-button-label">
+                        <span>₹40,000 - ₹50,000</span>
                     </label>
-                    <span>₹40,000 - ₹50,000</span>
                 </div>
                 <div class="category">
-                    <label class="radio-button-label">
-                        <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
+                    <input type="checkbox" id="price-8" name="price-range" class="category-check" value="8">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="price-8" class="radio-button-label">
+                        <span>Above ₹50,000</span>
                     </label>
-                    <span>Above ₹50,000</span>
                 </div>
             </div>
             <div class="categories">
-                <span class="title">Brand</span>
-                {% for category in categories %}
+                <span class="title">Brand
+                    <img class="down" src="{% static 'images/chevron.png' %}" alt="">
+                    <img class="clear" src="{% static 'images/x.png' %}" alt="">
+                </span>
+                {% for brand in brands %}
                     <div class="category">
-                        <label class="radio-button-label">
-                            <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
+                        <input type="checkbox" id="brand-{{forloop.counter}}" name="brand" class="category-check" value="{{forloop.counter}}">
+                        <i class="checkbox checkbox-unchecked"></i>
+                        <i class="checkbox checkbox-checked"></i>
+                        <label for="brand-{{forloop.counter}}" class="radio-button-labels">
+                            {{brand.name}}
                         </label>
-                        <span>{{category.name}}</span>
                     </div>
                 {% endfor %} 
             </div>
             <div class="categories">
-                <span class="title">Rating & Reviews</span>
-                {% for category in categories %}
-                    <div class="category">
-                        <label class="radio-button-label">
-                            <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
-                        </label>
-                        <span>{{category.name}}</span>
-                    </div>
-                {% endfor %} 
+                <span class="title">Rating & Reviews
+                    <img class="down" src="{% static 'images/chevron.png' %}" alt="">
+                    <img class="clear" src="{% static 'images/x.png' %}" alt="">
+                </span>
+                <div class="category">
+                    <input type="checkbox" id="rating-1" name="rating" class="category-check" value="5">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="rating-1" class="radio-button-label">
+                        5 Stars
+                    </label>
+                </div>
+                <div class="category">
+                    <input type="checkbox" id="rating-2" name="rating" class="category-check" value="4">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="rating-2" class="radio-button-label">
+                        4 Stars
+                    </label>
+                </div>
+                <div class="category">
+                    <input type="checkbox" id="rating-3" name="rating" class="category-check" value="3">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="rating-3" class="radio-button-label">
+                        3 Stars
+                    </label>
+                </div>
+                <div class="category">
+                    <input type="checkbox" id="rating-4" name="rating" class="category-check" value="2">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="rating-4" class="radio-button-label">
+                        2 Stars
+                    </label>
+                </div>
+                <div class="category">
+                    <input type="checkbox" id="rating-5" name="rating" class="category-check" value="1">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="rating-5" class="radio-button-label">
+                        1 Star
+                    </label>
+                </div>
             </div>
             <div class="categories">
-                <span class="title">Offers</span>
-                {% for category in categories %}
-                    <div class="category">
-                        <label class="radio-button-label">
-                            <input type="checkbox" name="category" class="category-check" value="{{forloop.counter}}">
-                        </label>
-                        <span>{{category.name}}</span>
-                    </div>
-                {% endfor %} 
+                <span class="title">Offers
+                    <img class="down" src="{% static 'images/chevron.png' %}" alt="">
+                    <img class="clear" src="{% static 'images/x.png' %}" alt="">
+                </span>
+                <div class="category">
+                    <input type="checkbox" id="offer-1" name="offer" class="category-check" value="50">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="offer-1" class="radio-button-label">
+                        50 % Offer
+                    </label>
+                </div>
+                <div class="category">
+                    <input type="checkbox" id="offer-2" name="offer" class="category-check" value="40">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="offer-2" class="radio-button-label">
+                        40 % Offer
+                    </label>
+                </div>
+                <div class="category">
+                    <input type="checkbox" id="offer-3" name="offer" class="category-check" value="30">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="offer-3" class="radio-button-label">
+                        30 % Offer
+                    </label>
+                </div>
+                <div class="category">
+                    <input type="checkbox" id="offer-4" name="offer" class="category-check" value="20">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="offer-4" class="radio-button-label">
+                        20 % Offer
+                    </label>
+                </div>
+                <div class="category">
+                    <input type="checkbox" id="offer-5" name="offer" class="category-check" value="10">
+                    <i class="checkbox checkbox-unchecked"></i>
+                    <i class="checkbox checkbox-checked"></i>
+                    <label for="offer-5" class="radio-button-label">
+                        10 % Offer
+                    </label>
+                </div>
             </div>
         </div>
         <div class="product-section">
-            <span class="title">Products</span>
+            <h1>Products</h1>
             <div class="line"></div>
-            <div class="products">
+            <div class="products" id="shop-products">
                 {% for product in products %}
                 <div class="product" title="{{product.name}}">
                     <img id="productImage" src="{{ product.image.url }}" alt="">
+                    <img class="offer" src="{% static 'images/offer.png' %}" alt="">
+                    {% if is_new %}
+                        <img class="new" src="{% static 'images/new.png' %}" alt="">
+                    {% endif %}
                     <div class="product-details">
-                        <span>{{ product.name|truncatechars:15}}</span>
+                        <span>{{ product.name}}</span>
                         <div class="review">
-                            {% if product.rating == 5 %}
-                                {% for star in "12345"  %}
-                                    <img src="{% static 'images/star.png' %}" alt="">
-                                {% endfor %}
-                            {% elif product.rating == 4 %}
-                                {% for star in "1234"  %}
-                                    <img src="{% static 'images/star.png' %}" alt="">
-                                {% endfor %}
-                                {% for star in "1"  %}
-                                    <img src="{% static 'images/starline.png' %}" alt="">
-                                {% endfor %}
-                            {% elif product.rating == 3 %}
-                                {% for star in "123"  %}
-                                    <img src="{% static 'images/star.png' %}" alt="">
-                                {% endfor %}
-                                {% for star in "12"  %}
-                                    <img src="{% static 'images/starline.png' %}" alt="">
-                                {% endfor %}
-                            {% elif product.rating == 2 %}
-                                {% for star in "12"  %}
-                                    <img src="{% static 'images/star.png' %}" alt="">
-                                {% endfor %}
-                                {% for star in "123"  %}
-                                    <img src="{% static 'images/starline.png' %}" alt="">
-                                {% endfor %}
-                            {% elif product.rating == 1 %}
-                                {% for star in "1"  %}
-                                    <img src="{% static 'images/star.png' %}" alt="">
-                                {% endfor %}
-                                {% for star in "1234"  %}
-                                    <img src="{% static 'images/starline.png' %}" alt="">
-                                {% endfor %}
-                            {% else %}
-                                {% for star in "12345"  %}
-                                    <img src="{% static 'images/starline.png' %}" alt="">
-                                {% endfor %}
-                            {% endif %}
+                            {% for i in product.rating|custom_range %}
+                                <img src='{% static "images/star.png" %}' alt="">
+                            {% endfor %}
+                            {% for j in 5|subtract:product.rating|custom_range %}
+                                <img src='{% static "images/starline.png" %}' alt="">
+                            {% endfor %}
                         </div>
                         <span>₹<span class="mrp">{{ product.original_price|intcomma  }}</span></span>
                         <span class="price">₹{{ product.offer_price|intcomma  }}<span class="discount">-{{product.discount}}%</span></span>
                     </div>
                     <div class="actions">
                         <img class="add-to-wishlist" id={{product.id}} onclick="handleAddToWishlist({{product.id}})" src="{% static 'images/heart.png' %}" alt="" title="Add to wishlist">
-                        <a href="{% url 'shop:add-to-cart' product_id=product.id %}">
-                            <img src="{% static 'images/cart.png' %}" alt="" title="Add to cart">
-                        </a>
+                        <img src="{% static 'images/cart.png' %}" id={{product.id}} onclick="handleAddToCart({{product.id}})" alt="" title="Add to cart">
                         <a href="{% url 'shop:product-detail' product_id=product.id %}">
                             <img src="{% static 'images/view.png' %}" alt="" title="View product">
                         </a>
@@ -171,24 +241,3 @@
         </div>
     </div>
 {% endblock main %}
-{% block script %}
-<script>
-    const checkBoxes = document.querySelectorAll('.category-check');
-    
-    checkBoxes.forEach(checkbox => {
-        checkbox.addEventListener('change', toggleCheck);
-    });
-    
-    function toggleCheck(event) {
-        const checkbox = event.target;
-        const label = checkbox.parentNode;
-
-        if (checkbox.checked) {
-            label.style.backgroundImage = 'url("/static/images/checkbox.png")';
-        } else {
-            label.style.backgroundImage = 'url("/static/images/unchecked.png")';
-        }
-    }
-    
-</script>
-{% endblock script %}

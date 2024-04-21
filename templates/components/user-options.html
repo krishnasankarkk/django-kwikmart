@@ -2,23 +2,23 @@
 <div class="user-options">
     <a href="{% url 'profile' %}" class="user-option">
         <img src="{% static 'images/people.png' %}" alt="">
-        <span>Profile</span>
+        <span>Your account</span>
     </a>
     
     {% if request.user.is_superuser %}
     <a href="/admin" class="user-option">
-        <img src="{% static 'images/people.png' %}" alt="">
-        <span>Admin</span>
+        <img src="{% static 'images/admin.png' %}" alt="">
+        <span>Admin Panel</span>
     </a>
     {% endif %}
 
     <a href="{% url 'shop:wishlist' %}" class="user-option">
         <img src="{% static 'images/heart.png' %}" alt="">
-        <span>Wishlist</span>
+        <span>Your Wishlist</span>
     </a>
     <a href="{% url 'shop:orders' %}" class="user-option">
         <img src="{% static 'images/orders.png' %}" alt="">
-        <span>Orders</span>
+        <span>Your Orders</span>
     </a>
     <a href="{% url 'logout' %}" class="user-option">
         <img src="{% static 'images/logout.png' %}" alt="">

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
+{% load custom_filters %}
 {% block title %}Kwikmart Online Shopping{% endblock title %}
 {% block main %}
     {% include 'components/navbar.html' %}
@@ -191,46 +192,18 @@
                     <div class="product" title="{{product.name}}">
                         <img id="productImage" src="{{ product.image.url }}" alt="">
                         <img class="offer" src="{% static 'images/offer.png' %}" alt="">
+                        {% if is_new %}
+                            <img class="new" src="{% static 'images/new.png' %}" alt="">
+                        {% endif %}
                         <div class="product-details">
                             <span>{{ product.name|truncatechars:18}}</span>
                             <div class="review">
-                                {% if product.rating == 5 %}
-                                    {% for star in "12345"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                {% elif product.rating == 4 %}
-                                    {% for star in "1234"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                    {% for star in "1"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% elif product.rating == 3 %}
-                                    {% for star in "123"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                    {% for star in "12"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% elif product.rating == 2 %}
-                                    {% for star in "12"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                    {% for star in "123"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% elif product.rating == 1 %}
-                                    {% for star in "1"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                    {% for star in "1234"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% else %}
-                                    {% for star in "12345"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% endif %}
+                                {% for i in product.rating|custom_range %}
+                                    <img src='{% static "images/star.png" %}' alt="">
+                                {% endfor %}
+                                {% for j in 5|subtract:product.rating|custom_range %}
+                                    <img src='{% static "images/starline.png" %}' alt="">
+                                {% endfor %}
                             </div>
                             <span>₹<span class="mrp">{{ product.original_price|intcomma  }}</span></span>
                             <span class="price">₹{{ product.offer_price|intcomma  }}<span class="discount">-{{product.discount}}%</span></span>
@@ -264,43 +237,12 @@
                 <div class="details">
                     <span>{{best_deal.name}}</span>
                     <div class="review">
-                        {% if best_deal.rating == 5 %}
-                            {% for star in "12345"  %}
-                                <img src="{% static 'images/star.png' %}" alt="">
-                            {% endfor %}
-                        {% elif best_deal.rating == 4 %}
-                            {% for star in "1234"  %}
-                                <img src="{% static 'images/star.png' %}" alt="">
-                            {% endfor %}
-                            {% for star in "1"  %}
-                                <img src="{% static 'images/starline.png' %}" alt="">
-                            {% endfor %}
-                        {% elif best_deal.rating == 3 %}
-                            {% for star in "123"  %}
-                                <img src="{% static 'images/star.png' %}" alt="">
-                            {% endfor %}
-                            {% for star in "12"  %}
-                                <img src="{% static 'images/starline.png' %}" alt="">
-                            {% endfor %}
-                        {% elif best_deal.rating == 2 %}
-                            {% for star in "12"  %}
-                                <img src="{% static 'images/star.png' %}" alt="">
-                            {% endfor %}
-                            {% for star in "123"  %}
-                                <img src="{% static 'images/starline.png' %}" alt="">
-                            {% endfor %}
-                        {% elif best_deal.rating == 1 %}
-                            {% for star in "1"  %}
-                                <img src="{% static 'images/star.png' %}" alt="">
-                            {% endfor %}
-                            {% for star in "1234"  %}
-                                <img src="{% static 'images/starline.png' %}" alt="">
-                            {% endfor %}
-                        {% else %}
-                            {% for star in "12345"  %}
-                                <img src="{% static 'images/starline.png' %}" alt="">
-                            {% endfor %}
-                        {% endif %}
+                        {% for i in best_deal.rating|custom_range %}
+                            <img src='{% static "images/star.png" %}' alt="">
+                        {% endfor %}
+                        {% for j in 5|subtract:best_deal.rating|custom_range %}
+                            <img src='{% static "images/starline.png" %}' alt="">
+                        {% endfor %}
                     </div>
                     <span>₹<span class="mrp">{{ best_deal.original_price|intcomma  }}</span></span>
                     <span class="price">₹{{ best_deal.offer_price|intcomma  }}<span class="discount">-{{best_deal.discount}}%</span></span>
@@ -319,46 +261,18 @@
                     <div class="product" title="{{product.name}}">
                         <img id="productImage" src="{{ product.image.url }}" alt="">
                         <img class="offer" src="{% static 'images/offer.png' %}" alt="">
+                        {% if is_new %}
+                            <img class="new" src="{% static 'images/new.png' %}" alt="">
+                        {% endif %}
                         <div class="product-details">
                             <span>{{ product.name|truncatechars:18}}</span>
                             <div class="review">
-                                {% if product.rating == 5 %}
-                                    {% for star in "12345"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                {% elif product.rating == 4 %}
-                                    {% for star in "1234"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                    {% for star in "1"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% elif product.rating == 3 %}
-                                    {% for star in "123"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                    {% for star in "12"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% elif product.rating == 2 %}
-                                    {% for star in "12"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                    {% for star in "123"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% elif product.rating == 1 %}
-                                    {% for star in "1"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                    {% for star in "1234"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% else %}
-                                    {% for star in "12345"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% endif %}
+                                {% for i in product.rating|custom_range %}
+                                    <img src='{% static "images/star.png" %}' alt="">
+                                {% endfor %}
+                                {% for j in 5|subtract:product.rating|custom_range %}
+                                    <img src='{% static "images/starline.png" %}' alt="">
+                                {% endfor %}
                             </div>
                             <span>₹<span class="mrp">{{ product.original_price|intcomma  }}</span></span>
                             <span class="price">₹{{ product.offer_price|intcomma  }}<span class="discount">-{{product.discount}}%</span></span>
@@ -397,43 +311,12 @@
                         <div class="product-details">
                             <span>{{ product.name|truncatechars:18}}</span>
                             <div class="review">
-                                {% if product.rating == 5 %}
-                                    {% for star in "12345"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                {% elif product.rating == 4 %}
-                                    {% for star in "1234"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                    {% for star in "1"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% elif product.rating == 3 %}
-                                    {% for star in "123"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                    {% for star in "12"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% elif product.rating == 2 %}
-                                    {% for star in "12"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                    {% for star in "123"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% elif product.rating == 1 %}
-                                    {% for star in "1"  %}
-                                        <img src="{% static 'images/star.png' %}" alt="">
-                                    {% endfor %}
-                                    {% for star in "1234"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% else %}
-                                    {% for star in "12345"  %}
-                                        <img src="{% static 'images/starline.png' %}" alt="">
-                                    {% endfor %}
-                                {% endif %}
+                                {% for i in product.rating|custom_range %}
+                                    <img src='{% static "images/star.png" %}' alt="">
+                                {% endfor %}
+                                {% for j in 5|subtract:product.rating|custom_range %}
+                                    <img src='{% static "images/starline.png" %}' alt="">
+                                {% endfor %}
                             </div>
                             <span>₹<span class="mrp">{{ product.original_price|intcomma  }}</span></span>
                             <span class="price">₹{{ product.offer_price|intcomma  }}<span class="discount">-{{product.discount}}%</span></span>

@@ -50,7 +50,7 @@
     justify-content: start;
     cursor: pointer;
 }
-#review {
+#reviews {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,7 +58,7 @@
     margin-top: 1rem;
     gap: 1rem;
 }
-#review .review {
+#reviews .review {
     /* background-color: var(--theme-2); */
     padding: 1rem;
     border-radius: .5rem;
@@ -68,7 +68,7 @@
     flex-direction: row;
     gap: 8rem;
 }
-#review .review .user-section {
+#reviews .review .user-section {
     width: auto;
     /* background-color: var(--theme-2); */
     display: flex;
@@ -78,35 +78,37 @@
     gap: 1rem;
     padding-left: 2rem;
 }
-#review .review .user-section .user-name {
+#reviews .review .user-section .user-name {
     font-weight: bold;
     font-size: 1.5rem;
     color: var(--theme-3);
 }
-#review .review .user-section img {
+#reviews .review .user-section img {
     width: 3rem;
     height: auto;
 }
-#review .review .user-section .user-details {
+#reviews .review .user-section .user-details {
     display: flex;
     flex-direction: column;
 }
-#review .review .review-section {
-    width: auto;
-    background-color: var(--theme-2);
+#reviews .review .review-section {
+    max-width: 60%;
+    text-align: justify;
+    word-wrap: break-word;
+    background-color: var(--theme-1);
     padding: 2rem;
     border-radius: 0 2rem 2rem 2rem;
     position: relative;
 }
-#review .review .review-section img {
+#reviews .review .review-section img {
     width: 1rem;
     height: auto;
 }
-#review .review .review-section .comment {
+#reviews .review .review-section .comment {
     font-size: 1.2rem;
     color: var(--theme-5);
 }
-#review .write-comment {
+#reviews .write-comment {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -115,27 +117,29 @@
     width: 100%;
     margin-top: 5rem;
 }
-#review .write-comment .comment {
+#reviews .write-comment .comment {
     display: flex;
     flex-direction: column;
     width: 100%;
     position: relative;
 }
-#review .write-comment .comment .rating {
-    display: f;
+#reviews .write-comment .comment .rating input {
+    display: none;
+}
+#reviews .write-comment .comment .rating {
+    display: flex;
     flex-direction: row;
     align-items: center;
+    gap: .2rem;
 }
-#review .write-comment .comment .rating img {
+#reviews .write-comment .comment .rating img {
     width: 1.5rem;
     height: auto;
     cursor: pointer;
 }
-#review .write-comment button {
-    display: none;
-}
-#review .write-comment .comment input {
-    background-color: var(--theme-2);
+
+#reviews .write-comment .comment input {
+    background-color: var(--theme-1);
     color: var(--theme-5);
     border: none;
     padding: 1rem;
@@ -143,7 +147,7 @@
     font-family: inherit;
     width: auto;
 }
-#review .write-comment #sent-review {
+#reviews .write-comment #submit-review {
     width: 2rem;
     height: auto;
     cursor: pointer;
@@ -156,7 +160,7 @@
     height: 0;
     border-left: 6rem solid transparent;
     border-right: 2rem transparent;
-    border-top: 2rem solid var(--theme-2);
+    border-top: 2rem solid var(--theme-1);
     position: absolute;
     top: 0;
     left: -6rem;
@@ -180,7 +184,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--theme-2);
+    background-color: var(--theme-1);
     padding: .5rem;
     border-radius: 1rem;
     font-weight: bold;
@@ -200,7 +204,7 @@
     display: flex;
     align-items: center;
     justify-content: center;    
-    background-color: var(--theme-2);
+    background-color: var(--theme-1);
     padding: .5rem;
     border-radius: 1rem;
     color: var(--theme-5);
@@ -216,7 +220,7 @@
 .description {
     display: flex;
     flex-direction: column;
-    background-color: var(--theme-1);
+    background-color: var(--theme-2);
 }
 .description .title {
     font-size: 1.1rem;

@@ -12,3 +12,15 @@ def format_segment_to_title(segment):
     segment = segment.replace('-', ' ').replace('/', ' ')
     # Capitalize each word
     return segment.title()
+
+@register.filter
+def custom_range(value, start=0):
+    return range(start, value)
+
+@register.filter
+def subtract(value, arg):
+    return value - arg
+
+@register.filter
+def replace(value, arg):
+    return value.replace(arg, ' ')

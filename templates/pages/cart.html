@@ -12,43 +12,67 @@
                 <span>Continue to shopping</span>
             </a>
         </div>
-        <table class="cart-items">
-            <tbody>
-                {% for product in cart_items %}
-                <tr class="product">
-                    <td>
-                        <a href="{% url 'shop:product-detail' product_id=product.product_id %}">
-                            <img src="{{product.image}}" alt="">
-                        </a>
-                    </td>
-                    <td>
-                    <div class="details">
-                            <a href="{% url 'shop:product-detail' product_id=product.product_id %}" style="font-size:1.2rem;font-weight:bold;">{{product.product_name|truncatechars:20}}</a>
-                            <a href="">{{product.category}}</a>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="quantity">
-                            <span onclick="removeQuantity('{{product.product_id}}')">-</span>
-                            <b id="quantity-{{product.product_id}}">{{product.quantity}}</b>
-                            <span onclick="addQuantity('{{product.product_id}}')">+</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="product-price">
-                            <span class="price-text" id="price-{{product.product_id}}" data-product-price='{{product.price}}'>₹{{product.price|multiply:product.quantity|intcomma}}</span>
-                        </div>
-                    </td>
-                    <td class="delete">
-                        <img src="{% static 'images/trash.png' %}" alt="">
-                    </td>
-                </tr>
-                {% endfor %}  
-            </tbody>
-        </table>
+        <div class="line"></div>
+        {% if cart_items %}
+            <table class="cart-items">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Unit MRP</th>
+                        <th>Quantity</th>
+                        <th>Total MRP</th>
+                        <th>Discount</th>
+                        <th>Sub Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in cart_items %}
+                    <tr class="product">
+                        <td>
+                            <a href="{% url 'shop:product-detail' product_id=product.product_id %}">
+                                <img src="{{product.image}}" alt="">
+                            </a>
+                        </td>
+                        <td>
+                        <div class="details">
+                                <a href="{% url 'shop:product-detail' product_id=product.product_id %}">{{product.product_name}}</a>
+                            </div>
+                        </td>
+                        <td>
+                            ₹<span class="product-price" id="mrp-{{product.product_id}}" data-product-price='{{product.original_price}}'>{{product.original_price|intcomma}}</span>
+                        </td>
+                        <td>
+                            <div class="quantity">
+                                <span class="minus" onclick="removeQuantity({{product.product_id}})">-</span>
+                                <b id="quantity-{{product.product_id}}">{{product.quantity}}</b>
+                                <span onclick="addQuantity('{{product.product_id}}')">+</span>
+                            </div>
+                        </td>
+                        <td>
+                            ₹<span class="discount" id="discount-{{product.product_id}}" data-product-price='{{product.discount}}'>{{product.total_mrp}}</span>
+                        </td>
+                        <td>
+                            <span class="discount" id="discount-{{product.product_id}}" data-product-price='{{product.discount}}'>{{product.discount}}%</span>
+                        </td>
+                        <td>
+                            ₹<span class="product-price" id="price-{{product.product_id}}" data-product-price='{{product.offer_price}}'>{{product.sub_total|intcomma}}</span>
+                        </td>
+                        <td class="delete">
+                            <img onclick="deleteItemFromCart({{product.id}})" src="{% static 'images/trash.png' %}" alt="">
+                        </td>
+                    </tr>
+                    {% endfor %}  
+                </tbody>
+            </table>
+        {% else %}
+            <h2 style="text-align:center;">No items in cart.</h2>
+        {% endif %}
     </div>
     <div class="checkout">
         <h1>Checkout</h1>
+        <div class="line"></div>
         <br>
         <div class="charges">
             <span>Sub Total ({{total_items}} items) :</span>
@@ -60,11 +84,11 @@
         </div>
         <div class="charges">
             <span>Discount :</span>
-            <span class="price">- ₹100 (5%)</span>
+            <span class="price">- ₹{{total_discount_price}} ({{total_discount}}%)</span>
         </div>
         <div class="sub-total">
             <span style="font-size:1.5rem;">Total :</span>
-            <span id="total_price">₹{{total_price|intcomma}}</span>
+            <span id="total_price">₹{{total_offer_price|intcomma}}</span>
         </div>
         <a href="{% url 'shop:checkout' %}">
             <button>Proceed to Checkout</button>
@@ -76,18 +100,20 @@
 <script>
     function addQuantity(product_id){
         var quantity = parseInt($('#quantity-'+product_id).text());
-        $('#quantity-'+product_id).text(quantity+1);
+        {% comment %} $('#quantity-'+product_id).text(quantity+1);
         var price = parseInt($('#price-'+product_id).data('product-price'));
-        $('#price-'+product_id).text('₹'+price*(quantity+1)+'.00');
+        $('#price-'+product_id).text('₹'+price*(quantity+1)+'.00'); {% endcomment %}
         handleAddToCart(product_id);
+        location.reload();
     }
     function removeQuantity(product_id){
         var quantity = parseInt($('#quantity-'+product_id).text());
         var price = parseInt($('#price-'+product_id).data('product-price'));
         if(quantity>1){
-            $('#quantity-'+product_id).text(quantity-1);
-            $('#price-'+product_id).text('₹'+price*(quantity-1)+'.00');
+            {% comment %} $('#quantity-'+product_id).text(quantity-1);
+            $('#price-'+product_id).text('₹'+price*(quantity-1)+'.00'); {% endcomment %}
             decreaseItemFromCart(product_id);
+            location.reload();
         }
 
     }

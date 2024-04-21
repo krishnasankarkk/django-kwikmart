@@ -21,11 +21,18 @@
             <b id="loggined-user">Hi, {{user.username}}</b>
             {% include 'components/user-options.html' %}
         {% else %}
-            <a href="{% url 'login' %}?next={{ request.path }}" class="item">Login</a>
+            <a href="{% url 'login' %}?next={{ request.path }}" class="item">Login</a>|<br>
             <a href="{% url 'signup' %}" class="item signup">Signup</a>
         {% endif %}
     </div>
     <div class="icons">
+        <div class="theme item">
+            <img src="{% static 'images/theme.png' %}" alt="">
+            {% if selected_theme %}
+                <span class="selected-theme"></span>
+            {% endif %}
+        </div>
+        {% include 'components/themes.html' %}
         <div class="cart item">
             <img id="cartImage" src="{% static 'images/cart.png' %}" alt="">
             <span class="count">{{cart_item_count}}</span>
