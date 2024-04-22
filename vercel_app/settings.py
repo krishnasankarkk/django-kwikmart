@@ -159,7 +159,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static', 'static'
+    BASE_DIR / 'static', 'static',
+    '/home/ubuntu/django-kwikmart/.venv/lib/python3.10/site-packages/django/contrib/admin/static',
 ]
 STATIC_ROOT = str(BASE_DIR / 'staticfiles_build' / 'static')
 
