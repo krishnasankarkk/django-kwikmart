@@ -5,7 +5,7 @@ body{
 .shop {
     background-color: var(--theme-1);
     margin: 1rem;
-    color: var(--theme-5);
+    color: var(--theme-4);
     display: flex;
     flex-direction: row;
     border-radius: 1rem;
@@ -25,7 +25,7 @@ body{
     color: var(--theme-3);
 }
 .price {
-    color: var(--theme-6);
+    color: var(--theme-5);
 }
 .categories {
     background-color: var(--theme-2);
@@ -36,8 +36,8 @@ body{
 }
 .categories .title {
     font-size: 1rem;
-    background-color: var(--theme-4);
-    color: var(--theme-5);
+    background-color: var(--theme-3);
+    color: var(--theme-1);
     padding: .5rem;
     border-radius: .5rem;
     transition: all .3s ease;
@@ -152,7 +152,7 @@ input[type="checkbox"] {
     justify-content: center;
     cursor: pointer;
     background-color: var(--theme-2);
-    color: var(--theme-5);
+    color: var(--theme-4);
     border-radius: 1rem;
     transition: all .2s ease;
     position: relative;
@@ -217,13 +217,13 @@ input[type="checkbox"] {
 .products .product .product-details .mrp {
     font-size: 1rem;
     text-decoration: line-through;
-    color: var(--theme-5);
+    color: var(--theme-4);
 }
 .products .product .product-details .price {
     font-size: 1.2rem;
 }
 .products .product .product-details .price .discount {
-    color: var(--theme-7);
+    color: var(--theme-6);
     font-size: .8rem;
 }
 .products .product:hover .actions img, .products .product:hover .review img {
@@ -240,7 +240,7 @@ input[type="checkbox"] {
 }
 
 .products .product img {
-    background-color: var(--theme-5);
+    background-color: var(--theme-4);
     width: 100%;
     height: 100%;
     object-fit: contain;

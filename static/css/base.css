@@ -27,7 +27,7 @@ body {
     font-family: 'Poppins';
     font-size: 15px;
     background-color: var(--theme-2);
-    color: var(--theme-5);
+    color: var(--theme-4);
     margin: 0;
     position: relative;
     overflow: auto;
@@ -56,20 +56,23 @@ body {
 
 #loading-screen {
     position: fixed;
+    top: 0;
     width: 100%;
     height: 100%;
-    z-index: 99;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: #31363f4b;
+    background-color: var(--theme-1);
+    opacity: .8;
     font-weight: bold;
     font-size: 1.2rem;
-    gap: 1rem;
+    gap: .5rem;
+    z-index: 99;
 }
 #loading-screen span {
     width: 1rem;
+    opacity: 1;
     height: 1rem;
     background-color: var(--theme-3);
     border-radius: 50%;
@@ -80,7 +83,7 @@ body {
         transform: translateY(0);
     }
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-2rem);
     }
 }
 #loading-screen span:nth-child(1) {
@@ -97,14 +100,14 @@ body {
 .line {
     width: 100%;
     height: 2px;
-    background-color: var(--theme-5);
+    background-color: var(--theme-4);
     border-radius: 2rem;
 }
 .price {
     display: flex;
     align-items: start;
     font-size: 1.2rem;
-    color: var(--theme-6);
+    color: var(--theme-5);
     font-weight: bold;
 }
 .messages {
@@ -162,13 +165,13 @@ body {
     font-weight: bold;
 }
 .messages .success{
-    color: #00aa66;
+    color: #028b54;
 }
 .messages .warning{
-    color: #ffb62f;
+    color: #d18c0b;
 }
 .messages .info{
-    color: #007bff;
+    color: #0057b4;
 }
 .timeout-bar {
     position: absolute;
@@ -187,13 +190,12 @@ body {
     justify-content: start;
     gap: .3rem;
     background-color: var(--theme-1);
-    color: var(--theme-1);
+    color: var(--theme-3);
     border: .1rem solid var(--theme-3);
     border-radius: 2rem;
     z-index: 98;
     font-size: .8rem;
     font-weight: bold;
-    color: var(--theme-5);
     position: absolute;
     bottom: -3.1rem;
     left: 0;
@@ -210,7 +212,7 @@ body {
 }
 .breadcrumbs .item:hover {
     cursor: pointer;
-    color: var(--theme-3);
+    color: var(--theme-4);
 }
 .navbar .breadcrumbs img {
     width: 1.5rem;

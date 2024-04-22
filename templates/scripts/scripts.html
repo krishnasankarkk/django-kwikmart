@@ -235,7 +235,7 @@
             var row = $('<tr>').addClass('cart-item');
             // Append table data for each cart item
             row.append($('<td>').append($('<img>').attr('src', item.image)));
-            row.append($('<td>').addClass('product-name').append($('<span>')).text(item.product_name));
+            row.append($('<td>').addClass('product-name').append($('<span>')).text(item.product_name.slice('10:')));
             row.append($('<td>').append($('<span>')).text(item.quantity));
             row.append($('<td>').append($('<span>').addClass('price').text('₹' + item.sub_total)));
             row.append($('<td>').append($('<img>').addClass('delete').attr('src', '{% static "images/trash.png" %}').attr('title', 'Remove item from cart').attr('onclick', "deleteItemFromCart('"+item.id+"')")));
@@ -275,6 +275,7 @@
     
     // Handle add to cart click.
     function handleAddToCart(productId){
+        $('.loading-screen').show();
         $.ajax({
             type: 'POST',
             url: '{% url "shop:add-to-cart" %}',
@@ -286,6 +287,7 @@
             },
             dataType: 'json',
             success: (res)=>{
+                {% comment %} $('.loading-screen').hide(); {% endcomment %}
                 if(res){
                     var message = $('<div>');
                     message.addClass('message');
@@ -380,7 +382,6 @@
                     $('.count').text(res.cart_items_count);
                     $('.checkout-button .price').text('₹' + res.total_price.toLocaleString());
                     updateCartItems(res.cart_items);
-                    location.reload();
                 }
             },
             error: (err)=>{
@@ -491,12 +492,23 @@
     $(document).ready(function() {
         // product-detail.html
         $('#reviews').hide();
+        $('#description-button').prop('checked', true);
+        $('label[for="description-button"').css('background-color', 'var(--theme-3)');
+        $('label[for="description-button"').css('color', 'var(--theme-1)');
         $('#description-button').click(function(){
+            $('label[for="description-button"').css('background-color', 'var(--theme-3)');
+            $('label[for="description-button"').css('color', 'var(--theme-1)');
+            $('label[for="review-button"').css('background-color', 'transparent');
+            $('label[for="review-button"').css('color', 'var(--theme-4)');
             $('#description').show();
             $('#reviews').hide();
             $('#review-button').prop('checked', false);
         });
         $('#review-button').click(function(){
+            $('label[for="review-button"').css('background-color', 'var(--theme-3)');
+            $('label[for="review-button"').css('color', 'var(--theme-1)');
+            $('label[for="description-button"').css('background-color', 'transparent');
+            $('label[for="description-button"').css('color', 'var(--theme-4)');
             $('#reviews').show();
             $('#description').hide();
             $('#description-button').prop('checked', false);

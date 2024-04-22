@@ -7,15 +7,12 @@ def theme(request):
     try:
         themes = Theme.objects.all()
     except Theme.DoesNotExist:
-        return {}
+        raise ValueError("Themes does not exists!")
     else:
-        if request.user.is_authenticated:
-            try:
-                user_theme = UserTheme.objects.get(user=request.user)
-                return {'selected_theme': user_theme.theme, 'themes': themes}
-            except UserTheme.DoesNotExist:
-                return {}
-        else:
+        user = request.user if request.user.is_authenticated else None
+        try:
+            user_theme = UserTheme.objects.get(user=user)
+        except UserTheme.DoesNotExist:
             user_session = request.session.session_key
             if not user_session:
                 request.session.save()
@@ -23,13 +20,13 @@ def theme(request):
             try:
                 session_theme = SessionTheme.objects.get(user_session=user_session)
             except SessionTheme.DoesNotExist:
-                try:
-                    selected_theme = Theme.objects.get(selected=True)
-                    return {'selected_theme': selected_theme, 'themes': themes}
-                except Theme.DoesNotExist:
-                    return {'selected_theme': None, 'themes': themes}
+                selected_theme = Theme.objects.get(selected=True)
+                return {'selected_theme':selected_theme, 'themes':themes}
             else:
-                return {'selected_theme': session_theme.theme, 'themes': themes}
+                return {'selected_theme':session_theme.theme, 'themes':themes}
+        else:
+            return {'selected_theme':user_theme.theme, 'themes':themes}
+                
 
 
 def cart_items(request):

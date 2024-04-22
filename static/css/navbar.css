@@ -1,7 +1,7 @@
 
 .navbar {
     background-color: var(--theme-1);
-    color: var(--theme-5);
+    color: var(--theme-4);
     /* border-bottom: .2rem solid var(--theme-3); */
     box-shadow: 0 0 1rem black;
     position: fixed;
@@ -23,7 +23,7 @@
     transition: transform 0.3s ease;
 }
 .navbar a {
-    color: var(--theme-5);
+    color: var(--theme-4);
     text-decoration: none;
 }
 .navbar .item:hover { 
@@ -34,7 +34,7 @@
     font-family: 'Borel';
     line-height: .5;
     font-size: 1.4rem;
-    color: var(--theme-3);
+    color: #00ADB5;
     display: flex;
     align-items: baseline;
     cursor: pointer;
@@ -50,7 +50,7 @@
     width: auto;
     border: none;
     background-color: var(--theme-1);
-    color: var(--theme-5);
+    color: var(--theme-4);
     padding: .5rem;
     border: .2rem solid var(--theme-2);
     border-radius: .5rem 0 0 .5rem;
@@ -74,7 +74,7 @@
 }
 .navbar input{
     background-color: var(--theme-2);
-    color: var(--theme-5);
+    color: var(--theme-4);
     border: none;
     border-radius: 0 .5rem .5rem 0;
     padding: 10px;
@@ -97,7 +97,7 @@
     font-weight:bold;
 }
 .navbar .signup:hover {
-    color:var(--theme-5);
+    color:var(--theme-4);
 }
 .navbar .icons {
     display: flex;
@@ -121,8 +121,8 @@
     top: 4rem;
     right: 3rem;
     z-index: 999;
-    background-color: var(--theme-2);
-    color: var(--theme-5);
+    background-color: var(--theme-1);
+    color: var(--theme-4);
     border-radius: 0 0 1rem 1rem;
     box-shadow: 0 0rem 1rem black;
     /* border: .2rem solid var(--theme-3); */
@@ -174,7 +174,7 @@
     height: 10px;
     width: 10px;
     border-radius: 50%;
-    background-color: var(--theme-5);
+    background-color: var(--theme-4);
     color: var(--theme-1);
     font-size: .7rem;
     font-weight: bold;
@@ -191,8 +191,8 @@
     top: 3rem;
     right: 1/2;
     z-index: 999;
-    background-color: var(--theme-2);
-    color: var(--theme-5);
+    background-color: var(--theme-1);
+    color: var(--theme-4);
     border-radius: 0 0 1rem 1rem;
     box-shadow: 0 0rem 1rem black;
     /* border: .2rem solid var(--theme-3); */
@@ -227,9 +227,6 @@
     0% {
         transform: scaleY(0)
     }
-    80% {
-        transform: scaleY(1.1)
-    }
     100% {
         transform: scaleY(1)
     }
@@ -249,8 +246,8 @@
     flex-direction: column;
     top: 4.15rem;
     right: .5rem;
-    background-color: var(--theme-2);
-    color: var(--theme-5);
+    background-color: var(--theme-1);
+    color: var(--theme-4);
     padding: 1rem;
     border-radius: 0 0 1rem 1rem;
     /* border: .2rem solid var(--theme-3); */
@@ -262,7 +259,7 @@
 .cart-popup .cart_items {
     max-height: 25rem;
     overflow-y: auto;
-    background-color: var(--theme-2);
+    background-color: var(--theme-1);
     animation: scaleY .3s ease forwards;
 }
 .cart-popup .cart_items .price {
@@ -273,7 +270,7 @@
 }
 
 .cart-popup .title {
-    color: var(--theme-3);
+    color: var(--theme-4);
     font-weight: bold;
     font-size: 1.4rem;
     display: flex;
@@ -283,19 +280,20 @@
 }
 .cart-popup .title .view {
     font-size: 1rem;
-    background-color: var(--theme-1);
-    color: var(--theme-3);
+    background-color: var(--theme-2);
+    color: var(--theme-4);
     padding: .5rem;
     border-radius: .5rem;
     margin-bottom: .5rem;
     cursor: pointer;
 }
 .cart-popup .title .view:hover {
-    background-color: #474955;
+    background-color: var(--theme-3);
+    color: var(--theme-1);
 }
 .cart-popup .cart_items tr {
     background-color: var(--theme-1);
-    color: var(--theme-5);
+    color: var(--theme-4);
     width: 100%;
 }
 .cart-popup .cart_items td {
@@ -304,8 +302,8 @@
 .cart-popup .cart_items .product-name {
     width: 10rem;
 }
-.cart-popup .cart_items tr:hover{
-    background-color: var(--theme-1);
+.cart-popup .cart_items a:hover{
+    color: var(--theme-3);
 }
 .cart-popup .cart-item td {
     padding: .5rem;
@@ -334,13 +332,13 @@
     gap: 1rem;
 }
 .cart-popup .checkout-button .price {
-    background-color: var(--theme-1);
+    background-color: var(--theme-2);
     padding: .5rem;
     border-radius: .5rem;
     font-size: 1.1rem;
 }
 .cart-popup .checkout-button a {
-    background-color: var(--theme-6);
+    background-color: var(--theme-5);
     color: var(--theme-1);
     font-weight: bold;
     padding: .5rem;

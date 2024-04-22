@@ -12,7 +12,7 @@ body {
     align-items: start;
     justify-content: start;
     background-color: var(--theme-2);
-    color: var(--theme-5);
+    color: var(--theme-4);
 }
 .cart-section {
     background-color: var(--theme-1);
@@ -39,13 +39,12 @@ body {
     padding: 1rem;
     border-radius: 1rem;
     background-color: var(--theme-2);
-    color: var(--theme-3);
+    color: var(--theme-5);
     font-weight: bold;
     cursor: pointer;
-    transition: transform .2s ease;
+    transition: all .2s ease;
 }
 .cart-head a:hover {
-    transform: scale(1.1);
     color: var(--theme-3);
 }
 .cart-items {
@@ -104,7 +103,7 @@ td {
     display: flex;
     align-items: baseline;
     background-color: var(--theme-1);
-    color: var(--theme-6);
+    color: var(--theme-5);
     font-weight: bold;
     justify-content: center;
     border-radius: .5rem;
@@ -126,7 +125,7 @@ td {
     border-radius: .5rem;
 }
 .quantity .minus {
-    color: var(--theme-7);
+    color: var(--theme-6);
 }
 .quantity img {
     cursor: pointer;
@@ -138,11 +137,11 @@ td {
     font-weight:bold;
     width: auto;
     overflow: auto;
-    color:var(--theme-5);
+    color:var(--theme-4);
     text-align: center;
 }
 .discount {
-    color: var(--theme-5);
+    color: var(--theme-4);
     font-weight: bold;
     font-size:1.1rem;
     text-align: center;
@@ -150,7 +149,7 @@ td {
 .checkout {
     border-radius: 2rem;
     background-color: var(--theme-1);
-    color: var(--theme-5);
+    color: var(--theme-4);
     width: 25%;
     margin-right: 1rem;
     padding: 2rem;
@@ -171,7 +170,7 @@ td {
 #total_price {
     width: auto;
     background-color: var(--theme-2);
-    color:var(--theme-6);
+    color:var(--theme-5);
     padding: .5rem;
     border-radius: 1rem;
     margin-top: 1rem;
@@ -202,6 +201,6 @@ td {
     cursor: pointer;
 }
 .checkout button:hover {
-    background-color: var(--theme-6);
+    background-color: var(--theme-5);
     color: var(--theme-1);
 }

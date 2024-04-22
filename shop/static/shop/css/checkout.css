@@ -42,7 +42,7 @@ body::-webkit-scrollbar {
     background-color: var(--theme-3);
     width: 100%;
     font-weight: 800;
-    font-size: 1.2rem;
+    font-size: 1rem;
     border-radius: .5rem .5rem 0 0;
 }
 .checkout-form .title span {
@@ -61,13 +61,13 @@ body::-webkit-scrollbar {
     border-radius: 0 .5rem .5rem .5rem;
     border-bottom: .1rem solid var(--theme-4);
     font-family: inherit;
-    color: var(--theme-5);
+    color: var(--theme-4);
     outline: none;
     padding: .5rem;
 }
 .checkout-form input:-webkit-autofill, .checkout-form textarea:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px var(--theme-1) inset;
-    -webkit-text-fill-color: var(--theme-5);
+    -webkit-text-fill-color: var(--theme-4);
 }
 .checkout-form .order-section {
     width: auto;
@@ -107,14 +107,14 @@ body::-webkit-scrollbar {
     transition: background-color .2s ease;
 }
 .checkout-form .order-section .payment-methods .payment-provider label:hover {
-    background-color: var(--theme-4);
+    background-color: var(--theme-3);
 }
 .checkout-form .order-section .payment-methods .payment-provider img {
     width: 1.5rem;
     height: auto;
 }
 .checkout-form .order-section .payment-methods .payment-provider input[name="payment_method"]:checked + label {
-    background-color: var(--theme-6);
+    background-color: var(--theme-5);
 }
 .checkout-form .orders {
     background-color: var(--theme-2);
@@ -184,7 +184,7 @@ body::-webkit-scrollbar {
     background-color: var(--theme-2);
     padding: .5rem;
     border-radius: .5rem;
-    color: var(--theme-6);
+    color: var(--theme-5);
     font-weight: bold;
     font-size: 1.3rem;
 }
@@ -205,5 +205,5 @@ body::-webkit-scrollbar {
     transition: all .2s ease;
 }
 .checkout-form .submit-button:hover {
-    background-color: var(--theme-6);
+    background-color: var(--theme-5);
 }

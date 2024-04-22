@@ -227,7 +227,7 @@
         </div>
         <div class="best-deal">
             {% if best_deal %}
-            <div class="product">
+            <a href="{% url 'shop:product-detail' product_id=best_deal.id %}" class="product">
                 <img id="best-buy" src="{% static 'images/best-buy.png' %}" alt="">
                 <div id="best-seller">
                     <span>Best deal</span>
@@ -247,7 +247,7 @@
                     <span>₹<span class="mrp">{{ best_deal.original_price|intcomma  }}</span></span>
                     <span class="price">₹{{ best_deal.offer_price|intcomma  }}<span class="discount">-{{best_deal.discount}}%</span></span>
                 </div>
-            </div>
+            </a>
             {% endif %}
         </div>
         <div class="deals">

@@ -153,6 +153,7 @@ def add_to_cart(request):
             'cart_items_count': cart_items_count,
             'total_price': total_price,
         }
+        
         return JsonResponse(context)
     except Product.DoesNotExist:
         context = {
@@ -601,11 +602,9 @@ def change_theme(request, theme_id):
     except Theme.DoesNotExist:
         return JsonResponse({'message':'Theme does not exists!'})
     else:
-        if user:
+        try:
             user_theme = UserTheme.objects.get(user=user)
-            user_theme.theme = theme
-            user_theme.save()
-        else:
+        except UserTheme.DoesNotExist:
             user_session = request.session.session_key
             if not user_session:
                 request.session.save()
@@ -621,6 +620,9 @@ def change_theme(request, theme_id):
             else:
                 session_theme.theme = theme
                 session_theme.save()
+        else:
+            user_theme.theme = theme
+            user_theme.save()
         
     previous_url = request.META.get('HTTP_REFERER', None)
     return redirect(previous_url)
