@@ -11,7 +11,7 @@
             <div class="categories">
                 <span class="title">Categories 
                     <img class="down" src="{% static 'images/chevron.png' %}" alt="">
-                    <img class="clear" src="{% static 'images/x.png' %}" alt="">
+                    <img class="clear" onclick="clearProductFilters('categories')" src="{% static 'images/x.png' %}" alt="">
                 </span>
                 {% for category in categories %}
                     <div class="category">
@@ -28,7 +28,7 @@
 
                 <span class="title">Price Range
                     <img class="down" src="{% static 'images/chevron.png' %}" alt="">
-                    <img class="clear" src="{% static 'images/x.png' %}" alt="">
+                    <img class="clear" onclick="clearProductFilters('prices')" src="{% static 'images/x.png' %}" alt="">
                 </span>
                 <div class="category">
                     <input type="checkbox" id="price-1" name="price-range" class="category-check" value="1">
@@ -98,7 +98,7 @@
             <div class="categories">
                 <span class="title">Brand
                     <img class="down" src="{% static 'images/chevron.png' %}" alt="">
-                    <img class="clear" src="{% static 'images/x.png' %}" alt="">
+                    <img class="clear" onclick="clearProductFilters('brands')" src="{% static 'images/x.png' %}" alt="">
                 </span>
                 {% for brand in brands %}
                     <div class="category">
@@ -114,7 +114,7 @@
             <div class="categories">
                 <span class="title">Rating & Reviews
                     <img class="down" src="{% static 'images/chevron.png' %}" alt="">
-                    <img class="clear" src="{% static 'images/x.png' %}" alt="">
+                    <img class="clear" onclick="clearProductFilters('ratings')" src="{% static 'images/x.png' %}" alt="">
                 </span>
                 <div class="category">
                     <input type="checkbox" id="rating-1" name="rating" class="category-check" value="5">
@@ -160,7 +160,7 @@
             <div class="categories">
                 <span class="title">Offers
                     <img class="down" src="{% static 'images/chevron.png' %}" alt="">
-                    <img class="clear" src="{% static 'images/x.png' %}" alt="">
+                    <img class="clear" onclick="clearProductFilters('offers')" src="{% static 'images/x.png' %}" alt="">
                 </span>
                 <div class="category">
                     <input type="checkbox" id="offer-1" name="offer" class="category-check" value="50">
@@ -216,7 +216,7 @@
                         <img class="new" src="{% static 'images/new.png' %}" alt="">
                     {% endif %}
                     <div class="product-details">
-                        <span>{{ product.name}}</span>
+                        <span>{{ product.name|truncatechars:40}}</span>
                         <div class="review">
                             {% for i in product.rating|custom_range %}
                                 <img src='{% static "images/star.png" %}' alt="">

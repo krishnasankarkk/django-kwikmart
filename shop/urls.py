@@ -22,4 +22,5 @@ urlpatterns = [
     path('add-review/', views.add_review, name='add-review'),
     path('filter-products/', views.filter_products, name='filter-products'),
     path('change-theme/<int:theme_id>', views.change_theme, name='change-theme'),
+    path('search-product/<str:search>', views.search_product, name='search-product'),
 ]

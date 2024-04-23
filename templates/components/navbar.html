@@ -13,8 +13,9 @@
                 <option value="{{ category.id }}">{{ category.name }}</option>
             {% endfor %}
         </select>
-        <input type="text" name="search" id="search" placeholder="Search Products...">
-        <img src="{% static 'images/search.png' %}" alt="">
+        <input type="text" name="search" id="search-product" placeholder="Search Products...">
+        <img onclick="searchProducts()" src="{% static 'images/search.png' %}" alt="">
+        {% include 'components/search-products.html' %}
     </div>
     <div class="login">
         {% if request.user.is_authenticated %}

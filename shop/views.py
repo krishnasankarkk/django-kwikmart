@@ -54,14 +54,17 @@ def home(request):
     carousel = Carousel.objects.all()
     categories = Category.objects.all()
     products = Product.objects.all()
-    best_deal = Product.objects.filter(discount__gt=0).order_by('-discount').first()
+    best_deals = Product.objects.filter(discount__gt=0).order_by('-discount')[:20]
+    best_deal = best_deals.first()
     threshold_date = datetime.now() - timedelta(days=7)
+    new_products = products.filter(created_at__gte=threshold_date)
     context = {
         'carousel': carousel,
         'categories': categories,
         'products': products,
+        'best_deals': best_deals,
         'best_deal': best_deal,
-        'is_new': datetime.now()>threshold_date,
+        'new_products': new_products,
     }
     return render(request, 'pages/home.html', context)
 
@@ -133,7 +136,7 @@ def add_to_cart(request):
                 {
                     'id': item.id,
                     'product_id': item.product.id,
-                    'product_name': item.product.name,
+                    'product_name': item.product.name[:39]+'...',
                     'original_price': item.product.original_price,
                     'offer_price': item.product.offer_price,
                     'discount': item.product.discount,
@@ -194,7 +197,7 @@ def decrease_from_cart(request):
             serialized_cart_items.append({
                 'id': item.id,
                 'product_id': item.product.id,
-                'product_name': item.product.name,
+                'product_name': item.product.name[:40] + ('...' if len(product.name) > 40 else ''),
                 'original_price': item.product.original_price,
                 'offer_price': item.product.offer_price,
                 'discount': item.product.discount,
@@ -240,7 +243,7 @@ def delete_from_cart(request, cart_item_id):
             serialized_cart_items.append({
                 'id': item.id,
                 'product_id': item.product.id,
-                'product_name': item.product.name,
+                'product_name': item.product.name[:40] + ('...' if len(product.name) > 40 else ''),
                 'original_price': item.product.original_price,
                 'offer_price': item.product.offer_price,
                 'discount': item.product.discount,
@@ -263,53 +266,6 @@ def delete_from_cart(request, cart_item_id):
         return JsonResponse({'message': 'Request method is not DELETE'})
     
 def cart_view(request):
-    # user_session = request.session.session_key
-    # if not user_session:
-    #     request.session.save()
-    #     user_session = request.session.session_key
-    # user = request.user if request.user.is_authenticated else None
-    # if user:
-    #     cart_items = Cart.objects.filter(user=user).order_by('created_at')
-    # else:
-    #     cart_items = Cart.objects.filter(user_session=user_session).order_by('created_at')
-    # if cart_items:
-    #     total_price = sum(item.sub_total for item in cart_items)
-    #     total_original_price = sum(item.product.original_price*item.quantity for item in cart_items)
-    #     total_discount_price = total_original_price - total_price
-    #     total_discount = total_discount_price/total_original_price*100
-    #     total_price_afer_discount = total_original_price - total_discount_price + 40
-    #     total_items = sum(item.quantity for item in cart_items)
-    
-    # # Serialize cart_items queryset into a list of dictionaries
-    # serialized_cart_items = []
-    # for item in cart_items:
-    #     # Extracting the URL from CloudinaryResource object
-    #     image_url = item.product.image.url if isinstance(item.product.image, CloudinaryResource) else None
-    #     serialized_cart_items.append({
-    #         'id': item.id,
-    #         'product_id': item.product.id,
-    #         'product_name': item.product.name,
-    #         'original_price': item.product.original_price,
-    #         'offer_price': item.product.offer_price,
-    #         'discount': item.product.discount,
-    #         'category': item.product.category.name,
-    #         'image': image_url,
-    #         'quantity': item.quantity,
-    #         'sub_total': item.sub_total,
-    #         'total_mrp': item.product.original_price*item.quantity,
-    #     })
-    # breadcrumbs = [
-    #     {'name': 'Cart', 'url': ''},
-    # ]
-    # context = {
-    #     'cart_items': serialized_cart_items,
-    #     'total_price': total_original_price,
-    #     'total_offer_price': total_price_afer_discount,
-    #     'total_items': total_items,
-    #     'breadcrumbs': breadcrumbs,
-    #     'total_discount':round(total_discount, 2),
-    #     'total_discount_price':total_discount_price,
-    # }
     return render(request, 'pages/cart.html')
 
 @login_required
@@ -570,24 +526,23 @@ def filter_products(request):
     if offers:
         for offer_value in offers:
             products = products.filter(discount__gte=offer_value)
-    
     # You can add additional context if needed
     context = {
         'products': [
             {
                 'id': product.id,
-                'name': product.name,
+                'name': product.name[:40] + ('...' if len(product.name) > 40 else ''),
                 'original_price': product.original_price,
                 'offer_price': product.offer_price,
                 'discount': product.discount,
-                'category': product.category.name.name,
+                'category': product.category.name,
                 'brand': product.brand.name,
                 'rating': product.rating,
                 # Extract the image URL from the Cloudinary field
                 'image_url': product.image.url if product.image else None,
                 # Other fields of the product model
             }
-            for product in products
+            for product in products if products
         ],
         'success' : True,
         'message' : "Products updated! ✔",
@@ -626,3 +581,18 @@ def change_theme(request, theme_id):
         
     previous_url = request.META.get('HTTP_REFERER', None)
     return redirect(previous_url)
+
+@require_GET
+def search_product(request, search):
+    products = Product.objects.filter(name__icontains=search)
+    context = {
+        'products': [
+            {
+                'id': product.id,
+                'name': product.name[:50]+'...',
+                'brand': product.brand.name,
+            }
+            for product in products
+        ],
+    }
+    return JsonResponse(context)

@@ -11,23 +11,25 @@
     align-items: start;
     justify-content: start;
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 .product-detail .product .image {
     width: 50%;
-    height: 20rem;
+    height: 30rem;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: start;
+    justify-content: start;
 }
 .product-detail .product .image img {
-    border-radius: 1rem;
-    width: 15rem;
+    border-radius: 2rem;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 .product-detail .product .details {
     flex: 1;
     display: flex;
-    height: 20rem;
+    height: auto;
     flex-direction: column;
     align-items: start;
     justify-content: space-evenly;
@@ -41,7 +43,7 @@
     font-size: 2.5rem;
 }
 .product-detail .product .details .discount {
-    color: var(--theme-7);
+    color: var(--theme-6);
 }
 .product-detail .product .details .review {
     display: flex;

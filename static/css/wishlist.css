@@ -23,7 +23,7 @@
     justify-content: center;
     cursor: pointer;
     background-color: var(--theme-2);
-    color: var(--theme-5);
+    color: var(--theme-4);
     border-radius: 1rem;
     transition: all .2s ease;
     position: relative;
@@ -53,7 +53,7 @@
     font-size: 1.2rem;
 }
 .wishlist-items .item .product-details .price .discount {
-    color: var(--theme-7);
+    color: var(--theme-6);
     font-size: .8rem;
 }
 .wishlist-items .item .add-to-cart {
@@ -67,10 +67,9 @@
 }
 
 .wishlist-items .item img {
-    background-color: var(--theme-5);
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 1rem 1rem 0 0;
 }
 .wishlist-items .item .product-details .review {

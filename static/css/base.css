@@ -121,7 +121,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    z-index: 98;
+    z-index: 999999;
 }
 .messages .message {
     position: relative;
@@ -225,7 +225,7 @@ body {
     transform: translate(-50%, -50%);
     z-index: 9999;
     background-color: var(--theme-1);
-    color: var(--theme-5);
+    color: var(--theme-4);
     padding: 1rem;
     border-radius: 1rem;
     width: 20%;
@@ -239,7 +239,7 @@ body {
     position: absolute;
     top: .35rem;
     right: .5rem;
-    background-color: var(--theme-7);
+    background-color: var(--theme-6);
     color: var(--theme-1);
     width: .5rem;
     height: .5rem;
@@ -265,7 +265,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--theme-2);
+    background-color: var(--theme-6);
     color: var(--theme-1);
     font-weight: bold;
     padding: .5rem;

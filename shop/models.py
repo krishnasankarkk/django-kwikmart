@@ -25,7 +25,7 @@ class Brand(models.Model):
         return self.name
 
 class Product(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     description = models.TextField()
     original_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -34,7 +34,7 @@ class Product(models.Model):
     image = CloudinaryField('image')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)], default=1)
-    # today_deal = models.BooleanField(default=False)
+    recommended = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):

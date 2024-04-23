@@ -16,7 +16,7 @@
                                 <img src="{{item.product.image.url}}" alt="">
                             </td>
                             <td class="product-name">
-                                <a href="{% url 'shop:product-detail' product_id=item.product.id %}">{{item.product.name|truncatechars:15}}</a>
+                                <a href="{% url 'shop:product-detail' product_id=item.product.id %}">{{item.product.name|truncatechars:40}}</a>
                             </td>
                             <td>
                                 <span>{{item.quantity}}</span>

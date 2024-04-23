@@ -181,50 +181,6 @@
                 <a>See all deals</a>
             </div>
         </div>
-        <div class="deals">
-            <div class="title">
-                <h1>Today's deals</h1>
-                <a href="{% url 'shop:shop' %}">See all deals</a>
-            </div>
-            <div class="line"></div>
-            <div class="products">
-                {% for product in products %}
-                    <div class="product" title="{{product.name}}">
-                        <img id="productImage" src="{{ product.image.url }}" alt="">
-                        <img class="offer" src="{% static 'images/offer.png' %}" alt="">
-                        {% if is_new %}
-                            <img class="new" src="{% static 'images/new.png' %}" alt="">
-                        {% endif %}
-                        <div class="product-details">
-                            <span>{{ product.name|truncatechars:18}}</span>
-                            <div class="review">
-                                {% for i in product.rating|custom_range %}
-                                    <img src='{% static "images/star.png" %}' alt="">
-                                {% endfor %}
-                                {% for j in 5|subtract:product.rating|custom_range %}
-                                    <img src='{% static "images/starline.png" %}' alt="">
-                                {% endfor %}
-                            </div>
-                            <span>₹<span class="mrp">{{ product.original_price|intcomma  }}</span></span>
-                            <span class="price">₹{{ product.offer_price|intcomma  }}<span class="discount">-{{product.discount}}%</span></span>
-                        </div>
-                        <div class="actions">
-                            <img class="add-to-wishlist" id={{product.id}} onclick="handleAddToWishlist({{product.id}})" src="{% static 'images/heart.png' %}" alt="" title="Add to wishlist">
-                            <img src="{% static 'images/cart.png' %}" onclick="handleAddToCart({{product.id}})" alt="" title="Add to cart">
-                            <a href="{% url 'shop:product-detail' product_id=product.id %}">
-                                <img src="{% static 'images/view.png' %}" alt="" title="View product">
-                            </a>
-                        </div>
-                    </div>
-                {% endfor %}
-                <div class="prev-prod">
-                    <img src="{% static 'images/before.png' %}" alt="">
-                </div>
-                <div class="next-prod">
-                    <img src="{% static 'images/next.png' %}" alt="">
-                </div>
-            </div>
-        </div>
         <div class="best-deal">
             {% if best_deal %}
             <a href="{% url 'shop:product-detail' product_id=best_deal.id %}" class="product">
@@ -252,12 +208,12 @@
         </div>
         <div class="deals">
             <div class="title">
-                <h1>Recommended items</h1>
+                <h1>Today's deals</h1>
                 <a href="{% url 'shop:shop' %}">See all deals</a>
             </div>
             <div class="line"></div>
             <div class="products">
-                {% for product in products %}
+                {% for product in best_deals %}
                     <div class="product" title="{{product.name}}">
                         <img id="productImage" src="{{ product.image.url }}" alt="">
                         <img class="offer" src="{% static 'images/offer.png' %}" alt="">
@@ -296,18 +252,62 @@
         </div>
         <div class="deals">
             <div class="title">
-                <h1>New arrivals</h1>
+                <h1>Recommended items</h1>
                 <a href="{% url 'shop:shop' %}">See all deals</a>
             </div>
             <div class="line"></div>
             <div class="products">
                 {% for product in products %}
+                    {% if product.recommended %}    
+                        <div class="product" title="{{product.name}}">
+                            <img id="productImage" src="{{ product.image.url }}" alt="">
+                            <img class="offer" src="{% static 'images/offer.png' %}" alt="">
+                            {% if is_new %}
+                                <img class="new" src="{% static 'images/new.png' %}" alt="">
+                            {% endif %}
+                            <div class="product-details">
+                                <span>{{ product.name|truncatechars:18}}</span>
+                                <div class="review">
+                                    {% for i in product.rating|custom_range %}
+                                        <img src='{% static "images/star.png" %}' alt="">
+                                    {% endfor %}
+                                    {% for j in 5|subtract:product.rating|custom_range %}
+                                        <img src='{% static "images/starline.png" %}' alt="">
+                                    {% endfor %}
+                                </div>
+                                <span>₹<span class="mrp">{{ product.original_price|intcomma  }}</span></span>
+                                <span class="price">₹{{ product.offer_price|intcomma  }}<span class="discount">-{{product.discount}}%</span></span>
+                            </div>
+                            <div class="actions">
+                                <img class="add-to-wishlist" id={{product.id}} onclick="handleAddToWishlist({{product.id}})" src="{% static 'images/heart.png' %}" alt="" title="Add to wishlist">
+                                <img src="{% static 'images/cart.png' %}" onclick="handleAddToCart({{product.id}})" alt="" title="Add to cart">
+                                <a href="{% url 'shop:product-detail' product_id=product.id %}">
+                                    <img src="{% static 'images/view.png' %}" alt="" title="View product">
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="prev-prod">
+                    <img src="{% static 'images/before.png' %}" alt="">
+                </div>
+                <div class="next-prod">
+                    <img src="{% static 'images/next.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="deals">
+            <div class="title">
+                <h1>New arrivals</h1>
+                <a href="{% url 'shop:shop' %}">See all deals</a>
+            </div>
+            <div class="line"></div>
+            <div class="products">
+                {% for product in new_products %}
                 <div class="product" title="{{product.name}}">
                         <img id="productImage" src="{{ product.image.url }}" alt="">
                         <img class="offer" src="{% static 'images/offer.png' %}" alt="">
-                        {% if is_new %}
-                            <img class="new" src="{% static 'images/new.png' %}" alt="">
-                        {% endif %}
+                        <img class="new" src="{% static 'images/new.png' %}" alt="">
                         <div class="product-details">
                             <span>{{ product.name|truncatechars:18}}</span>
                             <div class="review">

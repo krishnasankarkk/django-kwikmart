@@ -1,8 +1,15 @@
 {% load static %}
 <script>
+    var timeout;
     $('.top').click(function(){
         $("html").scrollTop(0);
     });
+    $('.cancel-login-popup').click(()=>{
+        $('.login-popup').hide()
+    })
+    $('.close-login-popup').click(()=>{
+        $('.login-popup').hide()
+    })
     Array.prototype.remove = function(value) {
         var index = this.indexOf(value);
         if (index !== -1) {
@@ -47,14 +54,101 @@
             // Hide the message after 5 seconds (adjust as needed)
             setTimeout(() => {
                 message.remove();
-            }, 1000);
+            }, 3000);
     }
-
     
 
+    // Search products.
+    $('#search-product').on('input', function(event){
+        $('.search-products').show();
+        var search = $('#search-product').val();
+        if(search.length>2)
+            searchProducts();
+    })
+
+    function searchProducts(){
+        var search = $('#search-product').val();
+        var url = `/search-product/${search}`;
+        if(search.length>2){
+            $('#loading-screen').show();
+            $.ajax({
+                url: url,
+                type: 'GET',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                success: (res)=>{
+                    $('#loading-screen').hide();
+                    if(res){
+                        $('.search-products').show();
+                        $(document).click(function(event){
+                            $('.search-products').hide();
+                        });
+                        $('.search-products').empty();
+                        if(res.products.length>0){
+                            var products = res.products;
+                            products.forEach((product)=>{
+                                var html = `
+                                    <a href="/product-detail/${product.id}">${product.name}</a>
+                                `;
+                                $('.search-products').append(html);
+                            })
+                        } else {
+                            $('.search-products').append('<span id="loading-products">No products matching query...</span> ');
+                        }
+                    }
+                },
+                error: (err)=>{
+                    $('#loading-screen').hide();
+                    console.log(err);
+                },
+            })
+        } else {
+            var message = {
+                'success' : false,
+                'message': 'Please enter atleast three characters to search!',
+            }
+            updateMessages(message);
+        }
+    }
+
     // Clear products filters.
-    function clearProductFilters(){
-        $('input[type="checkbox"]').prop('check', false);
+    function clearProductFilters(target){
+        if(target=='categories'){
+            $('input[name="category"]').each(function(){
+                $(this).prop('checked', false);
+            })
+            handleCheckboxState();
+            filterProducts();
+        }
+        if(target=='prices'){
+            $('input[name="price-range"]').each(function(){
+                $(this).prop('checked', false);
+            })
+            handleCheckboxState();
+            filterProducts();
+        }
+        if(target=='brands'){
+            $('input[name="brand"]').each(function(){
+                $(this).prop('checked', false);
+            })
+            handleCheckboxState();
+            filterProducts();
+        }
+        if(target=='ratings'){
+            $('input[name="rating"]').each(function(){
+                $(this).prop('checked', false);
+            })
+            handleCheckboxState();
+            filterProducts();
+        }
+        if(target=='offers'){
+            $('input[name="offer"]').each(function(){
+                $(this).prop('checked', false);
+            })
+            handleCheckboxState();
+            filterProducts();
+        }
     }
 
     // Function to filter products.
@@ -563,8 +657,6 @@
                 submitReview($('#written-comment').data('product-id'));
             }
         });
-
-        var timeout;
         
         function hideAll(){
             $('.themes').hide();
