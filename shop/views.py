@@ -560,21 +560,28 @@ def change_theme(request, theme_id):
         try:
             user_theme = UserTheme.objects.get(user=user)
         except UserTheme.DoesNotExist:
-            user_session = request.session.session_key
-            if not user_session:
-                request.session.save()
-                user_session = request.session.session_key
-            try:
-                session_theme = SessionTheme.objects.get(user_session=user_session)
-            except SessionTheme.DoesNotExist:
-                new_session_theme = SessionTheme(
-                    user_session = user_session,
-                    theme = theme,
+            if user:
+                new_user_theme = UserTheme(
+                    user=user,
+                    theme=theme,
                 )
-                new_session_theme.save()
+                new_user_theme.save()
             else:
-                session_theme.theme = theme
-                session_theme.save()
+                user_session = request.session.session_key
+                if not user_session:
+                    request.session.save()
+                    user_session = request.session.session_key
+                try:
+                    session_theme = SessionTheme.objects.get(user_session=user_session)
+                except SessionTheme.DoesNotExist:
+                    new_session_theme = SessionTheme(
+                        user_session = user_session,
+                        theme = theme,
+                    )
+                    new_session_theme.save()
+                else:
+                    session_theme.theme = theme
+                    session_theme.save()
         else:
             user_theme.theme = theme
             user_theme.save()
