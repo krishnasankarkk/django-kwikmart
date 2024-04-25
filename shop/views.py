@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.http import require_GET, require_http_methods
 from django.db.models import Q, Sum, F, Case, When, IntegerField, CharField, DateTimeField
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from .models import Product, Carousel, Category, Cart, WishList, Order, OrderItem, Review, Brand, Theme, UserTheme, SessionTheme
 
@@ -56,7 +57,7 @@ def home(request):
     products = Product.objects.all()
     best_deals = Product.objects.filter(discount__gt=0).order_by('-discount')[:20]
     best_deal = best_deals.first()
-    threshold_date = datetime.now() - timedelta(days=7)
+    threshold_date = timezone.now() - timedelta(days=7)
     new_products = products.filter(created_at__gte=threshold_date)
     context = {
         'carousel': carousel,

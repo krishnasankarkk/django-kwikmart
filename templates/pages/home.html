@@ -7,18 +7,23 @@
     {% include 'components/navbar.html' %}
     <div class="main">
         <div class="carousel">
-            <div class="carousel-inner">
-                {% for item in carousel %}
-                    <div class="carousel-item">
-                        <img src="{{ item.image.url }}" alt="{{ item.name }}">
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="prev">
-                <img src="{% static 'images/before.png' %}" alt="">
-            </div>
-            <div class="next">
-                <img src="{% static 'images/next.png' %}" alt="">
+            {% for item in carousel %}
+                <div class="carousel-item">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                </div>
+            {% endfor %}
+            <div class="nav-buttons">
+                <div class="prev">
+                    <img src="{% static 'images/left.png' %}" alt="">
+                </div>
+                <div class="next">
+                    <img src="{% static 'images/right.png' %}" alt="">
+                </div>
+                <div class="slider">
+                    {% for item in carousel %}
+                        <span class="nav-dot"></span>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div class="offers">
