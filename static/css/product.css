@@ -108,7 +108,7 @@
 }
 #reviews .review .review-section .comment {
     font-size: 1.2rem;
-    color: var(--theme-5);
+    color: var(--theme-4);
 }
 #reviews .write-comment {
     display: flex;
@@ -142,7 +142,7 @@
 
 #reviews .write-comment .comment input {
     background-color: var(--theme-1);
-    color: var(--theme-5);
+    color: var(--theme-4);
     border: none;
     padding: 1rem;
     border-radius: 1rem;
@@ -209,7 +209,7 @@
     background-color: var(--theme-1);
     padding: .5rem;
     border-radius: 1rem;
-    color: var(--theme-5);
+    color: var(--theme-4);
     cursor: pointer;
     transition: transform .2s ease;
 }

@@ -273,7 +273,7 @@ body {
     cursor: pointer;
 }
 .action-bar {
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;

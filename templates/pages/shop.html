@@ -211,10 +211,11 @@
                 {% for product in products %}
                 <div class="product" title="{{product.name}}">
                     <img id="productImage" src="{{ product.image.url }}" alt="">
-                    <img class="offer" src="{% static 'images/offer.png' %}" alt="">
-                    {% if is_new %}
-                        <img class="new" src="{% static 'images/new.png' %}" alt="">
+
+                    {% if product.discount > 0 %}                    
+                        <img class="offer" src="{% static 'images/offer.png' %}" alt="">
                     {% endif %}
+                        
                     <div class="product-details">
                         <span>{{ product.name|truncatechars:40}}</span>
                         <div class="review">
