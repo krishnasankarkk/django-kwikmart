@@ -57,6 +57,36 @@
             }, 3000);
     }
     
+    // Navigate carousel.
+    var carouselContainer = $('.carousel');
+    var carouselItems = $('.carousel-item');
+    var currentIndex = 0;
+    var itemWidth = carouselItems.first().outerWidth(); // Use outerWidth() to include padding and margin
+    var totalItems = carouselItems.length;
+    var navDots = $('.nav-dot');
+    navDots.css('background-color', 'var(--theme-2)'); 
+    navDots.eq(0).css('background-color', 'var(--theme-3)'); 
+    $('.next').click(function(){
+        if (currentIndex < totalItems - 1) {
+            navDots.css('background-color', 'var(--theme-2)'); 
+            currentIndex++;
+            var offset = currentIndex * itemWidth;
+            console.log(offset)
+            navDots.eq(currentIndex).css('background-color', 'var(--theme-3)');
+            carouselContainer.animate({scrollLeft: offset}, 500); // Use jQuery animate for smooth scrolling
+        }
+    });
+    
+    $('.prev').click(function(){
+        if (currentIndex > 0) {
+            navDots.css('background-color', 'var(--theme-2)'); 
+            currentIndex--;
+            navDots.eq(currentIndex).css('background-color', 'var(--theme-3)');
+            var offset = currentIndex * itemWidth;
+            console.log(offset)
+            carouselContainer.animate({scrollLeft: offset}, 500); // Use jQuery animate for smooth scrolling
+        }
+    });
 
     // Search products.
     $('#search-product').on('input', function(event){
