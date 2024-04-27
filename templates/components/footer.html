@@ -1,12 +1,10 @@
 {% load static %}
 {% if not request.user.is_authenticated %}
-    <div class="line"></div>
     <div class="signin">
         <span class="title">See personalized recommendations</span>
         <a class="login" href="{% url 'login' %}">Sign In</a>
-        <span>New customer?<a href="{% url 'signup' %}">Register account</a></span>
+        <span class="register">New customer?<a href="{% url 'signup' %}">Register account</a></span>
     </div>
-    <div class="line"></div>  
 {% endif %}
 <br><br>
 <div class="footer">

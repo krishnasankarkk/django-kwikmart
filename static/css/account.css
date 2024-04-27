@@ -1,0 +1,174 @@
+body {
+    margin-top: 5rem;
+}
+.main {
+    width: 100%;
+    height: 100vh;
+    background-color: var(--theme-2);
+}
+.account-section {
+    background-color: var(--theme-1);
+    color: var(--theme-4);
+    width: 90%;
+    height: 100%;
+    margin: 1rem;
+    border-radius: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+h2 {
+    width: 100%;
+}
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 2rem;
+}
+.container .options, .container .details {
+    height: 100%;
+    background-color: var(--theme-2);
+    color: var(--theme-4);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    padding-top: 1rem;
+}
+.container .options {
+    width: 30%;
+}
+.container .option {
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: .5rem;
+    min-width: 85%;
+    border-radius: 1rem;
+}
+.container .option:hover {
+    color: var(--theme-3);
+    transform: translateX(1rem);
+    box-shadow: -0.5rem 0 1rem #222831;
+}
+.container .option img {
+    width: 2rem;
+    height: auto;
+}
+.container .details .account-details {
+    margin: 0 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 50%;
+    height: 100%;
+    font-size: 1.2rem;
+}
+.container .details {
+    width: 70%;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    position: relative;
+}
+.container .details .profile {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: .5rem;
+}
+.container .details .profile .image {
+    width: 10rem;
+    height: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container .details .profile .image img {
+    border-radius: 1rem;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.container .details .profile .change-profile {
+    padding: .8rem;
+    background-color: var(--theme-1);
+    border-radius: .5rem;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .2rem;
+    width: 30%;
+}
+.container .details .profile .change-profile img {
+    width: 1.5rem;
+    height: auto;
+}
+.container .details .profile .change-profile:hover {
+    background-color: var(--theme-1);
+    color: var(--theme-3);
+}
+.container .account-details label {
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+.container .account-details input, .container .account-details textarea {
+    background-color: var(--theme-1);
+    color: var(--theme-4);
+    padding: .5rem;
+    max-width: 90%;
+    min-width: 100%;
+    border-radius: .4rem;
+    border: none;
+    font-family: inherit;
+    font-size: 1.1rem;
+}
+.container .account-details textarea {
+    height: 20%;
+}
+
+.container .details .save {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    width: auto;
+    height: 100%;
+    display: flex;
+    align-items: end;
+    justify-self: end;
+}
+.container .details .save .save-changes {
+    padding: .8rem;
+    border-radius: .8rem;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .2rem;
+    width: 100%;
+    background-color: var(--theme-5);
+    color: #222831;
+}
+.container .details .save .save-changes:hover {
+    background-color: var(--theme-3);
+}

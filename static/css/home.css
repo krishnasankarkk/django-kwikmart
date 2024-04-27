@@ -1,5 +1,6 @@
 body {
     overflow-x: hidden;
+    margin-top: 4rem;
 }
 .main {
     display: flex;
@@ -7,7 +8,6 @@ body {
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    margin-top: 4rem;
 }
 .main a {
     color: var(--theme-3);
@@ -20,6 +20,7 @@ body {
     text-decoration: underline;
 }
 .carousel {
+    user-select: none;
     display: flex;
     flex-direction: row;
     overflow-x: auto;
@@ -50,8 +51,8 @@ body {
 }
 .carousel .nav-buttons .slider .nav-dot {
     background-color: var(--theme-3);
-    width: 1rem;
-    height: 1rem;
+    width: .5rem;
+    height: .5rem;
     border-radius: 100%;
 }
 .carousel .next, .carousel .prev {
@@ -115,7 +116,7 @@ body {
     justify-content: center;
 }
 .best-deal img {
-    width: 20rem;
+    width: 10rem;
     height: auto;
     border-radius: 1rem;
 }

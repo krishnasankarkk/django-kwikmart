@@ -5,8 +5,7 @@
     justify-content: start;
     background-color: var(--theme-1);
     width: 100%;
-    height: auto;
-    padding-bottom: 5rem;
+    height: 100%;
 }
 .signup-section .logo {
     display: flex;
@@ -49,7 +48,7 @@
     align-items: center;
     justify-content: start;
 }
-.signup-section form a {
+.signup-section form .explore {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,7 +68,7 @@
     padding: 1rem;
     border-radius: 2rem;
     border: none;
-    color: var(--theme-5);
+    color: var(--theme-4);
     font-family: inherit;
 }
 .signup-section form ul {

@@ -1,3 +1,4 @@
+
 @font-face {
     font-family: 'Poppins';
     src: url('/static/fonts/Poppins-Regular.ttf');
@@ -129,7 +130,6 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-    border: .15rem solid var(--theme-3);
     background-color: var(--theme-1);
     color: var(--theme-5);
     font-weight: bold;
@@ -165,13 +165,16 @@ body {
     font-weight: bold;
 }
 .messages .success{
-    color: #028b54;
+    background-color: var(--theme-5);
+    color: #222831;
 }
 .messages .warning{
-    color: #d18c0b;
+    background-color: #ffa703;
+    color: #222831;
 }
 .messages .info{
-    color: #0057b4;
+    background-color: var(--theme-3);
+    color: #222831;
 }
 .timeout-bar {
     position: absolute;
