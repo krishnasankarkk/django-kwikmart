@@ -1,3 +1,4 @@
+{% load compress %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -15,14 +16,27 @@
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+    {% comment %} {% compress css %}
+        <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %} {% endcomment %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
 </head>
 <body>
     {% include 'components/loading.html' %}
     {% include 'components/login-popup.html' %}
     {% include 'components/notifications.html' %}
+
+    {% if request.path != '/login/' and request.path != '/signup/' %}
+        {% include 'components/navbar.html' %}
+    {% endif %}
+    
     {% block main %}{% endblock main %}
-    {% include 'components/footer.html' %}
+    
+    {% if request.path != '/login/' and request.path != '/signup/' %}
+        {% include 'components/footer.html' %}
+    {% endif %}
+
     {% block script %}{% endblock script %}
     {% include 'scripts/scripts.html' %}
 </body>

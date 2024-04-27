@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Kwikmart • Account{% endblock title %}
+{% block main %}
+<link rel="stylesheet" href="{% static 'css/account.css' %}">
+<div class="main">
+    <div class="account-section">
+        <h2>Your Account</h2>
+        <div class="line"></div>
+        <div class="container">
+            <div class="options">
+                <div class="option">
+                    <img src="{% static 'images/people.png' %}" alt="">
+                    <span>Account Information</span>
+                </div>
+                <div class="option">
+                    <img src="{% static 'images/orders.png' %}" alt="">
+                    <span>Order Details</span>
+                </div>
+                <div class="option">
+                    <img src="{% static 'images/heart.png' %}" alt="">
+                    <span>Wishlist</span>
+                </div>
+                <div class="option">
+                    <img src="{% static 'images/settings.png' %}" alt="">
+                    <span>Settings</span>
+                </div>
+                <div class="option">
+                    <img src="{% static 'images/location.png' %}" alt="">
+                    <span>Shipping Address</span>
+                </div>
+                <div class="option">
+                    <img src="{% static 'images/wallet.png' %}" alt="">
+                    <span>Payment Method</span>
+                </div>
+                <div class="option">
+                    <img src="{% static 'images/customer-service.png' %}" alt="">
+                    <span>Help</span>
+                </div>
+            </div>
+            <form method="post" class="details" id="change-account">
+                {% csrf_token %}
+                <div class="account-details">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" value="{{request.user.username}}">
+                    
+                    <label for="fullname">Full Name</label>
+                    <input type="text" name="fullname" id="fullname" value="{{request.user.fullname}}">
+                   
+                    <label for="old-password">Old Password</label>
+                    <input type="password" name="old-password" id="old-password" value="">
+
+                    <label for="new-password">New Password</label>
+                    <input type="password" name="new-password" id="new-password" value="">
+
+                    <label for="address">Primary Billing Address</label>
+                    <textarea type="hidden" name="address" id="address" value="{{billing_address}}" ></textarea>
+                </div>
+                <div class="profile">
+                    <div class="image">
+                        <img src="{% static 'images/user.png' %}" alt="" id="uploaded-image">
+                    </div>
+                    <label for="change-image" class="change-profile">Change Image</label>
+                    <input type="file" name="change-image" id="change-image" hidden>
+                    {% comment %} <span class="change-profile">Edit Profile
+                        <img src="{% static 'images/edit.png' %}" alt="">
+                    </span> {% endcomment %}
+                </div>
+                <div class="save">
+                    <span class="save-changes">Save Changes</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main %}

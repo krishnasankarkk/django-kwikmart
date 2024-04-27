@@ -50,7 +50,17 @@ INSTALLED_APPS = [
     
     'django.contrib.humanize',    
     'shop',
+    
+    'compressor',
 ]
+
+# compressor settings
+COMPRESS_ROOT = BASE_DIR / 'static'
+COMPRESS_ENABLED = True
+STATICFILES_FINDERS = (
+    'compressor.finders.CompressorFinder',
+)
+
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 

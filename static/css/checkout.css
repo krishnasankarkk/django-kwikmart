@@ -180,6 +180,13 @@ body::-webkit-scrollbar {
     gap: 1rem;
     width: 97%;
 }
+.charges .warning {
+    color: var(--theme-6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
 .checkout-form .charges #total_price {
     background-color: var(--theme-2);
     padding: .5rem;

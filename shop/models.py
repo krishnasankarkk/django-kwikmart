@@ -8,6 +8,20 @@ from django.contrib.auth.models import User
 import uuid, math
 
 
+class Account(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = CloudinaryField('image')
+    billing_address1 = models.TextField(blank=True, null=True)
+    billing_address2 = models.TextField(blank=True, null=True)
+    billing_address3 = models.TextField(blank=True, null=True)
+    payment_method = models.CharField(max_length=50)
+    total_orders = models.IntegerField(default=0)
+    total_spend = models.IntegerField(default=0)
+    total_revenue = models.IntegerField(default=0)
+    total_reviews = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)

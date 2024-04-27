@@ -57,6 +57,106 @@
             }, 3000);
     }
     
+    // save account changes.
+    $('#change-account').submit(function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+        const username = $('input[name="username"]').val();
+        const address = $('textarea[name="address"]').val();
+        const billingEmail = $('input[name="fullname"]').val();
+        const billingCity = $('input[name="city"]').val();
+        const billingPostalCode = $('input[name="postal_code"]').val();
+        const billingCountry = $('input[name="country"]').val();
+        const selectedPaymentMethod = $('input[name="payment_method"]:checked').val();
+        const totalAmount = parseInt($('#total_price').data('total-price'));
+        
+        // products from cart.
+        var cartItems = [] 
+        $('.cart-item').each(function(){
+            var productId = $(this).data("product-id");
+            var quantity = $(this).data("quantity");
+            if(productId){
+                cartItems.push({
+                    'product_id': productId,
+                    'quantity': quantity,
+                });
+            }
+        });
+    
+        // Data to place order.
+        const data = {
+            'name' : billingName,
+            'address' : billingAddress,
+            'email' : billingEmail,
+            'city' : billingCity,
+            'postal_code' : billingPostalCode,
+            'country' : billingCountry,
+            'payment_method' : selectedPaymentMethod,
+            'total_amount' : totalAmount,
+            'cart_items': JSON.stringify(cartItems),
+        }
+    
+        // Example: Send the selected value in an AJAX request
+        if(cartItems.length>0){
+            $('#loading-screen').show();
+            $.ajax({
+                url: '{% url "shop:save-order" %}',
+                type: 'POST',
+                data: data,
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                },
+                success: function(response) {
+                    $('#loading-screen').hide();
+                    if(response){
+                        updateMessages(response);
+                    }
+                },
+                error: function(error) {
+                    $('#loading-screen').hide();
+                    console.log(error)
+                }
+            });
+        }else {
+            var message = {
+                'success': false,
+                'message': 'No products in cart!',
+            }
+            updateMessages(message);
+        }
+    });
+
+    // Navigate carousel.
+    var carouselContainer = $('.carousel');
+    var carouselItems = $('.carousel-item');
+    var currentIndex = 0;
+    var itemWidth = carouselItems.first().outerWidth(); // Use outerWidth() to include padding and margin
+    var totalItems = carouselItems.length;
+    var navDots = $('.nav-dot');
+    navDots.css('background-color', 'var(--theme-2)'); 
+    navDots.eq(0).css('background-color', 'var(--theme-3)'); 
+    $('.next').click(function(){
+        if (currentIndex < totalItems - 1) {
+            navDots.css('background-color', 'var(--theme-2)'); 
+            currentIndex++;
+            var offset = currentIndex * itemWidth;
+            console.log(offset)
+            navDots.eq(currentIndex).css('background-color', 'var(--theme-3)');
+            carouselContainer.animate({scrollLeft: offset}, 500); // Use jQuery animate for smooth scrolling
+        }
+    });
+    
+    $('.prev').click(function(){
+        if (currentIndex > 0) {
+            navDots.css('background-color', 'var(--theme-2)'); 
+            currentIndex--;
+            navDots.eq(currentIndex).css('background-color', 'var(--theme-3)');
+            var offset = currentIndex * itemWidth;
+            console.log(offset)
+            carouselContainer.animate({scrollLeft: offset}, 500); // Use jQuery animate for smooth scrolling
+        }
+    });
+
 
     // Search products.
     $('#search-product').on('input', function(event){
@@ -719,7 +819,44 @@
                 $('.cart-popup').hide();
             }, 500);
         });
+
+        // change profile image.
+        $('#change-image').change(function() {
+            // Check if files were selected
+            if (this.files && this.files[0]) {
+                // Create a FileReader object
+                const reader = new FileReader();
+                
+                // Set up the FileReader onload event
+                reader.onload = function(e) {
+                    // Set the src attribute of the image element
+                    $('#uploaded-image').attr('src', e.target.result);
+                }
+                
+                // Read the file as a data URL
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
         
+        // toggel payment methods.
+        $(".payment-details").hide();
+        $("input[name='payment_method'][id='cash_on_delivery']").prop('checked', true);
+        $("#card-details").show();
+        $("input[name='payment_method']").change(function(){
+            const selectedPaymentMethod = $("input[name='payment_method']:checked").val();
+            if(selectedPaymentMethod!='cash_on_delivery'){
+                var message = {
+                    'success':false,
+                    'message':'Sorry! Payment method not available at the moment :(',
+                }
+                updateMessages(message);
+                $("input[name='payment_method'][id='cash_on_delivery']").prop('checked', true);
+            }
+            $(".payment-details").hide();
+            $("#"+selectedPaymentMethod+"-details").show();
+        })
+
         // Handle form submission
         $('.checkout-form').submit(function(event) {
             // Prevent the default form submission

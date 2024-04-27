@@ -17,7 +17,7 @@ from django.db.models import Q, Sum, F, Case, When, IntegerField, CharField, Dat
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
-from .models import Product, Carousel, Category, Cart, WishList, Order, OrderItem, Review, Brand, Theme, UserTheme, SessionTheme
+from .models import Product, Carousel, Category, Cart, WishList, Order, OrderItem, Review, Brand, Theme, UserTheme, SessionTheme, Account
 
 def login(request):
     if request.method == 'POST':
@@ -40,7 +40,7 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Sign Up successfull! ✔ ')
+            messages.success(request, 'Successfully created account! ✔ ')
             return redirect('login')
     else:
         form = UserCreationForm()    
@@ -114,7 +114,7 @@ def add_to_cart(request):
         user = request.user if request.user.is_authenticated else None
 
         if user:
-            cart_item, created = Cart.objects.get_or_create(product=product, user=user, user_session=user_session)
+            cart_item, created = Cart.objects.get_or_create(product=product, user=user)
         else:
             cart_item, created = Cart.objects.get_or_create(product=product, user_session=user_session)
         
@@ -124,8 +124,11 @@ def add_to_cart(request):
             message = 'Cart updated successfully! ✔'
         else:
             message = 'Item added to cart successfully! ✔'
-            
-        cart_items = Cart.objects.filter(user=user, user_session=user_session).order_by('created_at')
+        
+        if user:    
+            cart_items = Cart.objects.filter(user=user).order_by('created_at')
+        else:
+            cart_items = Cart.objects.filter(user_session=user_session).order_by('created_at')
         total_price = sum(item.sub_total for item in cart_items)
         
         # Serialize cart_items queryset into a list of dictionaries
@@ -267,7 +270,14 @@ def delete_from_cart(request, cart_item_id):
         return JsonResponse({'message': 'Request method is not DELETE'})
     
 def cart_view(request):
-    return render(request, 'pages/cart.html')
+    breadcrumbs = [
+        {'name': 'Shop', 'url': '/shop'},
+        {'name': 'Cart', 'url': ''},
+    ]
+    context = {
+        'breadcrumbs':breadcrumbs,
+    }
+    return render(request, 'pages/cart.html', context)
 
 @login_required
 def add_to_wishlist(request):
@@ -305,10 +315,10 @@ def delete_from_wishlist(request, product_id):
             wishlist_item = WishList.objects.filter(user=user, product=product)
             if wishlist_item.exists():
                 wishlist_item.delete()
-                messages.success(request, 'Removed from wishlist successfully! ✔')
-                return JsonResponse({'success': True, 'message': 'Removed from wishlist successfully! ✔'})
+                messages.success(request, 'Successfully removed item from wishlist! ✔')
+                return JsonResponse({'success': True, 'message': 'Successfully removed item from wishlist! ✔'})
             else:
-                return JsonResponse({'success': False, 'message': 'Item not in wishlist!'})
+                return JsonResponse({'success': False, 'message': 'Item is not in wishlist!'})
         else:
             return JsonResponse({'success': False, 'message': 'Product not found!'})
 
@@ -329,6 +339,7 @@ def show_wishlist(request):
 def checkout_view(request):
     
     breadcrumbs = [
+        {'name': 'Shop', 'url': '/shop'},
         {'name': 'Cart', 'url': '/cart'},
         {'name': 'Checkout', 'url': ''},
     ]
@@ -604,3 +615,51 @@ def search_product(request, search):
         ],
     }
     return JsonResponse(context)
+
+def account_view(request):
+    return render(request, 'pages/account.html')
+
+@require_http_methods(["POST"])
+def update_account(request):
+    if request.user.is_authenticated:
+        user = request.user
+        username = request.POST.get('username')
+        fullname = request.POST.get('fullname')
+        old_password = request.POST.get('old-password')
+        new_password = request.POST.get('new-password')
+        primary_billing_address = request.POST.get('address')
+
+        # Update username if provided
+        if username:
+            user.username = username
+
+        # Update fullname if provided
+        if fullname:
+            user.first_name, user.last_name = fullname.split(maxsplit=1)
+
+        # Check if old password matches and new password is provided
+        if old_password and new_password:
+            if user.check_password(old_password):
+                user.set_password(new_password)
+            else:
+                return JsonResponse({'error': 'Old password is incorrect.'}, status=400)
+
+        # Update primary billing address if provided
+        if primary_billing_address:
+            try:
+                account = Account.objects.get(user=user)
+            except Account.DoesNotExist:
+                return JsonResponse({'error': 'Account does not exist.'}, status=404)
+            else:
+                if 'image' in request.FILES:
+                    account.image = request.FILES['change-image']
+                if 'billing_address1' in request.POST:
+                    account.billing_address1 = primary_billing_address
+                account.save()
+
+        # Save the user object
+        user.save()
+
+        return JsonResponse({'message': 'Account updated successfully.'})
+    else:
+        return JsonResponse({'error': 'User is not authenticated.'}, status=401)
