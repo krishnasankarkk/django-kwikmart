@@ -285,6 +285,7 @@ body {
     width: 100%;
     background-color: var(--theme-1);
     box-shadow: 0 0 1rem black;
+    position: relative;
 }
 .action-bar img {
     padding: 1rem;
@@ -308,5 +309,8 @@ body {
     }
     .action-bar {
         display: flex;
+    }
+    .breadcrumbs {
+        display: none;
     }
 }

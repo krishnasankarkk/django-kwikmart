@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="{% static 'css/shop.css' %}">
     <div class="shop">
         <div class="filters">
+            <div class="close-filter-popup">
+                <img src="{% static 'images/x.png' %}" alt="">
+            </div>
             <h1>Filters</h1>
             <div class="line"></div>
             <div class="categories">
@@ -204,6 +207,10 @@
             </div>
         </div>
         <div class="product-section">
+            <div class="shop-filter">
+                <span>Filters</span>
+                <img src="{% static 'images/filter.png' %}" alt="">
+            </div>
             <h1>Products</h1>
             <div class="line"></div>
             <div class="products" id="shop-products">

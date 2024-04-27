@@ -57,6 +57,14 @@
             }, 3000);
     }
     
+    // close shop filter popup.
+    $('.close-filter-popup').click(function(){
+        $('.filters').hide()
+    })
+    $('.shop-filter').click(function(){
+        $('.filters').show()
+    })
+
     // save account changes.
     $('#change-account').submit(function(event) {
         // Prevent the default form submission
