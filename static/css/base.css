@@ -275,3 +275,38 @@ body {
     border-radius: 1rem;
     cursor: pointer;
 }
+.action-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--theme-1);
+    box-shadow: 0 0 1rem black;
+}
+.action-bar img {
+    padding: 1rem;
+    width: 1.5rem;
+    height: auto;
+    transition: all .3s ease;
+}
+.action-bar img:hover{
+    transform: translateY(-.5rem);
+    background-color: var(--theme-1);
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem black;
+}
+@media screen and (max-width: 576px) {
+    html{
+        overflow-x: hidden;
+    }
+    .messages .message {
+        font-size: .8rem;
+        padding: .2rem;
+    }
+    .action-bar {
+        display: flex;
+    }
+}

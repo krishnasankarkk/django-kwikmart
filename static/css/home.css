@@ -381,3 +381,126 @@ body {
 .deals .products .product:hover #productImage{
     opacity: 0.5;
 }
+.signin {
+    background-color: var(--theme-1);
+    color: var(--theme-4);
+    width: 100%;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.signin .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.signin .login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    border: none;
+    background-color: var(--theme-3);
+    border-radius: .5rem;
+    font-weight: bold;
+    font-family: inherit;
+    font-size: 1.2rem;
+    color: var(--theme-1);
+    padding: .5rem;
+    transition: transform .2s ease;
+}
+.signin .login:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+.signin a {
+    color: var(--theme-3);
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+@media screen and (max-width: 576px){
+    html{
+        overflow-x: hidden;
+    }
+    .carousel{
+        height: 50%;
+        overflow-x: auto;
+    }
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    .carousel .carousel-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .carousel .nav-buttons .prev, .carousel .nav-buttons .next {
+        display: none;
+    }
+    .carousel .nav-buttons {
+        display: none;
+    }
+    .carousel .nav-buttons .slider .nav-dot {
+        width: .5rem;
+        height: .5rem;
+    }
+    .offers {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .offers .offer {
+        width: 90%;
+    }
+    .best-deal {
+        display: none;
+    }
+    .deals {
+        font-size: .5rem;
+    }
+    .main a {
+        font-size: .8rem;
+    }
+    .deals .products .product {
+        min-width: 6rem;
+        height: 10rem;
+    }
+    .deals .products {
+        margin: 1rem;
+    }
+    .prev-prod, .next-prod {
+        display: none;
+    }
+    .deals .products .product .product-details .mrp {
+        font-size: .5rem;
+    }
+    .deals .products .product .new, .deals .products .product .offer {
+        width: 2rem;
+    }
+    .deals .products .product .product-details .price {
+        font-size: .6rem;
+    }
+    .deals .products .product .review img {
+        width: .5rem;
+        height: .5rem;
+    }
+    .deals .products .product .product-details .price .discount{
+        font-size: .4rem;
+    }
+    .deals .products .product .product-details{
+        padding: 0;
+    }
+    .footer {
+        display: none;
+    }
+    .deals .products .product .actions{
+        gap: .2rem;
+    }
+    .deals .products .product .actions img {
+        width: .8rem;
+        height: auto;
+        border-radius: .5rem;
+    }
+}

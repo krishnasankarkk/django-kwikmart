@@ -125,6 +125,20 @@
             updateMessages(message);
         }
     });
+  
+    // action bar navigation.
+    function handleAction(value){
+        if(value == 'home')
+            location.href="{% url 'shop:home' %}";
+        if(value == 'shop')
+            location.href="{% url 'shop:shop' %}";
+        if(value == 'search')
+            location.href="{% url 'shop:shop' %}";
+        if(value == 'wishlist')
+            location.href="{% url 'shop:wishlist' %}";
+        if(value == 'cart')
+            location.href="{% url 'shop:cart' %}";
+    }
 
     // Navigate carousel.
     var carouselContainer = $('.carousel');
@@ -156,7 +170,6 @@
             carouselContainer.animate({scrollLeft: offset}, 500); // Use jQuery animate for smooth scrolling
         }
     });
-
 
     // Search products.
     $('#search-product').on('input', function(event){
