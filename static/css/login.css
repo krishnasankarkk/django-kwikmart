@@ -37,7 +37,7 @@
     align-items: center;
     justify-content: center;
 }
-.login-section form a {
+.login-section form .explore {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,6 +47,7 @@
     padding: 1rem;
     border-radius: 2rem;
     font-weight: bold;
+    font-size: 1.2rem;
     transition: transform .2s ease;
 }
 .login-section form a:hover {

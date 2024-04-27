@@ -5,7 +5,6 @@
 {% block title %}Kwikmart • Checkout{% endblock title %}
 
 {% block main %}
-{% include 'components/navbar.html' %}
 <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
 <div class="checkout-section">
     <h2>Checkout</h2>
@@ -174,6 +173,8 @@
                             </div>
                         {% endif %}
                     </div>
+                    
+                    {% if cart_items %}
                     <div class="place-order">
                         <div class="charges">
                             <span>Sub Total ({{cart_item_count}} items) :</span>
@@ -191,8 +192,13 @@
                             <span style="font-size:1.5rem;">Total :</span>
                             <span id="total_price" data-total-price="{{total_offer_price}}">₹{{total_offer_price|intcomma}}</span>
                         </div>
-                        <button class="submit-button" type="submit">Place Order</button>
+                        <div class="charges">
+                            <span class="warning">You need to login in order to track your order!</span>
+                        </div>
+                        <button class="submit-button" type="submit">Place Your Order</button>
                     </div>
+                    {% endif %}
+                        
                 </div>
             </div>
         </div>
@@ -201,13 +207,5 @@
 {% endblock main %}
 {% block script %}
 <script>
-    $(".payment-details").hide();
-    $("input[name='payment_method'][id='cash_on_delivery']").prop('checked', true);
-    $("#card-details").show();
-    $("input[name='payment_method']").change(function(){
-        const selectedPaymentMethod = $("input[name='payment_method']:checked").val();
-        $(".payment-details").hide();
-        $("#"+selectedPaymentMethod+"-details").show();
-    })
 </script>
 {% endblock script %}
