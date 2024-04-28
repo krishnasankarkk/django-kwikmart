@@ -34,7 +34,7 @@ SECRET_KEY = config('SECRET_KEY', default='')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '13.201.18.50', 'ec2-13-201-18-50.ap-south-1.compute.amazonaws.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'www.kwikmart.one', 'kwikmart.one']
 
 LOGIN_URL = '/login/'
 
