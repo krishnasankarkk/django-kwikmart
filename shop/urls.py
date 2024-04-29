@@ -8,6 +8,8 @@ app_name = 'shop'
 urlpatterns = [
     path('', views.home, name='home'),
     path('shop', views.shop, name='shop'),
+    path('filtered-shop/<str:categories>/', views.filtered_shop, name='filtered-shop'),
+    path('filtered-shop/<str:categories>/<str:brands>', views.filtered_shop, name='filtered-shop'),
     path('product-detail/<int:product_id>/', views.product, name='product-detail'),
     path('cart/', views.cart_view, name='cart'),
     path('add-to-cart/', views.add_to_cart, name='add-to-cart'),
@@ -23,5 +25,6 @@ urlpatterns = [
     path('filter-products/', views.filter_products, name='filter-products'),
     path('change-theme/<int:theme_id>', views.change_theme, name='change-theme'),
     path('search-product/<str:search>', views.search_product, name='search-product'),
+    path('search-category-product/<int:category_id>/<str:search>', views.search_category_product, name='search-category-product'),
     path('update-account/', views.update_account, name="update-account")
 ]

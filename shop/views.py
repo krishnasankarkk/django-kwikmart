@@ -86,6 +86,26 @@ def shop(request):
     }
     return render(request, 'pages/shop.html', context)
 
+def filtered_shop(request, categories, brands=None):
+    categories_ids = json.loads(categories)
+    categories = Category.objects.all()
+    filter_categories = categories.filter(id__in=categories_ids)
+    products = Product.objects.filter(category__in=filter_categories)
+    brands = Brand.objects.all()
+    threshold_date = datetime.now() - timedelta(days=7)
+    breadcrumbs = [
+        {'name': 'Shop', 'url': ''},  # Example: Current page
+    ]
+    context = {
+        'categories': categories,
+        'filter_categories': filter_categories,
+        'products': products,
+        'brands': brands,
+        'breadcrumbs':breadcrumbs,
+        'is_new': datetime.now()>threshold_date,
+    }
+    return render(request, 'pages/shop.html', context)
+
 def product(request, product_id):
     product = Product.objects.get(id=product_id)
     categories = Category.objects.all()
@@ -140,7 +160,7 @@ def add_to_cart(request):
                 {
                     'id': item.id,
                     'product_id': item.product.id,
-                    'product_name': item.product.name[:39]+'...',
+                    'product_name': item.product.name[:39]+'...'  if len(item.product.name)>50 else item.product.name,
                     'original_price': item.product.original_price,
                     'offer_price': item.product.offer_price,
                     'discount': item.product.discount,
@@ -612,12 +632,34 @@ def change_theme(request, theme_id):
 
 @require_GET
 def search_product(request, search):
-    products = Product.objects.filter(name__icontains=search)
+    products = Product.objects.filter(Q(name__icontains=search) 
+                                    | Q(category__name__icontains=search)
+                                    | Q(category__description__icontains=search)
+                                    | Q(brand__name__icontains=search))
     context = {
         'products': [
             {
                 'id': product.id,
-                'name': product.name[:50]+'...',
+                'name': product.name[:50]+'...' if len(product.name)>50 else product.name,
+                'brand': product.brand.name,
+            }
+            for product in products
+        ],
+    }
+    return JsonResponse(context)
+
+@require_GET
+def search_category_product(request, category_id, search):
+    products = Product.objects.filter(Q(category__id=category_id)
+                                    & (Q(name__icontains=search) 
+                                    | Q(category__name__icontains=search)
+                                    | Q(category__description__icontains=search)
+                                    | Q(brand__name__icontains=search)))
+    context = {
+        'products': [
+            {
+                'id': product.id,
+                'name': product.name[:50]+'...' if len(product.name)>50 else product.name,
                 'brand': product.brand.name,
             }
             for product in products

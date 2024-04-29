@@ -29,160 +29,160 @@
             <div class="offer">
                 <span class="offer-title">Appliances for your home | Up to 55% off</span>
                 <div class="offer-items">
-                    <div class="offer-item">
+                    <a href="{% url 'shop:filtered-shop' categories='[2]' %}" class="offer-item">
                         <img src="{% static 'images/offers/ac.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Air conditioners</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[3]' %}" class="offer-item">
                         <img src="{% static 'images/offers/fridge.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Refrigerators</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[4]' %}" class="offer-item">
                         <img src="{% static 'images/offers/oven.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Microwaves</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[5]' %}" class="offer-item">
                         <img src="{% static 'images/offers/wm.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Washing machines</span>
-                    </div>
+                    </a>
                 </div>
-                <a>See all offers</a>
+                <a href="{% url 'shop:filtered-shop' categories='[2,3,4,5]' %}">See all offers</a>
             </div>
             <div class="offer">
                 <span class="offer-title">Up to 60% off | Styles for men</span>
                 <div class="offer-items">
-                    <div class="offer-item">
+                    <a href="{% url 'shop:filtered-shop' categories='[6]' %}" class="offer-item">
                         <img src="{% static 'images/offers/cloth.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Clothing</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[7]' %}" class="offer-item">
                         <img src="{% static 'images/offers/shoe.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Footwears</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[8]' %}" class="offer-item">
                         <img src="{% static 'images/offers/watch.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Watches</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[9]' %}" class="offer-item">
                         <img src="{% static 'images/offers/bag.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Bags & Wallets</span>
-                    </div>
+                    </a>
                 </div>
-                <a>End of season sale</a>
+                <a href="{% url 'shop:filtered-shop' categories='[6,7,8,9]' %}">End of season sale</a>
             </div>
             <div class="offer">
                 <span class="offer-title">Revamp your home in style</span>
                 <div class="offer-items">
-                    <div class="offer-item">
+                    <a href="{% url 'shop:filtered-shop' categories='[10]' %}" class="offer-item">
                         <img src="{% static 'images/offers/mat.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Mat, bedsheets & more</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[10]' %}" class="offer-item">
                         <img src="{% static 'images/offers/figure.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Figurines, vases & more</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[10]' %}" class="offer-item">
                         <img src="{% static 'images/offers/storage.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Home storage</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[10]' %}" class="offer-item">
                         <img src="{% static 'images/offers/light.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Lighting solutions</span>
-                    </div>
+                    </a>
                 </div>
-                <a>Explore all</a>
+                <a href="{% url 'shop:filtered-shop' categories='[10]' %}">Explore all</a>
             </div>
-            <div class="offer">
+            <a href="{% url 'shop:filtered-shop' categories='[1]' brands='[1]' %}" class="offer">
                 <span class="offer-title">Own your Iphone now | Exciting offers.</span>
                 <img src="{% static 'images/offers/iphone.jpg' %}" alt="">
-            </div>
+            </a>
             <div class="offer">
                 <span class="offer-title">Up to 75% off | Headphones</span>
                 <div class="offer-items">
-                    <div class="offer-item">
+                    <a href="{% url 'shop:filtered-shop' categories='[11]' %}" class="offer-item">
                         <img src="{% static 'images/offers/boat.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Up to 75% off | boAt</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[11]' %}" class="offer-item">
                         <img src="{% static 'images/offers/boult.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Up to 75% off | Boult</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[11]' %}" class="offer-item">
                         <img src="{% static 'images/offers/noise.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Up to 75% off | Noise</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[11]' %}" class="offer-item">
                         <img src="{% static 'images/offers/zebro.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Up to 75% off | Zebronics</span>
-                    </div>
+                    </a>
                 </div>
-                <a>See all offers</a>
+                <a href="{% url 'shop:filtered-shop' categories='[11]' %}">See all offers</a>
             </div>
             <div class="offer">
                 <span class="offer-title">Starting ₹99 | All your home improvement needs</span>
                 <div class="offer-items">
-                    <div class="offer-item">
+                    <a href="{% url 'shop:filtered-shop' categories='[12]' %}" class="offer-item">
                         <img src="{% static 'images/offers/floorcleaner.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Spin mops, wipes & more</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[12]' %}" class="offer-item">
                         <img src="{% static 'images/offers/towel.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Bathroom accessories</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[12]' %}" class="offer-item">
                         <img src="{% static 'images/offers/hammer.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Hammers, screwdrivers & more</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[12]' %}" class="offer-item">
                         <img src="{% static 'images/offers/extension.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Extension boards, plugs</span>
-                    </div>
+                    </a>
                 </div>
-                <a>Explore all</a>
+                <a href="{% url 'shop:filtered-shop' categories='[12]' %}">Explore all</a>
             </div>
             <div class="offer">
                 <span class="offer-title">Up to 60% off | Styles for women</span>
                 <div class="offer-items">
-                    <div class="offer-item">
+                    <a href="{% url 'shop:filtered-shop' categories='[13]' %}" class="offer-item">
                         <img src="{% static 'images/offers/womencloth.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Women's clothing</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[14, 15]' %}" class="offer-item">
                         <img src="{% static 'images/offers/womenbag.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Footwears & Bags</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[16]' %}" class="offer-item">
                         <img src="{% static 'images/offers/womenwatch.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Watches</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[17]' %}" class="offer-item">
                         <img src="{% static 'images/offers/necklase.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Fashion jwellery</span>
-                    </div>
+                    </a>
                 </div>
-                <a>End of season sale</a>
+                <a href="{% url 'shop:filtered-shop' categories='[13, 14, 15, 16, 17]' %}">End of season sale</a>
             </div>
             <div class="offer">
                 <span class="offer-title">Min. 40% off | Baby care & toys | Amazon Brands & more</span>
                 <div class="offer-items">
-                    <div class="offer-item">
+                    <a href="{% url 'shop:filtered-shop' categories='[18]' %}" class="offer-item">
                         <img src="{% static 'images/offers/pampers.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Baby essentials</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[19]' %}" class="offer-item">
                         <img src="{% static 'images/offers/toy.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Play gyms & more</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[19]' %}" class="offer-item">
                         <img src="{% static 'images/offers/penguin.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Soft toys</span>
-                    </div>
-                    <div class="offer-item">
+                    </a>
+                    <a href="{% url 'shop:filtered-shop' categories='[19]' %}" class="offer-item">
                         <img src="{% static 'images/offers/unicorn.jpg' %}" alt="">
                         <span style="font-size:.8rem;">Outdoor games</span>
-                    </div>
+                    </a>
                 </div>
-                <a>See all deals</a>
+                <a href="{% url 'shop:filtered-shop' categories='[18, 19]' %}">See all deals</a>
             </div>
         </div>
         <div class="best-deal">

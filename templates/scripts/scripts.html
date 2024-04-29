@@ -192,8 +192,13 @@
     })
 
     function searchProducts(){
+        var selectedCategory = $('#category-select').val();
         var search = $('#search-product').val();
-        var url = `/search-product/${search}`;
+        if(selectedCategory){
+            var url = `/search-category-product/${selectedCategory}/${search}`;
+        } else {
+            var url = `/search-product/${search}`;
+        }
         if(search.length>2){
             $('#loading-screen').show();
             $.ajax({
@@ -380,6 +385,20 @@
         $('input[type="checkbox"]').change(function(){
             filterProducts();
         })
+        $('input[type="checkbox"]').each(function() {
+            // Check if the current checkbox is checked
+            if ($(this).prop('checked')) {
+                
+                // Show the corresponding checked element and hide the unchecked element
+                $(this).siblings('.checkbox-checked').show();
+                $(this).siblings('.checkbox-unchecked').hide();
+            } else {
+                // Hide the corresponding checked element and show the unchecked element
+                $(this).siblings('.checkbox-checked').hide();
+                $(this).siblings('.checkbox-unchecked').show();
+            }
+        });
+
     })
     // Function to handle checkbox state change
     function handleCheckboxState() {

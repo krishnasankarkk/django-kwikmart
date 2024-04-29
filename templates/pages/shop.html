@@ -17,7 +17,13 @@
                 </span>
                 {% for category in categories %}
                     <div class="category">
-                        <input type="checkbox" id="category-{{forloop.counter}}" name="category" class="category-check" value="{{category.id}}">
+                        
+                        {% if category in filter_categories %}
+                            <input type="checkbox" id="category-{{forloop.counter}}" name="category" class="category-check" value="{{category.id}}" checked>
+                        {% else %}   
+                            <input type="checkbox" id="category-{{forloop.counter}}" name="category" class="category-check" value="{{category.id}}">
+                        {% endif %}
+                            
                         <i class="checkbox checkbox-unchecked"></i>
                         <i class="checkbox checkbox-checked"></i>
                         <label for="category-{{forloop.counter}}" class="radio-button-label">
