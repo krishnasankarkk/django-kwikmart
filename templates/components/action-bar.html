@@ -1,11 +1,18 @@
 {% load static %}
 <div class="action-bar">
     <img onclick="handleAction('home')" src="{% static 'images/home.png' %}" alt="">
-    <img onclick="handleAction('search')" src="{% static 'images/search.png' %}" alt="">
     <img onclick="handleAction('shop')" src="{% static 'images/store.png' %}" alt="">
     <img onclick="handleAction('wishlist')" src="{% static 'images/heart.png' %}" alt="">
     <div class="action-bar-cart">
         <img onclick="handleAction('cart')" src="{% static 'images/cart.png' %}" alt="">
         <span class="count">{{cart_item_count}}</span>
     </div>
+    
+    {% if request.user.is_authenticated %}
+        {% comment %} <img onclick="handleAction('orders')" src="{% static 'images/orders.png' %}" alt=""> {% endcomment %}
+        <img onclick="handleAction('logout')" src="{% static 'images/logout.png' %}" alt="">
+    {% else %}    
+        <img onclick="handleAction('login')" src="{% static 'images/people.png' %}" alt="">
+    {% endif %}
+        
 </div>

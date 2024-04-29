@@ -140,12 +140,16 @@
             location.href="{% url 'shop:home' %}";
         if(value == 'shop')
             location.href="{% url 'shop:shop' %}";
-        if(value == 'search')
-            location.href="{% url 'shop:shop' %}";
+        if(value == 'login')
+            location.href="{% url 'login' %}";
+        if(value == 'logout')
+            location.href="{% url 'logout' %}";
         if(value == 'wishlist')
             location.href="{% url 'shop:wishlist' %}";
         if(value == 'cart')
             location.href="{% url 'shop:cart' %}";
+        if(value == 'orders')
+            location.href="{% url 'shop:orders' %}";
     }
 
     // Navigate carousel.

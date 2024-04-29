@@ -1,9 +1,9 @@
 {% load static %}
 <div class="user-options">
-    <a href="#" class="user-option">
+    {% comment %} <a href="/account" class="user-option">
         <img src="{% static 'images/people.png' %}" alt="">
         <span>Your account</span>
-    </a>
+    </a> {% endcomment %}
     
     {% if request.user.is_superuser %}
     <a href="/admin" class="user-option">
