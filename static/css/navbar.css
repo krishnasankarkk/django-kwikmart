@@ -13,6 +13,11 @@
     justify-content: space-between;
     z-index: 99;
 }
+.navbar .logo img {
+    width: 2rem;
+    height: auto;
+    margin: 0;
+}
 .navbar img {
     height: 40px;
     width: 40px;
