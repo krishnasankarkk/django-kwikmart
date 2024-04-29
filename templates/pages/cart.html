@@ -6,13 +6,35 @@
 <div class="cart-main">
     <div class="cart-section">
         <div class="cart-head">
-            <h1 style="font-size:1.9rem;font-weight:bold;">Cart</h1>
+            <h1>Cart</h1>
             <a href="{% url 'shop:shop' %}">
-                <span>Continue to shopping</span>
+                <span>Continue Shopping</span>
             </a>
         </div>
         <div class="line"></div>
         {% if cart_items %}
+        <div class="cart-items-responsive">
+            
+            {% for item in cart_items %}
+                <div class="cart-item">
+                    <img src="{{item.image}}" alt="">
+                    <div class="product-details">
+                        <a href="{% url 'shop:product-detail' product_id=item.product_id %}" class="product-name">{{item.product_name|truncatechars:40}}</a>
+                        <span class="price">₹{{item.sub_total|intcomma}}</span>
+                        <div class="quantity">
+                            <span class="minus" onclick="removeQuantity({{item.product_id}})">-</span>
+                            <b id="quantity-{{item.product_id}}">{{item.quantity}}</b>
+                            <span onclick="addQuantity('{{item.product_id}}')">+</span>
+                        </div>
+                    </div>
+                    <img id="deleteItem" onclick="deleteItemFromCart({{item.id}})" src="{% static 'images/trash.png' %}" alt="">
+                </div>
+            {% endfor %}
+            <a href="{% url 'shop:shop' %}">
+                <span>Continue Shopping</span>
+            </a>
+                
+        </div>
             <table class="cart-items">
                 <thead>
                     <tr>
@@ -83,7 +105,7 @@
         </div>
         <div class="charges">
             <span>Discount :</span>
-            <span class="price">- ₹{{total_discount_price}} ({{total_discount}}%)</span>
+            <span class="price">({{total_discount}}%) - ₹{{total_discount_price|intcomma}}</span>
         </div>
         <div class="sub-total">
             <span style="font-size:1.5rem;">Total :</span>
@@ -103,7 +125,6 @@
         var price = parseInt($('#price-'+product_id).data('product-price'));
         $('#price-'+product_id).text('₹'+price*(quantity+1)+'.00'); {% endcomment %}
         handleAddToCart(product_id);
-        location.reload();
     }
     function removeQuantity(product_id){
         var quantity = parseInt($('#quantity-'+product_id).text());
@@ -112,7 +133,6 @@
             {% comment %} $('#quantity-'+product_id).text(quantity-1);
             $('#price-'+product_id).text('₹'+price*(quantity-1)+'.00'); {% endcomment %}
             decreaseItemFromCart(product_id);
-            location.reload();
         }
 
     }

@@ -15,10 +15,10 @@
             <p>{{error}}</p>
         {% endif %}
         <span style="display:flex;justify-content:center;">Sign Up</span>
-        <div class="line"></div>
         {{form.as_p}}
         <button type="submit">Sign Up</button>
         <a href="/" class="explore">Explore Without Login</a>
+        <a href="/login" class="back"><img src="{% static 'images/left.png' %}" alt="">Back</a>
     </form>
 </div>
 <script>

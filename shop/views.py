@@ -160,7 +160,7 @@ def add_to_cart(request):
             'cart_items_count': cart_items_count,
             'total_price': total_price,
         }
-        
+        messages.success(request, message)
         return JsonResponse(context)
     except Product.DoesNotExist:
         context = {
@@ -201,7 +201,7 @@ def decrease_from_cart(request):
             serialized_cart_items.append({
                 'id': item.id,
                 'product_id': item.product.id,
-                'product_name': item.product.name[:40] + ('...' if len(product.name) > 40 else ''),
+                'product_name': item.product.name[:40] + ('...' if len(item.product.name) > 40 else ''),
                 'original_price': item.product.original_price,
                 'offer_price': item.product.offer_price,
                 'discount': item.product.discount,
@@ -219,6 +219,7 @@ def decrease_from_cart(request):
             'cart_items_count': cart_items_count,
             'total_price': total_price,
         }
+        messages.success(request, 'Cart updated successfully! ✔')
         return JsonResponse(context, safe=False)
     
     except Product.DoesNotExist:
@@ -230,42 +231,50 @@ def decrease_from_cart(request):
 
 def delete_from_cart(request, cart_item_id):
     if request.method == 'DELETE':
-        Cart.objects.get(id=cart_item_id).delete()
-        user_session = request.session.session_key
-        
-        if not user_session:
-            request.session.save()
+        try:
+            Cart.objects.get(id=cart_item_id).delete()
+        except Cart.DoesNotExist:
+            return JsonResponse({'success':False, 'message': 'Cart not found'})
+        else:
             user_session = request.session.session_key
-        
-        cart_items = Cart.objects.filter(user_session=user_session)
-        total_price = sum(item.sub_total for item in cart_items)
-        # Serialize cart_items queryset into a list of dictionaries
-        serialized_cart_items = []
-        for item in cart_items:
-            # Extracting the URL from CloudinaryResource object
-            image_url = item.product.image.url if isinstance(item.product.image, CloudinaryResource) else None
-            serialized_cart_items.append({
-                'id': item.id,
-                'product_id': item.product.id,
-                'product_name': item.product.name[:40] + ('...' if len(product.name) > 40 else ''),
-                'original_price': item.product.original_price,
-                'offer_price': item.product.offer_price,
-                'discount': item.product.discount,
-                'category': item.product.category.name,
-                'image': image_url,
-                'quantity': item.quantity,
-                'sub_total': item.sub_total,
+            
+            if not user_session:
+                request.session.save()
+                user_session = request.session.session_key
+            user = request.user if request.user.is_authenticated else None
+            if user:
+                cart_items = Cart.objects.filter(user=user)
+            else:
+                cart_items = Cart.objects.filter(user_session=user_session)
+            total_price = sum(item.sub_total for item in cart_items)
+            # Serialize cart_items queryset into a list of dictionaries
+            serialized_cart_items = []
+            for item in cart_items:
+                # Extracting the URL from CloudinaryResource object
+                image_url = item.product.image.url if isinstance(item.product.image, CloudinaryResource) else None
+                serialized_cart_items.append({
+                    'id': item.id,
+                    'product_id': item.product.id,
+                    'product_name': item.product.name[:40] + ('...' if len(item.product.name) > 40 else ''),
+                    'original_price': item.product.original_price,
+                    'offer_price': item.product.offer_price,
+                    'discount': item.product.discount,
+                    'category': item.product.category.name,
+                    'image': image_url,
+                    'quantity': item.quantity,
+                    'sub_total': item.sub_total,
 
-            })
-        cart_items_count = cart_items.count()
-        context = {
-            'deleted_item': cart_item_id,
-            'cart_items': serialized_cart_items,
-            'cart_items_count': cart_items_count,
-            'total_price': total_price,
-            'message': 'Item deleted successfully! ✔',
-        }
-        return JsonResponse(context, safe=False)
+                })
+            cart_items_count = cart_items.count()
+            context = {
+                'deleted_item': cart_item_id,
+                'cart_items': serialized_cart_items,
+                'cart_items_count': cart_items_count,
+                'total_price': total_price,
+                'message': 'Item deleted successfully! ✔',
+            }
+            messages.success(request, 'Item deleted successfully! ✔')
+            return JsonResponse(context, safe=False)
     else:
         return JsonResponse({'message': 'Request method is not DELETE'})
     
@@ -383,7 +392,7 @@ def save_order(request):
     else:
         Cart.objects.filter(user_session=user_session).delete()
     # messages.success(request, 'Order saved successfully')
-    return JsonResponse({'success': True, 'message': f'{new_order.order_number} - Order placed successfully! ✔'})
+    return JsonResponse({'success': True, 'message': f'Order placed successfully! Order No : {new_order.order_number} ✔'})
 
 @login_required
 @require_http_methods(["POST"])

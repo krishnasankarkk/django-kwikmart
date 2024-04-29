@@ -135,7 +135,7 @@ body::-webkit-scrollbar {
 }
 .checkout-form .orders .cart_items {
     max-height: 15rem;
-    overflow-y: auto;
+    overflow-x: auto;
     background-color: var(--theme-1);
     padding: .5rem;
     border-radius: .5rem;
@@ -213,4 +213,32 @@ body::-webkit-scrollbar {
 }
 .checkout-form .submit-button:hover {
     background-color: var(--theme-5);
+}
+@media screen and (max-width: 576px) {
+    .checkout-section .checkout-form {
+        flex-direction: column;
+    }
+    .checkout-form .billing {
+        width: 100%;
+    }
+    .checkout-form input, .checkout-form textarea {
+        max-width: 10rem;
+        min-width: 85%;
+    }
+    .checkout-form .order-section .payment-methods {
+        flex-wrap: wrap;
+    }
+    .checkout-form .order-section .payment-methods .payment-provider {
+        width: 90%;
+        text-align: center;
+    }
+    .cart_items::-webkit-scrollbar {
+        display: block;
+    }
+    .place-order .charges {
+        width: auto;
+    }
+    .checkout-section {
+        margin-bottom: 2rem;
+    }
 }

@@ -278,6 +278,7 @@
     min-width: 25rem;
     position: fixed;
     display: flex;
+    display: none;
     flex-direction: column;
     top: 4.15rem;
     right: .5rem;
@@ -386,31 +387,6 @@
 .cart-popup .checkout-button a:hover {
     background-color: var(--theme-3);
 }
-@media screen and (max-width: 1200px) {
-    
-}
-@media screen and (max-width: 992px) {
-    .navbar .search-product select,
-    .navbar .search-product input {
-        width: 100%;
-    }
-
-    .user-options,
-    .cart-popup {
-        right: 0;
-    }
-}
-@media screen and (max-width: 768) {
-    .navbar .search-product select,
-    .navbar .search-product input {
-        width: 100%;
-    }
-
-    .user-options,
-    .cart-popup {
-        right: 0;
-    }
-}
 
 @media screen and (max-width: 576px) {
     html{
@@ -418,9 +394,15 @@
     }
     .navbar {
         position: fixed;
+        padding: .5rem 0 .5rem 0;
     }
     .navbar .logo span {
         display: none;
+    }
+    .navbar .logo img {
+        width: 1.5rem;
+        height: auto;
+        margin: 0;
     }
     .navbar .theme {
         display: none;
@@ -432,7 +414,7 @@
         display: none;
     }
     .navbar .search-product {
-        margin-right: 2rem;
+        margin-right: 1rem;
         flex: 1;
     }
     .navbar .search-product input {

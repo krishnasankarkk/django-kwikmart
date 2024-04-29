@@ -14,7 +14,7 @@
             <div class="details">
                 <div style="display:flex;flex-direction:column;">
                     <span><b>Category:</b> <span>{{product.category}}</span></span>
-                    <span style="font-weight:bold;font-size:1.9rem;">{{product.name}}</span>
+                    <span class="product-name">{{product.name}}</span>
                     <span class="review">
                         <div id="productDetailReview">
                             {% for i in product.rating|custom_range %}

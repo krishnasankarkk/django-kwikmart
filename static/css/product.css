@@ -12,10 +12,11 @@
     justify-content: start;
     width: 100%;
     height: auto;
+    gap: 1rem;
 }
 .product-detail .product .image {
-    width: 50%;
-    height: 30rem;
+    width: 40%;
+    height: auto;
     display: flex;
     align-items: start;
     justify-content: start;
@@ -24,7 +25,7 @@
     border-radius: 2rem;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 .product-detail .product .details {
     flex: 1;
@@ -34,6 +35,10 @@
     align-items: start;
     justify-content: space-evenly;
     gap: 1rem;
+}
+.product-detail .product .details .product-name {
+    font-weight: bold;
+    font-size: 1.5rem;
 }
 .product-detail .product .details .mrp {
     text-decoration: line-through;
@@ -243,4 +248,89 @@
 .description .title label:hover {
     background-color: var(--theme-3);
     color: var(--theme-1);
+}
+#productSpecs{
+    display:flex;
+    flex-direction:column;
+    align-items:start;
+    justify-content:center;
+    gap:1rem;
+    width:100%;
+}
+#productSpecs span{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:start;
+    justify-content:start;
+    word-wrap:break-word;
+    text-align: start;
+}
+@media screen and (max-width: 576px) {
+    body{
+        margin: 0;
+    }
+    .product-detail{
+        padding: 0;
+    }
+    .product-detail .product {
+        flex-direction: column;
+        gap: .5rem;
+    }
+    .product-detail .product .image{
+        width: 100%;
+        height: auto;
+    }
+    .product-detail .product .image img {
+        height: auto;
+        width: 100%;
+        object-fit: cover;
+    }
+    .product-detail .product .details .product-name {
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    .product-detail .product .details .mrp {
+        font-size: 1rem;
+    }
+    .product-detail .product .details .offer-price {
+        font-size: 1.5rem;
+    }
+    .product-detail .product .details .price .discount {
+        font-size: 1rem;
+    }
+    .action-buttons .add-to-cart {
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+    }
+    .action-buttons .add-to-cart img {
+        width: 1.8rem;
+        height: auto;
+    }
+    .description .title label {
+        font-size: 1rem;
+    }
+    #reviews .review{
+        width: 100%;
+        align-items: start;
+        gap: 2rem;
+    }
+    #reviews .review .user-section {
+        width: 10%;
+    }
+    #reviews .review .user-section img {
+        display: none;
+    }
+    #reviews .review .review-section {
+        width: 100%;
+        padding: 1rem;
+    }
+    .triangle {
+        border-left: 3rem solid transparent;
+        border-right: 0rem transparent;
+        border-top: 1rem solid var(--theme-1);
+        left: -2rem;
+    }
 }

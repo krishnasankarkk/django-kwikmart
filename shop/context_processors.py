@@ -48,9 +48,11 @@ def cart_items(request):
         total_price_afer_discount = total_original_price - total_discount_price + 40
         
         serialized_cart_items = []
+        total_items = 0
         for item in cart_items:
             # Extracting the URL from CloudinaryResource object
             image_url = item.product.image.url if isinstance(item.product.image, CloudinaryResource) else None
+            total_items += item.quantity
             serialized_cart_items.append({
                 'id': item.id,
                 'product_id': item.product.id,
@@ -69,6 +71,7 @@ def cart_items(request):
             'items_in_cart': cart_items,
             'cart_items': serialized_cart_items,
             'cart_item_count': cart_item_count,
+            'total_items': total_items,
             'total_price': total_original_price,
             'total_offer_price': total_price_afer_discount,
             'total_discount':round(total_discount, 2),

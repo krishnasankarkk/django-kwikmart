@@ -149,13 +149,13 @@
                                                 <span>{{item.product_name|truncatechars:20}}</span>
                                             </td>
                                             <td>
-                                                <span id="price">₹{{item.original_price}}</span>
+                                                <span id="price">₹{{item.original_price|intcomma}}</span>
                                             </td>
                                             <td>
                                                 <span>{{item.quantity}}</span>
                                             </td>
                                             <td>
-                                                <span id="price">₹{{item.total_mrp}}</span>
+                                                <span id="price">₹{{item.total_mrp|intcomma}}</span>
                                             </td>
                                             <td>
                                                 <span id="price">{{item.discount}}%</span>
@@ -186,15 +186,19 @@
                         </div>
                         <div class="charges">
                             <span>Discount :</span>
-                            <span>- ₹{{total_discount_price}} ({{total_discount}}%)</span>
+                            <span> ({{total_discount}}%) - ₹{{total_discount_price|intcomma}}</span>
                         </div>
                         <div class="charges">
                             <span style="font-size:1.5rem;">Total :</span>
                             <span id="total_price" data-total-price="{{total_offer_price}}">₹{{total_offer_price|intcomma}}</span>
                         </div>
-                        <div class="charges">
-                            <span class="warning">You need to login in order to track your order!</span>
-                        </div>
+                        
+                        {% if not request.user.is_authenticated %}
+                            <div class="charges">
+                                <span class="warning">You need to login in order to track your order!</span>
+                            </div>
+                        {% endif %}
+                            
                         <button class="submit-button" type="submit">Place Your Order</button>
                     </div>
                     {% endif %}

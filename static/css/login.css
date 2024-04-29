@@ -1,3 +1,6 @@
+body {
+    margin: 0;
+}
 .login-section {
     display: flex;
     flex-direction: column;
@@ -16,6 +19,10 @@
     margin: 2rem;
     font-family: 'Borel';
 
+}
+.login-section .logo img {
+    width: 3rem;
+    height: auto;
 }
 .login-section form {
     display: flex;
@@ -86,4 +93,10 @@
     font-weight: bold;
     font-size: 1.1rem;
     cursor: pointer;
+}
+@media screen and (max-width: 576px) {
+    img {
+        width: 2rem;
+        height: 2rem;
     }
+}

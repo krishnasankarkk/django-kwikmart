@@ -474,11 +474,12 @@
             success: (res)=>{
                 $('#loading-screen').hide();
                 if(res){
-                    updateMessages(res)
+                    //updateMessages(res)
                     updateCartItems(res.cart_items);
                     $('.count').text(res.cart_items_count);
                     $('.checkout-button .price').text('₹' + res.total_price.toLocaleString());
                     $('#total_price').text('₹' + res.total_price.toLocaleString());
+                    location.reload();
                 }
             },
             error: (err)=>{
@@ -504,26 +505,12 @@
             success: (res)=>{
                 {% comment %} $('.loading-screen').hide(); {% endcomment %}
                 if(res){
-                    var message = $('<div>');
-                    message.addClass('message');
-                    if(res.success){
-                        message.addClass('success');
-                    }else {
-                        message.addClass('warning');
-                    }
-                    message.text(res.message);
-                    $('.messages').empty();
-                    $('.messages').append(message);
-                    $('.messages').show();
+                    updateMessages(res);
                     updateCartItems(res.cart_items);
                     $('.count').text(res.cart_items_count);
                     $('.checkout-button .price').text('₹' + res.total_price.toLocaleString());
                     $('#total_price').text('₹' + res.total_price.toLocaleString());
-    
-                    // Hide the message after 5 seconds (adjust as needed)
-                    setTimeout(() => {
-                        message.remove();
-                    }, 1000);
+                    location.reload();
                 }
             },
             error: (err)=>{
@@ -550,22 +537,7 @@
                 success: (res)=>{
                     $('#loading-screen').hide();
                     if(res){
-                        var message = $('<div>');
-                        message.addClass('message');
-                        if(res.success){
-                            message.addClass('success');
-                        }else {
-                            message.addClass('warning');
-                        }
-                        message.text(res.message);
-                        $('.messages').empty();
-                        $('.messages').append(message);
-                        $('.messages').show();
-    
-                        // Hide the message after 5 seconds (adjust as needed)
-                        setTimeout(() => {
-                            message.remove();
-                        }, 3000);
+                        updateMessages(res);
                     }
                 },
                 error: (err)=>{
@@ -593,10 +565,11 @@
             success: (res)=>{
                 $('#loading-screen').hide();
                 if(res){
-                    updateMessages(res);
+                    {% comment %} updateMessages(res); {% endcomment %}
                     $('.count').text(res.cart_items_count);
                     $('.checkout-button .price').text('₹' + res.total_price.toLocaleString());
                     updateCartItems(res.cart_items);
+                    location.reload();
                 }
             },
             error: (err)=>{
