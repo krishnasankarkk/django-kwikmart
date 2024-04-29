@@ -58,7 +58,7 @@ def home(request):
     best_deals = Product.objects.filter(discount__gt=0).order_by('-discount')[:20]
     best_deal = best_deals.first()
     threshold_date = timezone.now() - timedelta(days=7)
-    new_products = products.filter(created_at__gte=threshold_date)
+    new_products = products.filter(created_at__gte=threshold_date).order_by('created_at')
     context = {
         'carousel': carousel,
         'categories': categories,
