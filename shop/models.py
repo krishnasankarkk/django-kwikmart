@@ -4,6 +4,7 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 from django.core.validators import MaxValueValidator
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 import uuid, math
 
@@ -86,6 +87,10 @@ class Product(models.Model):
         
         self.rating = math.floor(avg_rating)
         self.save()
+    
+    def get_absolute_url(self):
+        return reverse('shop:product-detail', args=[str(self.id)])
+
 
 class Carousel(models.Model):
     name = models.CharField(max_length=100)

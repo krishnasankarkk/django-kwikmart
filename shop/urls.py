@@ -1,11 +1,18 @@
 # shop/urls.py
 from django.urls import path
+from django.contrib.sitemaps.views import sitemap
 
+from shop.sitemaps import ProductSitemap
 from shop import views
+
+sitemaps = {
+    'products': ProductSitemap,
+}
 
 app_name = 'shop'
 
 urlpatterns = [
+    path('sitemap.xml', sitemap, {'sitemaps':sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('', views.home, name='home'),
     path('shop', views.shop, name='shop'),
     path('filtered-shop/<str:categories>/', views.filtered_shop, name='filtered-shop'),
