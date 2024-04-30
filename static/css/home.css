@@ -250,16 +250,26 @@ body {
     top: 50%;
     left: 10px;
     cursor: pointer;
-    width: 2.5rem;
+    width: 2rem;
     margin: 1rem;
+    padding: 1rem;
+    border-radius: .5rem;
+    transition: all .3s ease;
 }
 .deals .products .next-prod img {
     position: absolute;
     top: 50%;
     right: 10px;
     cursor: pointer;
-    width: 2.5rem;
+    width: 2rem;
     margin: 1rem;
+    padding: 1rem;
+    border-radius: .5rem;
+    transition: all .3s ease;
+}
+.deals .products .prev-prod img:hover, .deals .products .next-prod img:hover {
+    background-color: var(--theme-1);
+    box-shadow: 0 0 1rem black;
 }
 .deals .products .product {
     position: relative;

@@ -146,6 +146,7 @@
         width: 100%;
         height: 6rem;
         flex-direction: row;
+        justify-content: start;
         padding: 0;
         margin: 0;
     }
@@ -153,9 +154,10 @@
         transform: none;
     }
     .wishlist-items .item img {
-        width: auto;
+        width: 40%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
+        background-color: white;
         border-radius: 1rem 0 0 1rem;
     }
     .wishlist-items .item .product-details{
