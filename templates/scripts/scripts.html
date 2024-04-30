@@ -152,6 +152,38 @@
             location.href="{% url 'shop:orders' %}";
     }
 
+    // Scroll products.
+    var dealProductsContainer = $('#deal-products');
+    var newProductsContainer = $('#new-products');
+    var recommendedProductsContainer = $('#recommended-products');
+    var dealoffset = 0
+    $('#deal-prev').click(function(){
+        dealoffset -= 1000
+        dealProductsContainer.animate({scrollLeft: dealoffset}, 500);
+    });
+    $('#deal-next').click(function(){
+        dealoffset += 1000
+        dealProductsContainer.animate({scrollLeft: dealoffset}, 500);
+    });
+    var newoffset = 0
+    $('#new-prev').click(function(){
+        newoffset -= 1000
+        newProductsContainer.animate({scrollLeft: newoffset}, 500);
+    });
+    $('#new-next').click(function(){
+        newoffset += 1000
+        newProductsContainer.animate({scrollLeft: newoffset}, 500);
+    });
+    var recoffset = 0
+    $('#rec-prev').click(function(){
+        recoffset -= 1000
+        recommendedProductsContainer.animate({scrollLeft: recoffset}, 500);
+    });
+    $('#rec-next').click(function(){
+        recoffset += 1000
+        recommendedProductsContainer.animate({scrollLeft: recoffset}, 500);
+    });
+
     // Navigate carousel.
     var carouselContainer = $('.carousel');
     var carouselItems = $('.carousel-item');
@@ -166,7 +198,6 @@
             navDots.css('background-color', 'var(--theme-2)'); 
             currentIndex++;
             var offset = currentIndex * itemWidth;
-            console.log(offset)
             navDots.eq(currentIndex).css('background-color', 'var(--theme-3)');
             carouselContainer.animate({scrollLeft: offset}, 500); // Use jQuery animate for smooth scrolling
         }
@@ -178,7 +209,6 @@
             currentIndex--;
             navDots.eq(currentIndex).css('background-color', 'var(--theme-3)');
             var offset = currentIndex * itemWidth;
-            console.log(offset)
             carouselContainer.animate({scrollLeft: offset}, 500); // Use jQuery animate for smooth scrolling
         }
     });

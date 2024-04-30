@@ -216,7 +216,7 @@
                 <a href="{% url 'shop:shop' %}">See all deals</a>
             </div>
             <div class="line"></div>
-            <div class="products">
+            <div class="products" id="deal-products">
                 {% for product in best_deals %}
                     <div class="product" title="{{product.name}}">
                         <img id="productImage" src="{{ product.image.url }}" alt="">
@@ -246,10 +246,10 @@
                         </div>
                     </div>
                 {% endfor %}
-                <div class="prev-prod">
+                <div class="prev-prod" id="deal-prev">
                     <img src="{% static 'images/left.png' %}" alt="">
                 </div>
-                <div class="next-prod">
+                <div class="next-prod" id="deal-next">
                     <img src="{% static 'images/right.png' %}" alt="">
                 </div>
             </div>
@@ -261,7 +261,7 @@
                 <a href="{% url 'shop:shop' %}">See all deals</a>
             </div>
             <div class="line"></div>
-            <div class="products">
+            <div class="products" id="new-products">
                 {% for product in new_products %}
                 <div class="product" title="{{product.name}}">
                         <img id="productImage" src="{{ product.image.url }}" alt="">
@@ -289,10 +289,10 @@
                         </div>
                     </div>
                 {% endfor %}
-                <div class="prev-prod">
+                <div class="prev-prod" id="new-prev">
                     <img src="{% static 'images/left.png' %}" alt="">
                 </div>
-                <div class="next-prod">
+                <div class="next-prod" id="new-next">
                     <img src="{% static 'images/right.png' %}" alt="">
                 </div>
             </div>
@@ -305,7 +305,7 @@
                     <a href="{% url 'shop:shop' %}">See all deals</a>
                 </div>
                 <div class="line"></div>
-                <div class="products">
+                <div class="products" id="recommended-products">
                     {% for product in products %}
                         {% if product.recommended %}    
                             <div class="product" title="{{product.name}}">
@@ -337,10 +337,10 @@
                             </div>
                         {% endif %}
                     {% endfor %}
-                    <div class="prev-prod">
+                    <div class="prev-prod" id="rec-prev">
                         <img src="{% static 'images/left.png' %}" alt="">
                     </div>
-                    <div class="next-prod">
+                    <div class="next-prod" id="rec-next">
                         <img src="{% static 'images/right.png' %}" alt="">
                     </div>
                 </div>

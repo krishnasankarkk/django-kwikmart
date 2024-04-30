@@ -229,7 +229,7 @@
                     {% endif %}
                         
                     <div class="product-details">
-                        <span>{{ product.name|truncatechars:40}}</span>
+                        <span class="product-name">{{ product.name|truncatechars:40}}</span>
                         <div class="review">
                             {% for i in product.rating|custom_range %}
                                 <img src='{% static "images/star.png" %}' alt="">
