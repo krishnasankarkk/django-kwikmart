@@ -10,7 +10,7 @@
     </div>
     <div class="line"></div>
     {% if orders %}
-        <div class="statistics">
+        {% comment %} <div class="statistics">
             <div class="item">
                 <span>Total Orders</span>
                 <span>0</span>
@@ -27,7 +27,7 @@
                 <span>Total Earnings</span>
                 <span>0</span>
             </div>
-        </div>
+        </div> {% endcomment %}
         <div class="filters">
             <span>All orders ({{orders|length}})</span>
             <span>Pending (0)</span>

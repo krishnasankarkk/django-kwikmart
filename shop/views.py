@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_GET, require_http_methods
-from django.db.models import Q, Sum, F, Case, When, IntegerField, CharField, DateTimeField
+from django.db.models import Q, Sum, F, Case, When, IntegerField, CharField, DateTimeField, ExpressionWrapper, DecimalField
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
@@ -465,6 +465,7 @@ def add_review(request):
 def orders_view(request):
     user = request.user if request.user.is_authenticated else None
     if user:
+
         orders = (
             OrderItem.objects.filter(order__user=user)
                 .annotate(orderid=F('order__id'))
@@ -500,7 +501,7 @@ def orders_view(request):
                         output_field=CharField(),
                     ),
                 )
-                .order_by('orderid')
+                .order_by('-orderid')
             )
 
     breadcrumbs = [

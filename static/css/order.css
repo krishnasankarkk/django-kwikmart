@@ -49,7 +49,7 @@ body{
     align-items: center;
     justify-content: start;
     gap: 1rem;
-    border-bottom: 1px solid var(--theme-4);
+    /* border-bottom: 1px solid var(--theme-4); */
     padding: .5rem;
 }
 .orders-section .filters span {

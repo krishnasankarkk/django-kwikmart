@@ -212,7 +212,15 @@
                 <span>Filters</span>
                 <img src="{% static 'images/filter.png' %}" alt="">
             </div>
-            <h1>Products</h1>
+            <div class="products-head">
+                <h1>Products</h1>
+                <span class="sort-icon">Sort<img src="{% static 'images/sort.png' %}" alt=""></span>
+                <div class="sort-popup">
+                    <span>By Date</span>
+                    <span>By Name</span>
+                    <span>By Category</span>
+                </div>
+            </div>
             <div class="line"></div>
             <div class="products" id="shop-products">
                 {% for product in products %}

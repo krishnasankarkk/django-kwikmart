@@ -56,7 +56,29 @@
                 message.remove();
             }, 3000);
     }
-    
+    var timeout;
+    // Sort by in shop page.
+    $('.sort-icon').hover(function(){
+        clearTimeout(timeout);
+        $('.sort-popup').show();
+        $('.sort-popup').css('display', 'flex');
+    },
+    function(){
+        timeout = setTimeout(function(){
+            $('.sort-popup').hide();
+        }, 500);
+    });
+    $('.sort-popup').hover(function(){
+        clearTimeout(timeout);
+        $('.sort-popup').show();
+        $('.sort-popup').css('display', 'flex');
+    },
+    function(){
+        timeout = setTimeout(function(){
+            $('.sort-popup').hide();
+        }, 500);
+    });
+
     // close shop filter popup.
     $('.close-filter-popup').click(function(){
         $('.filters').hide()
@@ -396,7 +418,7 @@
                             <div class="product" title="${product.name}">
                                 <img id="productImage" src="${product.image_url}" alt="">
                                 <div class="product-details">
-                                    <span>${product.name.substring(0, 15)}</span>
+                                    <span class="product-name">${product.name.substring(0, 15)}</span>
                                     <div class="review">
                                         ${updateRating(product.rating)}
                                     </div>
