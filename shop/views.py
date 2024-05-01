@@ -353,7 +353,7 @@ def delete_from_wishlist(request, product_id):
 
 @login_required
 def show_wishlist(request):
-    wishlist = WishList.objects.all()
+    wishlist = WishList.objects.filter(user=request.user)
     items_count = wishlist.count()
     breadcrumbs = [
         {'name': 'Wishlist', 'url': ''},
