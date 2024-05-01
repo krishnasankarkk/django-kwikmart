@@ -1,4 +1,6 @@
 # ![Kwikmart Logo](/static/images/logo.png) Kwikmart - An online shopping app
+![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 ## Introduction
 Welcome to the My Django Shopping App! This is a simple yet powerful e-commerce platform built using Django framework. This README file will guide you through the installation process and provide an overview of the features and functionalities of this app.
 
@@ -46,6 +48,10 @@ python manage.py runserver
 - Visit the homepage to browse products and add them to your cart.
 - Use the navigation menu to explore different sections of the app such as products, cart, and orders.
 - Admins can access the admin panel by visiting **`http://localhost:8000/admin`** and login using the superuser credentials created earlier.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
 
 ## Contributing
 Contributions are welcome! If you would like to contribute to this project, please follow these steps:
