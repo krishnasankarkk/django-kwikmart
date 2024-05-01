@@ -236,8 +236,7 @@ body {
     display: none;
     flex-direction: column;
     align-items: center;
-    border: .15rem solid var(--theme-3);
-    box-shadow: 0 0 1rem var(--theme-1);
+    box-shadow: 0 0 1rem black;
 }
 .login-popup .close-login-popup{
     position: absolute;
@@ -299,6 +298,12 @@ body {
     border-radius: 1rem;
     box-shadow: 0 0 1rem black;
 }
+.action-bar .selected{
+    transform: translateY(-.5rem);
+    background-color: var(--theme-1);
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem black;
+}
 .action-bar .action-bar-cart{
     position: relative;
 }
@@ -330,5 +335,8 @@ body {
     }
     .breadcrumbs {
         display: none;
+    }
+    .login-popup {
+        width: 80%;
     }
 }

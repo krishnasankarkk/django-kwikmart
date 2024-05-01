@@ -501,7 +501,7 @@ def orders_view(request):
                         output_field=CharField(),
                     ),
                 )
-                .order_by('-orderid')
+                .order_by('orderid')
             )
 
     breadcrumbs = [

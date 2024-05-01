@@ -56,8 +56,9 @@
                 message.remove();
             }, 3000);
     }
-    var timeout;
+
     // Sort by in shop page.
+    var timeout;
     $('.sort-icon').hover(function(){
         clearTimeout(timeout);
         $('.sort-popup').show();
@@ -78,6 +79,9 @@
             $('.sort-popup').hide();
         }, 500);
     });
+    $('#sort-products-by-date').click(function(){
+
+    })
 
     // close shop filter popup.
     $('.close-filter-popup').click(function(){
@@ -361,7 +365,6 @@
         })
         $('input[name="price-range"]').each(function(){
             if ($(this).prop('checked')) {
-                console.log($(this).attr('name'), $(this).attr('value'))
                 prices.push($(this).attr('value'));
             } else {
                 prices.remove($(this).attr('value'));
@@ -592,7 +595,7 @@
             success: (res)=>{
                 {% comment %} $('.loading-screen').hide(); {% endcomment %}
                 if(res){
-                    updateMessages(res);
+                    //updateMessages(res);
                     updateCartItems(res.cart_items);
                     $('.count').text(res.cart_items_count);
                     $('.checkout-button .price').text('₹' + res.total_price.toLocaleString());
@@ -711,7 +714,7 @@
                 success: function(response) {
                     $('#loading-screen').hide();
                     if(response){
-                        updateMessages(response);
+                        {% comment %} updateMessages(response);
                         $('#productDetailReview').empty();
                         $('#productDetailReview').append(updateRating(response.rating));
                         $('#reviewsCount').empty();
@@ -748,7 +751,7 @@
                         // Optionally, you can clear the comment field and reset the rating
                         $('#written-comment').val('');
                         $('input[name="rating"]').prop('checked', false);
-                        $('.star').attr('src', '{% static "images/starline.png" %}');
+                        $('.star').attr('src', '{% static "images/starline.png" %}'); {% endcomment %}
                     }
                 },
                 error: function(error) {
