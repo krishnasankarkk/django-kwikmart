@@ -50,11 +50,23 @@ python manage.py runserver
 ## Contributing
 Contributions are welcome! If you would like to contribute to this project, please follow these steps:
 1. **Fork the repository.**
-2. **Create a new branch (`git checkout -b feature-branch`).**
-3. **Make your changes.**
-4. **Commit your changes (`git commit -am 'Add some feature'`).**
-5. **Push to the branch (`git push origin feature-branch`).**
-6. **Create a new Pull Request.**
+2. **Create a new branch.**
+
+```
+git checkout -b feature-branch
+```
+4. **Make your changes.**
+5. **Commit your changes.**
+
+```
+git commit -am 'Add some feature'
+```
+7. **Push to the branch.**
+
+```
+git push origin feature-branch
+```
+9. **Create a new Pull Request.**
 
 ## Acknowledgements
 - This app was built using the Django web framework.
