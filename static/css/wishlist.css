@@ -164,6 +164,7 @@
         text-align: start;
     }
     .wishlist-items .item .actions {
+        display: flex;
         flex-direction: row;
         top: 1.5rem;
         right: -3rem;

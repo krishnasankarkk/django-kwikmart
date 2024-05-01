@@ -517,6 +517,7 @@ body {
     }
     .deals .products .product .actions{
         gap: .2rem;
+        display: flex;
     }
     .deals .products .product .actions img {
         width: .8rem;
