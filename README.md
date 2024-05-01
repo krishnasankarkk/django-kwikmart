@@ -1,5 +1,7 @@
-# ![Kwikmart Logo](/static/images/logo.png) Kwikmart - An online shopping app
-![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)
+<div align="center">
+  <img src="/static/images/logo.png">
+  <h1>Kwikmart - An online shopping app</h1>
+</div>
 
 ## Introduction
 Welcome to the My Django Shopping App! This is a simple yet powerful e-commerce platform built using Django framework. This README file will guide you through the installation process and provide an overview of the features and functionalities of this app.
