@@ -51,10 +51,6 @@ python manage.py runserver
 - Use the navigation menu to explore different sections of the app such as products, cart, and orders.
 - Admins can access the admin panel by visiting **`http://localhost:8000/admin`** and login using the superuser credentials created earlier.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Contributing
 Contributions are welcome! If you would like to contribute to this project, please follow these steps:
 1. **Fork the repository.**
@@ -75,6 +71,10 @@ git commit -am 'Add some feature'
 git push origin feature-branch
 ```
 9. **Create a new Pull Request.**
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgements
 - This app was built using the Django web framework.
