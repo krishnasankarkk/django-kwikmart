@@ -745,6 +745,7 @@
                         console.log(currentCount+1)
                         $('#reviews_count').text(currentCount + 1);
                         $('#reviewsCount').empty();
+                        $('.no-review').remove();
                         $('#reviewsCount').text(`${currentCount+1} Reviews`);
                         // Optionally, you can clear the comment field and reset the rating
                         $('#written-comment').val('');

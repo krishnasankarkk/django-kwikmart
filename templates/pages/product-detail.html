@@ -75,7 +75,7 @@
                     </div>
                 {% endfor %}
                 {% if not reviews %}
-                    <h2>No Reviews</h2>
+                    <h2 class="no-review">No Reviews</h2>
                 {% endif %}
                 {% if request.user.is_authenticated %}
                     <div class="write-comment">
