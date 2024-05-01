@@ -91,30 +91,34 @@
             <h2 style="text-align:center;">No items in cart.</h2>
         {% endif %}
     </div>
-    <div class="checkout">
-        <h1>Checkout</h1>
-        <div class="line"></div>
-        <br>
-        <div class="charges">
-            <span>Sub Total ({{total_items}} items) :</span>
-            <span class="price">₹{{total_price|intcomma}}</span>
+    
+    {% if cart_items %}
+        <div class="checkout">
+            <h1>Checkout</h1>
+            <div class="line"></div>
+            <br>
+            <div class="charges">
+                <span>Sub Total ({{total_items}} items) :</span>
+                <span class="price">₹{{total_price|intcomma}}</span>
+            </div>
+            <div class="charges">
+                <span>Delivery charges :</span>
+                <span class="price">+ ₹40</span>
+            </div>
+            <div class="charges">
+                <span>Discount :</span>
+                <span class="price">({{total_discount}}%) - ₹{{total_discount_price|intcomma}}</span>
+            </div>
+            <div class="sub-total">
+                <span style="font-size:1.5rem;">Total :</span>
+                <span id="total_price">₹{{total_offer_price|intcomma}}</span>
+            </div>
+            <a href="{% url 'shop:checkout' %}">
+                <button>Proceed to Checkout</button>
+            </a>
         </div>
-        <div class="charges">
-            <span>Delivery charges :</span>
-            <span class="price">+ ₹40</span>
-        </div>
-        <div class="charges">
-            <span>Discount :</span>
-            <span class="price">({{total_discount}}%) - ₹{{total_discount_price|intcomma}}</span>
-        </div>
-        <div class="sub-total">
-            <span style="font-size:1.5rem;">Total :</span>
-            <span id="total_price">₹{{total_offer_price|intcomma}}</span>
-        </div>
-        <a href="{% url 'shop:checkout' %}">
-            <button>Proceed to Checkout</button>
-        </a>
-    </div>
+    {% endif %}
+        
 </div>
 {% endblock main %}
 {% block script %}
