@@ -503,13 +503,18 @@ def orders_view(request):
                 )
                 .order_by('orderid')
             )
-
+    all_orders = orders.count()
+    pending_orders = orders.filter(order__status='Pending').count()
+    delivered_orders = orders.filter(order__status='Delivered').count()
     breadcrumbs = [
         {'name': 'Shop', 'url': '/shop'},
         {'name': 'Orders', 'url': ''},
     ]
     context = {
         'orders': orders,
+        'all_orders': all_orders,
+        'delivered_orders': delivered_orders,
+        'pending_orders': pending_orders,
         'breadcrumbs': breadcrumbs,
     }
     return render(request, 'pages/orders.html', context)

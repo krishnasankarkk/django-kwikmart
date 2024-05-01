@@ -29,11 +29,11 @@
             </div>
         </div> {% endcomment %}
         <div class="filters">
-            <span>All orders ({{orders|length}})</span>
-            <span>Pending (0)</span>
+            <span>All orders ({{all_orders}})</span>
+            <span>Pending ({{pending_orders}})</span>
             <span>Processing (0)</span>
             <span>Shipped (0)</span>
-            <span>Delivered (0)</span>
+            <span>Delivered ({{delivered_orders}})</span>
             <span>Cancelled (0)</span>
         </div>
         <table>
