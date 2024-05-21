@@ -20,27 +20,65 @@ git clone https://github.com/krishnasankarkk/django-kwikmart.git
 ```
 cd django-kwikmart
 ```
-3. **Install dependencies:**
+3. **Create a virtual environment for isolate project's dependencies:**
+
+```
+python -m venv venv
+```
+4. **Activate the virtual environment:**
+
+For Windows:
+```
+venv\Scripts\activate
+```
+
+For Linux:
+```
+source venv/bin/activate
+```
+5. **Install dependencies:**
 
 ```
 pip install -r requirements.txt
 ```
-4. **Apply migrations:**
+6. **Apply migrations:**
 
 ```
-python manage.py migrate
+python -m manage migrate
 ```
-5. **Create a superuser (admin):**
+7. **Create a superuser (admin):**
 
 ```
-python manage.py createsuperuser
+python -m manage createsuperuser
 ```
-6. **Start the development server:**
+8. **Create a .env file by copying .env.example file and filling necessary values:**
 
 ```
-python manage.py runserver
+cp .env.example .env
 ```
-7. **Open your web browser and go to `http://localhost:8000`** to access the app.
+9. **Generate a new secret key and add it to .env file:**
+
+```
+python -c 'from django.core.management.utils import get_random_secret_key;print(get_random_secret_key())'
+```
+Replace the SECRET_KEY value in .env file with the generated key.
+10. **Cloudinary Management:**
+
+Cloudinary is used to host images in cloud. Login in to cloudinary to get api settings.
+[!Login here]('https://cloudinary.com') and replace these values in .env file:
+```
+# Cloudinary settings.
+CLOUD_NAME = "your_cloud_name"
+API_KEY = "your_api_key"
+API_SECRET = "your_api_secret"
+```
+11. **Start the development server:**
+
+```
+python -m manage runserver
+```
+12. **Open your web browser and go to `http://localhost:8000` to access the app.**
+JQuery is used for DOM Manipulation. Ensure you have a good internet connection to load JQuery API.
 
 ## Usage
 - Visit the homepage to browse products and add them to your cart.

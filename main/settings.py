@@ -14,11 +14,14 @@ from pathlib import Path
 from decouple import config
 import cloudinary
 
-# cloudinary config.
+"""
+    Cloudinary is used to host images in cloud. Login in to cloudinary to get api settings.
+    'https://cloudinary.com'
+"""
 cloudinary.config(
-  cloud_name = "dinphrbeu",
-  api_key = "499557373191457",
-  api_secret = "TF323Kby0hXq3cHv771aWzX7DHk"
+  cloud_name = config('CLOUD_NAME', default=''),
+  api_key = config('API_KEY', default=''),
+  api_secret = config('API_SECRET', default='')
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,7 +37,7 @@ SECRET_KEY = config('SECRET_KEY', default='')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'www.kwikmart.one', 'kwikmart.one']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 LOGIN_URL = '/login/'
 
@@ -103,6 +106,7 @@ WSGI_APPLICATION = 'main.wsgi.app'
 # Note: Django modules for using databases are not support in serverless
 # environments like Vercel. You can use a database over HTTP, hosted elsewhere.
 
+# Database PostgreSQL local configuration.
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -114,6 +118,7 @@ WSGI_APPLICATION = 'main.wsgi.app'
 #     }
 # }
 
+# Default Database SQLite3.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -121,12 +126,20 @@ DATABASES = {
     }
 }
 
+# For saving user sessions.
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379',
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
+
+# Redis Cache configuration
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6379',
+#     }
+# }
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'default'
