@@ -3,6 +3,15 @@
   <h1>Kwikmart - An online shopping app</h1>
 </div>
 
+## Table of Contents
+
+1.[Introduction](#Introduction)<br/>
+2.[Features](#Features)<br/>
+3.[Installation](#Installation)<br/>
+4.[Usage](#Usage)<br/>
+5.[Contributing](#Contributing)<br/>
+6.[Acknowledgements](#Acknowledgements)<br/>
+
 ## Introduction
 Welcome to the My Django Shopping App! This is a simple yet powerful e-commerce platform built using Django framework. This README file will guide you through the installation process and provide an overview of the features and functionalities of this app.
 
@@ -66,6 +75,7 @@ cp .env.example .env
 python -c 'from django.core.management.utils import get_random_secret_key;print(get_random_secret_key())'
 ```
 Replace the SECRET_KEY value in .env file with the generated key.
+
 10. **Cloudinary Management:**
 
 Cloudinary is used to host images in cloud. Login in to cloudinary to get api settings.
